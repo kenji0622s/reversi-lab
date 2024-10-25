@@ -12,71 +12,27 @@ const selectCell = (cell) => {
         if (turn.value === players[0]) {
             blackCells.value.push(selectedCell.value);
             usedCells.value.push(selectedCell.value);
-            reverse(selectedCell.value);
+            const allDirectionCells = getAllDirectionCells(selectedCell.value);
+            for (let i = 0; i < allDirectionCells.length; i++) {
+                directionReverse(allDirectionCells[i]);
+            }
             turn.value = players[1];
         } else {
             whiteCells.value.push(selectedCell.value);
             usedCells.value.push(selectedCell.value);
-            reverse(selectedCell.value);
+            const allDirectionCells = getAllDirectionCells(selectedCell.value);
+            for (let i = 0; i < allDirectionCells.length; i++) {
+                directionReverse(allDirectionCells[i]);
+            }
             turn.value = players[0];
         }
     }
 }
 
-
-function directionReverse(directionCells) {
-    const blackJudges = [];
-    for (let i = 0; i < directionCells.length; i++) {
-        blackJudges.push(blackCells.value.some(blackCell => blackCell[0] === directionCells[i][0] && blackCell[1] === directionCells[i][1]));
-    }
-    const whiteJudges = [];
-    for (let i = 0; i < directionCells.length; i++) {
-        whiteJudges.push(whiteCells.value.some(whiteCell => whiteCell[0] === directionCells[i][0] && whiteCell[1] === directionCells[i][1]));
-    }
-
-    console.log('blackJudges:' + blackJudges);
-    console.log('whiteJudges:' + whiteJudges);
-
-    if (turn.value === players[0]) {
-        if (whiteJudges[0] && blackJudges[1]) {
-            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === directionCells[0][0] && whiteCell[1] === directionCells[0][1]), 1);
-            blackCells.value.push(directionCells[0]);
-        }
-        if (whiteJudges[0] && whiteJudges[1] && blackJudges[2]) {
-            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === directionCells[0][0] && whiteCell[1] === directionCells[0][1]), 1);
-            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === directionCells[1][0] && whiteCell[1] === directionCells[1][1]), 1);
-            blackCells.value.push(directionCells[0], directionCells[1]);
-        }
-        if (whiteJudges[0] && whiteJudges[1] && whiteJudges[2] && blackJudges[3]) {
-            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === directionCells[0][0] && whiteCell[1] === directionCells[0][1]), 1);
-            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === directionCells[1][0] && whiteCell[1] === directionCells[1][1]), 1);
-            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === directionCells[2][0] && whiteCell[1] === directionCells[2][1]), 1);
-            blackCells.value.push(directionCells[0], directionCells[1], directionCells[2]);
-        }
-    } else {
-        if (blackJudges[0] && whiteJudges[1]) {
-            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === directionCells[0][0] && blackCell[1] === directionCells[0][1]), 1);
-            whiteCells.value.push(directionCells[0]);
-        }
-        if (blackJudges[0] && blackJudges[1] && whiteJudges[2]) {
-            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === directionCells[0][0] && blackCell[1] === directionCells[0][1]), 1);
-            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === directionCells[1][0] && blackCell[1] === directionCells[1][1]), 1);
-            whiteCells.value.push(directionCells[0], directionCells[1]);
-        }
-        if (blackJudges[0] && blackJudges[1] && blackJudges[2] && whiteJudges[3]) {
-            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === directionCells[0][0] && blackCell[1] === directionCells[0][1]), 1);
-            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === directionCells[1][0] && blackCell[1] === directionCells[1][1]), 1);
-            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === directionCells[2][0] && blackCell[1] === directionCells[2][1]), 1);
-            whiteCells.value.push(directionCells[0], directionCells[1], directionCells[2]);
-        }
-    }
-}
-function reverse(selectedCell) {
+function getAllDirectionCells(selectedCell) {
 
     const row = selectedCell[0];
     const column = selectedCell[1];
-
-    console.log('row:' + row, 'column:' + column);
 
     const upperLeftCells = [];
     for (let i = 1; i <= 7; i++) {
@@ -134,18 +90,110 @@ function reverse(selectedCell) {
         }
     }
 
-    const directionCells = [upperLeftCells, upperCells, upperRightCells, leftCells, rightCells, lowerLeftCells, lowerCells, lowerRightCells];
-    for (let i = 0; i < directionCells.length; i++) {
-        directionReverse(directionCells[i]);
+    const allDirectionCells = [upperLeftCells, upperCells, upperRightCells, leftCells, rightCells, lowerLeftCells, lowerCells, lowerRightCells];
+    return allDirectionCells;
+}
+
+function directionReverse(singleDirectionCells) {
+    const blackJudges = [];
+    for (let i = 0; i < singleDirectionCells.length; i++) {
+        blackJudges.push(blackCells.value.some(blackCell => blackCell[0] === singleDirectionCells[i][0] && blackCell[1] === singleDirectionCells[i][1]));
+    }
+    const whiteJudges = [];
+    for (let i = 0; i < singleDirectionCells.length; i++) {
+        whiteJudges.push(whiteCells.value.some(whiteCell => whiteCell[0] === singleDirectionCells[i][0] && whiteCell[1] === singleDirectionCells[i][1]));
+    }
+
+    if (turn.value === players[0]) {
+        if (whiteJudges[0] && blackJudges[1]) {
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[0][0] && whiteCell[1] === singleDirectionCells[0][1]), 1);
+            blackCells.value.push(singleDirectionCells[0]);
+        }
+        if (whiteJudges[0] && whiteJudges[1] && blackJudges[2]) {
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[0][0] && whiteCell[1] === singleDirectionCells[0][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[1][0] && whiteCell[1] === singleDirectionCells[1][1]), 1);
+            blackCells.value.push(singleDirectionCells[0], singleDirectionCells[1]);
+        }
+        if (whiteJudges[0] && whiteJudges[1] && whiteJudges[2] && blackJudges[3]) {
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[0][0] && whiteCell[1] === singleDirectionCells[0][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[1][0] && whiteCell[1] === singleDirectionCells[1][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[2][0] && whiteCell[1] === singleDirectionCells[2][1]), 1);
+            blackCells.value.push(singleDirectionCells[0], singleDirectionCells[1], singleDirectionCells[2]);
+        }
+        if (whiteJudges[0] && whiteJudges[1] && whiteJudges[2] && whiteJudges[3] && blackJudges[4]) {
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[0][0] && whiteCell[1] === singleDirectionCells[0][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[1][0] && whiteCell[1] === singleDirectionCells[1][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[2][0] && whiteCell[1] === singleDirectionCells[2][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[3][0] && whiteCell[1] === singleDirectionCells[3][1]), 1);
+            blackCells.value.push(singleDirectionCells[0], singleDirectionCells[1], singleDirectionCells[2], singleDirectionCells[3]);
+        }
+        if (whiteJudges[0] && whiteJudges[1] && whiteJudges[2] && whiteJudges[3] && whiteJudges[4] && blackJudges[5]) {
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[0][0] && whiteCell[1] === singleDirectionCells[0][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[1][0] && whiteCell[1] === singleDirectionCells[1][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[2][0] && whiteCell[1] === singleDirectionCells[2][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[3][0] && whiteCell[1] === singleDirectionCells[3][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[4][0] && whiteCell[1] === singleDirectionCells[4][1]), 1);
+            blackCells.value.push(singleDirectionCells[0], singleDirectionCells[1], singleDirectionCells[2], singleDirectionCells[3], singleDirectionCells[4]);
+        }
+        if (whiteJudges[0] && whiteJudges[1] && whiteJudges[2] && whiteJudges[3] && whiteJudges[4] && whiteJudges[5] && blackJudges[6]) {
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[0][0] && whiteCell[1] === singleDirectionCells[0][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[1][0] && whiteCell[1] === singleDirectionCells[1][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[2][0] && whiteCell[1] === singleDirectionCells[2][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[3][0] && whiteCell[1] === singleDirectionCells[3][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[4][0] && whiteCell[1] === singleDirectionCells[4][1]), 1);
+            whiteCells.value.splice(whiteCells.value.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[5][0] && whiteCell[1] === singleDirectionCells[5][1]), 1);
+            blackCells.value.push(singleDirectionCells[0], singleDirectionCells[1], singleDirectionCells[2], singleDirectionCells[3], singleDirectionCells[4], singleDirectionCells[5]);
+        }
+    } else {
+        if (blackJudges[0] && whiteJudges[1]) {
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[0][0] && blackCell[1] === singleDirectionCells[0][1]), 1);
+            whiteCells.value.push(singleDirectionCells[0]);
+        }
+        if (blackJudges[0] && blackJudges[1] && whiteJudges[2]) {
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[0][0] && blackCell[1] === singleDirectionCells[0][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[1][0] && blackCell[1] === singleDirectionCells[1][1]), 1);
+            whiteCells.value.push(singleDirectionCells[0], singleDirectionCells[1]);
+        }
+        if (blackJudges[0] && blackJudges[1] && blackJudges[2] && whiteJudges[3]) {
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[0][0] && blackCell[1] === singleDirectionCells[0][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[1][0] && blackCell[1] === singleDirectionCells[1][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[2][0] && blackCell[1] === singleDirectionCells[2][1]), 1);
+            whiteCells.value.push(singleDirectionCells[0], singleDirectionCells[1], singleDirectionCells[2]);
+        }
+        if (blackJudges[0] && blackJudges[1] && blackJudges[2] && blackJudges[3] && whiteJudges[4]) {
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[0][0] && blackCell[1] === singleDirectionCells[0][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[1][0] && blackCell[1] === singleDirectionCells[1][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[2][0] && blackCell[1] === singleDirectionCells[2][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[3][0] && blackCell[1] === singleDirectionCells[3][1]), 1);
+            whiteCells.value.push(singleDirectionCells[0], singleDirectionCells[1], singleDirectionCells[2], singleDirectionCells[3]);
+        }
+        if (blackJudges[0] && blackJudges[1] && blackJudges[2] && blackJudges[3] && blackJudges[4] && whiteJudges[5]) {
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[0][0] && blackCell[1] === singleDirectionCells[0][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[1][0] && blackCell[1] === singleDirectionCells[1][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[2][0] && blackCell[1] === singleDirectionCells[2][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[3][0] && blackCell[1] === singleDirectionCells[3][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[4][0] && blackCell[1] === singleDirectionCells[4][1]), 1);
+            whiteCells.value.push(singleDirectionCells[0], singleDirectionCells[1], singleDirectionCells[2], singleDirectionCells[3], singleDirectionCells[4]);
+        }
+        if (blackJudges[0] && blackJudges[1] && blackJudges[2] && blackJudges[3] && blackJudges[4] && blackJudges[5] && whiteJudges[6]) {
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[0][0] && blackCell[1] === singleDirectionCells[0][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[1][0] && blackCell[1] === singleDirectionCells[1][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[2][0] && blackCell[1] === singleDirectionCells[2][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[3][0] && blackCell[1] === singleDirectionCells[3][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[4][0] && blackCell[1] === singleDirectionCells[4][1]), 1);
+            blackCells.value.splice(blackCells.value.findIndex(blackCell => blackCell[0] === singleDirectionCells[5][0] && blackCell[1] === singleDirectionCells[5][1]), 1);
+            whiteCells.value.push(singleDirectionCells[0], singleDirectionCells[1], singleDirectionCells[2], singleDirectionCells[3], singleDirectionCells[4], singleDirectionCells[5]);
+        }
     }
 }
+
 </script>
 
 <template>
     <div class="text-center my-4">
         <span class="text-2xl font-bold">Turn: {{ turn }}</span>
     </div>
-    <div class="grid grid-cols-8 w-96 h-96 border border-black bg-green-600 mx-auto">
+    <div class="grid grid-cols-8 w-80 aspect-square border border-black bg-green-600 mx-auto">
         <template v-for="row in 8">
             <template v-for="column in 8">
                 <div :id="[row, column]" class="aspect-square border border-gray-500 flex justify-center items-center"
@@ -186,7 +234,7 @@ function reverse(selectedCell) {
             済: {{ usedCells }}
         </div>
     </div>
-        
-        
+
+
 
 </template>
