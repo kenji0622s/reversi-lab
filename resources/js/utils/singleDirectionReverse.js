@@ -1,4 +1,4 @@
-function directionReverse(singleDirectionCells, blackCells, whiteCells, turn, players) {
+function singleDirectionReverse(singleDirectionCells, blackCells, whiteCells, turn, players) {
     const blackJudges = [];
     for (let i = 0; i < singleDirectionCells.length; i++) {
         blackJudges.push(blackCells.some(blackCell => blackCell[0] === singleDirectionCells[i][0] && blackCell[1] === singleDirectionCells[i][1]));
@@ -91,4 +91,4 @@ function directionReverse(singleDirectionCells, blackCells, whiteCells, turn, pl
     }
 }
 
-export default directionReverse;
+export default singleDirectionReverse;
