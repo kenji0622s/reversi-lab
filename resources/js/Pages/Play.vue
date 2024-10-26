@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
@@ -46,6 +47,9 @@ const selectCell = (cell) => {
 </script>
 
 <template>
+
+    <Head title="Play" />
+
     <div class="text-center my-4">
         <span class="text-2xl font-bold">Turn: {{ turn }}</span>
     </div>
