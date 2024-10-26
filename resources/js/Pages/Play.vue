@@ -118,11 +118,4 @@ const selectCell = (cell) => {
         <button @click="resetGame" onclick="window.location.reload()"
             class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">ResetGame</button>
     </div>
-
-    <div>
-        isGameEnd: {{ isGameEnd }}
-        gameEndMessage: {{ gameEndMessage }}
-        blackAvailableCells: {{ blackAvailableCells }}
-        whiteAvailableCells: {{ whiteAvailableCells }}
-    </div>
 </template>
