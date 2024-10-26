@@ -144,7 +144,7 @@ function checkSingleDirectionCells(singleDirectionCells) {
     <div class="grid grid-cols-8 w-80 aspect-square border border-black mx-auto bg-emerald-500">
         <template v-for="row in 8">
             <template v-for="column in 8">
-                <div :id="[row, column]" class="aspect-square border border-gray-500 relative"
+                <div :id="[row, column]" class="w-full h-full border border-gray-500 relative"
                     @click="selectCell([row, column])">
                     <span v-if="whiteCells.some(cell => cell[0] === row && cell[1] === column)"
                         class="w-4/5 h-4/5 rounded-full bg-neutral-50 text-[10px] text-black flex justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
