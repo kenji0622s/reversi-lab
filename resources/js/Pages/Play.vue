@@ -17,19 +17,6 @@ const selectedCell = ref(null);
 const isGameEnd = ref(false);
 const gameEndMessage = ref('');
 const selectCell = (cell) => {
-    if (blackAvailableCells.value.length === 0 && whiteAvailableCells.value.length === 0 && usedCells.value.length > 4) {
-        const blackCellsLength = blackCells.value.length;
-        const whiteCellsLength = whiteCells.value.length;
-        if (blackCellsLength > whiteCellsLength) {
-            gameEndMessage.value = '黒の勝利';
-        } else if (blackCellsLength < whiteCellsLength) {
-            gameEndMessage.value = '白の勝利';
-        } else {
-            gameEndMessage.value = '引き分け';
-        }
-        isGameEnd.value = true;
-        return;
-    }
     selectedCell.value = cell;
     if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
         if (turn.value === players[0]) {
@@ -63,6 +50,18 @@ const selectCell = (cell) => {
                 }
             }
         }
+    }
+    if (blackAvailableCells.value.length === 0 && whiteAvailableCells.value.length === 0 && usedCells.value.length > 4) {
+        const blackCellsLength = blackCells.value.length;
+        const whiteCellsLength = whiteCells.value.length;
+        if (blackCellsLength > whiteCellsLength) {
+            gameEndMessage.value = '黒の勝利';
+        } else if (blackCellsLength < whiteCellsLength) {
+            gameEndMessage.value = '白の勝利';
+        } else {
+            gameEndMessage.value = '引き分け';
+        }
+        isGameEnd.value = true;
     }
 }
 </script>
@@ -118,5 +117,12 @@ const selectCell = (cell) => {
     <div class="flex justify-center items-center mt-6">
         <button @click="resetGame" onclick="window.location.reload()"
             class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">ResetGame</button>
+    </div>
+
+    <div>
+        isGameEnd: {{ isGameEnd }}
+        gameEndMessage: {{ gameEndMessage }}
+        blackAvailableCells: {{ blackAvailableCells }}
+        whiteAvailableCells: {{ whiteAvailableCells }}
     </div>
 </template>
