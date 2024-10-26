@@ -96,7 +96,7 @@ function startGame() {
     <Head title="Watch Mode" />
 
     <div class="relative">
-        <h2 class="text-center text-2xl font-bold bg-neutral-200 py-4 border-b-2 border-emerald-500">Watch Mode</h2>
+        <h2 class="text-center text-2xl font-bold bg-neutral-200 py-2 border-b-2 border-emerald-500">Watch Mode</h2>
         <a href="/" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Play Mode</a>
     </div>
 
@@ -122,13 +122,13 @@ function startGame() {
                         <!-- {{ row }},{{ column }} -->
                     </span>
                     <span
-                        v-else-if="whiteAvailableCells.some(whiteAvailableCell => whiteAvailableCell[0] === row && whiteAvailableCell[1] === column)"
-                        :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', 'absolute', 'top-1/2', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', turn === 'white' ? 'bg-amber-200 opacity-70' : '']">
+                        v-else-if="whiteAvailableCells.some(whiteAvailableCell => whiteAvailableCell[0] === row && whiteAvailableCell[1] === column) && turn === 'white'"
+                        :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', 'absolute', 'top-1/2', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', 'bg-amber-200', 'opacity-70']">
                         <!-- {{ row }},{{ column }} -->
                     </span>
                     <span
-                        v-else-if="blackAvailableCells.some(blackAvailableCell => blackAvailableCell[0] === row && blackAvailableCell[1] === column)"
-                        :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', 'absolute', 'top-1/2', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', turn === 'black' ? 'bg-amber-200 opacity-70' : '']">
+                        v-else-if="blackAvailableCells.some(blackAvailableCell => blackAvailableCell[0] === row && blackAvailableCell[1] === column) && turn === 'black'"
+                        :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', 'absolute', 'top-1/2', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', 'bg-amber-200', 'opacity-70']">
                         <!-- {{ row }},{{ column }} -->
                     </span>
                     <span v-else class="w-full h-full text-[10px] text-black flex justify-center items-center">
@@ -139,10 +139,8 @@ function startGame() {
         </template>
     </div>
     <div class="flex justify-center items-center gap-4 mt-6">
-        <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md">Start
-            Game</button>
+        <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md">Start Game</button>
         <button @click="resetGame" onclick="window.location.reload()"
-            class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">Reset
-            Game</button>
+            class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">Reset Game</button>
     </div>
 </template>

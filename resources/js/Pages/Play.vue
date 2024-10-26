@@ -72,7 +72,7 @@ const selectCell = (cell) => {
     <Head title="Play Mode" />
 
     <div class="relative">
-        <h2 class="text-center text-2xl font-bold bg-neutral-200 py-4 border-b-2 border-emerald-500">Play Mode</h2>
+        <h2 class="text-center text-2xl font-bold bg-neutral-200 py-2 border-b-2 border-emerald-500">Play Mode</h2>
         <a href="/watch" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Watch Mode</a>
     </div>
 
@@ -99,12 +99,12 @@ const selectCell = (cell) => {
                         <!-- {{ row }},{{ column }} -->
                     </span>
                     <span
-                        v-else-if="whiteAvailableCells.some(whiteAvailableCell => whiteAvailableCell[0] === row && whiteAvailableCell[1] === column)"
+                        v-else-if="whiteAvailableCells.some(whiteAvailableCell => whiteAvailableCell[0] === row && whiteAvailableCell[1] === column) && turn === 'white'"
                         :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', 'absolute', 'top-1/2', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', turn === 'white' ? 'bg-amber-200 opacity-70' : '']">
                         <!-- {{ row }},{{ column }} -->
                     </span>
                     <span
-                        v-else-if="blackAvailableCells.some(blackAvailableCell => blackAvailableCell[0] === row && blackAvailableCell[1] === column)"
+                        v-else-if="blackAvailableCells.some(blackAvailableCell => blackAvailableCell[0] === row && blackAvailableCell[1] === column) && turn === 'black'"
                         :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', 'absolute', 'top-1/2', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', turn === 'black' ? 'bg-amber-200 opacity-70' : '']">
                         <!-- {{ row }},{{ column }} -->
                     </span>
@@ -117,7 +117,11 @@ const selectCell = (cell) => {
     </div>
     <div class="flex justify-center items-center mt-6">
         <button @click="resetGame" onclick="window.location.reload()"
-            class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">Reset
-            Game</button>
+            class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">ResetGame</button>
+    </div>
+
+    <div>
+        blackAvailableCells: {{ blackAvailableCells }}
+        whiteAvailableCells: {{ whiteAvailableCells }}
     </div>
 </template>
