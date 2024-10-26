@@ -146,40 +146,27 @@ function checkSingleDirectionCells(singleDirectionCells) {
             <template v-for="column in 8">
                 <div :id="[row, column]" class="aspect-square border border-gray-500 flex justify-center items-center"
                     @click="selectCell([row, column])">
-                    <div v-if="whiteCells.some(cell => cell[0] === row && cell[1] === column)"
-                        class="w-4/5 h-4/5 rounded-full bg-neutral-50 relative">
-                        <span
-                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-black">
-                            {{ row }},{{ column }}
-                        </span>
-                    </div>
-                    <div v-else-if="blackCells.some(cell => cell[0] === row && cell[1] === column)"
-                        class="w-4/5 h-4/5 rounded-full bg-neutral-950 relative">
-                        <span
-                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-white">
-                            {{ row }},{{ column }}
-                        </span>
-                    </div>
-                    <div v-else-if="whiteAvailableCells.some(whiteAvailableCell => whiteAvailableCell[0] === row && whiteAvailableCell[1] === column)"
-                        :class="['w-4/5', 'h-4/5', 'relative', turn === 'white' ? 'bg-amber-200 opacity-70' : '']">
-                        <span
-                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-black">
-                            {{ row }},{{ column }}
-                        </span>
-                    </div>
-                    <div v-else-if="blackAvailableCells.some(blackAvailableCell => blackAvailableCell[0] === row && blackAvailableCell[1] === column)"
-                        :class="['w-4/5', 'h-4/5', 'relative', turn === 'black' ? 'bg-amber-200 opacity-70' : '']">
-                        <span
-                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-black">
-                            {{ row }},{{ column }}
-                        </span>
-                    </div>
-                    <div v-else class="relative w-full h-full">
-                        <span
-                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-black">
-                            {{ row }},{{ column }}
-                        </span>
-                    </div>
+                    <span v-if="whiteCells.some(cell => cell[0] === row && cell[1] === column)"
+                        class="w-4/5 h-4/5 rounded-full bg-neutral-50 text-[10px] text-black flex justify-center items-center">
+                        {{ row }},{{ column }}
+                    </span>
+                    <span v-else-if="blackCells.some(cell => cell[0] === row && cell[1] === column)"
+                        class="w-4/5 h-4/5 rounded-full bg-neutral-950 text-[10px] text-white flex justify-center items-center">
+                        {{ row }},{{ column }}
+                    </span>
+                    <span
+                        v-else-if="whiteAvailableCells.some(whiteAvailableCell => whiteAvailableCell[0] === row && whiteAvailableCell[1] === column)"
+                        :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', turn === 'white' ? 'bg-amber-200 opacity-70' : '']">
+                        {{ row }},{{ column }}
+                    </span>
+                    <span
+                        v-else-if="blackAvailableCells.some(blackAvailableCell => blackAvailableCell[0] === row && blackAvailableCell[1] === column)"
+                        :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', turn === 'black' ? 'bg-amber-200 opacity-70' : '']">
+                        {{ row }},{{ column }}
+                    </span>
+                    <span v-else class="w-full h-full text-[10px] text-black flex justify-center items-center">
+                        {{ row }},{{ column }}
+                    </span>
                 </div>
             </template>
         </template>
