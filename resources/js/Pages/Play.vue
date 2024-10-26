@@ -147,28 +147,28 @@ function checkSingleDirectionCells(singleDirectionCells) {
                 <div :id="[row, column]" class="aspect-square border border-gray-500 flex justify-center items-center"
                     @click="selectCell([row, column])">
                     <div v-if="whiteCells.some(cell => cell[0] === row && cell[1] === column)"
-                        class="w-4/5 aspect-square rounded-full bg-neutral-50 relative">
+                        class="w-full aspect-square rounded-full bg-neutral-50 relative">
                         <span
                             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-black">
                             {{ row }},{{ column }}
                         </span>
                     </div>
                     <div v-else-if="blackCells.some(cell => cell[0] === row && cell[1] === column)"
-                        class="w-4/5 aspect-square rounded-full bg-neutral-950 relative">
+                        class="w-full aspect-square rounded-full bg-neutral-950 relative">
                         <span
                             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-white">
                             {{ row }},{{ column }}
                         </span>
                     </div>
                     <div v-else-if="whiteAvailableCells.some(whiteAvailableCell => whiteAvailableCell[0] === row && whiteAvailableCell[1] === column)"
-                        :class="['w-4/5', 'aspect-square', 'relative', turn === 'white' ? 'bg-amber-200 opacity-70' : '']">
+                        :class="['w-full', 'aspect-square', 'relative', turn === 'white' ? 'bg-amber-200 opacity-70' : '']">
                         <span
                             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-black">
                             {{ row }},{{ column }}
                         </span>
                     </div>
                     <div v-else-if="blackAvailableCells.some(blackAvailableCell => blackAvailableCell[0] === row && blackAvailableCell[1] === column)"
-                        :class="['w-4/5', 'aspect-square', 'relative', turn === 'black' ? 'bg-amber-200 opacity-70' : '']">
+                        :class="['w-full', 'aspect-square', 'relative', turn === 'black' ? 'bg-amber-200 opacity-70' : '']">
                         <span
                             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-black">
                             {{ row }},{{ column }}
