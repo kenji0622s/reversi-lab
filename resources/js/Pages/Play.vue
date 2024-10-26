@@ -141,6 +141,7 @@ function checkSingleDirectionCells(singleDirectionCells) {
     <div class="text-center my-4">
         <span class="text-2xl font-bold">Turn: {{ turn }}</span>
     </div>
+    <span>1</span>
     <div class="grid grid-cols-8 w-80 aspect-square border border-black mx-auto bg-emerald-500">
         <template v-for="row in 8">
             <template v-for="column in 8">
