@@ -161,14 +161,14 @@ function checkSingleDirectionCells(singleDirectionCells) {
                         </span>
                     </div>
                     <div v-else-if="whiteAvailableCells.some(whiteAvailableCell => whiteAvailableCell[0] === row && whiteAvailableCell[1] === column)"
-                        :class="['w-full', 'aspect-square', 'relative', turn === 'white' ? 'bg-amber-200 opacity-70' : '']">
+                        :class="['w-4/5', 'aspect-square', 'relative', turn === 'white' ? 'bg-amber-200 opacity-70' : '']">
                         <span
                             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-black">
                             {{ row }},{{ column }}
                         </span>
                     </div>
                     <div v-else-if="blackAvailableCells.some(blackAvailableCell => blackAvailableCell[0] === row && blackAvailableCell[1] === column)"
-                        :class="['w-full', 'aspect-square', 'relative', turn === 'black' ? 'bg-amber-200 opacity-70' : '']">
+                        :class="['w-4/5', 'aspect-square', 'relative', turn === 'black' ? 'bg-amber-200 opacity-70' : '']">
                         <span
                             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] text-black">
                             {{ row }},{{ column }}
