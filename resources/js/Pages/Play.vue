@@ -76,16 +76,16 @@ const selectCell = (cell) => {
         <a href="/watch" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Watch Mode</a>
     </div>
 
-    <div class="text-center mt-8">
+    <div class="text-center mt-4 mb-2">
         <span v-if="isGameEnd" class="text-2xl font-bold">{{ gameEndMessage }}</span>
         <span v-else class="text-2xl font-bold">{{ turn === players[0] ? '黒の番' : '白の番' }}</span>
     </div>
 
-    <div class="text-center my-4">
+    <div class="text-center mb-4">
         黒: {{ blackCells.length }} | 白: {{ whiteCells.length }}
     </div>
 
-    <div class="grid grid-cols-8 w-80 aspect-square border border-black mx-auto bg-emerald-500">
+    <div class="grid grid-cols-8 w-80 aspect-square border border-black bg-emerald-500 mx-auto">
         <template v-for="row in 8">
             <template v-for="column in 8">
                 <div :id="[row, column]" class="w-full h-full border border-gray-500 relative"
@@ -115,7 +115,7 @@ const selectCell = (cell) => {
             </template>
         </template>
     </div>
-    <div class="flex justify-center items-center mt-8">
+    <div class="flex justify-center items-center mt-6">
         <button @click="resetGame" onclick="window.location.reload()"
             class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">Reset
             Game</button>

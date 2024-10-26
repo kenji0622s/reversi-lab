@@ -100,12 +100,12 @@ function startGame() {
         <a href="/" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Play Mode</a>
     </div>
 
-    <div class="text-center mt-8">
+    <div class="text-center mt-4 mb-2">
         <span v-if="isGameEnd" class="text-2xl font-bold">{{ gameEndMessage }}</span>
         <span v-else class="text-2xl font-bold">{{ turn === players[0] ? '黒の番' : '白の番' }}</span>
     </div>
 
-    <div class="text-center my-4">
+    <div class="text-center mb-4">
         黒: {{ blackCells.length }} | 白: {{ whiteCells.length }}
     </div>
 
@@ -138,7 +138,7 @@ function startGame() {
             </template>
         </template>
     </div>
-    <div class="flex justify-center items-center gap-4 mt-8">
+    <div class="flex justify-center items-center gap-4 mt-6">
         <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md">Start
             Game</button>
         <button @click="resetGame" onclick="window.location.reload()"
