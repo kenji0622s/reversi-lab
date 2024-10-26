@@ -5,6 +5,22 @@ import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
 
+setInterval(() => {
+    if (turn.value === players[0]) {
+        console.log('black');
+        const blackAvailableCellLength = blackAvailableCells.value.length;
+        const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
+        console.log(randomIndex);
+        selectCell(blackAvailableCells.value[0]);
+    } else {
+        console.log('white');
+        const whiteAvailableCellLength = whiteAvailableCells.value.length;
+        const randomIndex = Math.floor(Math.random() * whiteAvailableCellLength);
+        console.log(randomIndex);
+        selectCell(whiteAvailableCells.value[randomIndex]);
+    }
+}, 2000);
+
 const players = ['black', 'white'];
 const turn = ref(players[0]);
 const blackCells = ref([[4, 5], [5, 4]]);
@@ -48,11 +64,11 @@ const selectCell = (cell) => {
 
 <template>
 
-    <Head title="Play Mode" />
+    <Head title="Watch Mode" />
 
     <div class="relative">
-        <h2 class="text-center text-2xl font-bold bg-neutral-200 py-4 border-b-2 border-emerald-500">Play Mode</h2>
-        <a href="/watch" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Watch Mode</a>
+        <h2 class="text-center text-2xl font-bold bg-neutral-200 py-4 border-b-2 border-emerald-500">Watch Mode</h2>
+        <a href="/" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Play Mode</a>
     </div>
 
     <div class="text-center my-4">
@@ -61,8 +77,7 @@ const selectCell = (cell) => {
     <div class="grid grid-cols-8 w-80 aspect-square border border-black mx-auto bg-emerald-500">
         <template v-for="row in 8">
             <template v-for="column in 8">
-                <div :id="[row, column]" class="w-full h-full border border-gray-500 relative"
-                    @click="selectCell([row, column])">
+                <div :id="[row, column]" class="w-full h-full border border-gray-500 relative">
                     <span v-if="whiteCells.some(cell => cell[0] === row && cell[1] === column)"
                         class="w-4/5 h-4/5 rounded-full bg-neutral-50 text-[10px] text-black flex justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                         <!-- {{ row }},{{ column }} -->
