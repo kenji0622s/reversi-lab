@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
+import { whiteStrategyModel1, blackStrategyModel1 } from '../strategies/model1';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells, checkSingleDirectionCells } from '../utils/updateAvailableCells';
 
 const players = ['black', 'white'];
@@ -46,13 +47,11 @@ const selectCell = (cell) => {
                 setTimeout(() => {
                     if (whiteAvailableCells.value.length > 0) {
                         turn.value = players[1];
-                        const whiteAvailableCellLength = whiteAvailableCells.value.length;
-                        const randomIndex = Math.floor(Math.random() * whiteAvailableCellLength);
-                        selectCell(whiteAvailableCells.value[randomIndex]);
+                        const decisionCell = whiteStrategyModel1(whiteAvailableCells);
+                        selectCell(decisionCell);
                     } else {
-                        const blackAvailableCellLength = blackAvailableCells.value.length;
-                        const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
-                        selectCell(blackAvailableCells.value[randomIndex]);
+                        const decisionCell = blackStrategyModel1(blackAvailableCells);
+                        selectCell(decisionCell);
                     }
                 }, 50);
             }
@@ -70,13 +69,11 @@ const selectCell = (cell) => {
                 setTimeout(() => {
                     if (blackAvailableCells.value.length > 0) {
                         turn.value = players[0];
-                        const blackAvailableCellLength = blackAvailableCells.value.length;
-                        const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
-                        selectCell(blackAvailableCells.value[randomIndex]);
+                        const decisionCell = blackStrategyModel1(blackAvailableCells);
+                        selectCell(decisionCell);
                     } else {
-                        const whiteAvailableCellLength = whiteAvailableCells.value.length;
-                        const randomIndex = Math.floor(Math.random() * whiteAvailableCellLength);
-                        selectCell(whiteAvailableCells.value[randomIndex]);
+                        const decisionCell = whiteStrategyModel1(whiteAvailableCells);
+                        selectCell(decisionCell);
                     }
                 }, 50);
             }
