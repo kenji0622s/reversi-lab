@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRecordRequest;
 use App\Http\Requests\UpdateUserRecordRequest;
 use App\Models\UserRecord;
 use Inertia\Inertia;
+
 class UserRecordController extends Controller
 {
     /**
@@ -15,7 +16,11 @@ class UserRecordController extends Controller
      */
     public function index()
     {
-        $userRecords = UserRecord::where('user_id', auth()->user()->id)->with('brain')->get();
+        if (auth()->user()) {
+            $userRecords = UserRecord::where('user_id', auth()->user()->id)->with('brain')->get()->groupBy('brain_id');
+        } else {
+            $userRecords = UserRecord::where('user_id', 0)->with('brain')->get()->groupBy('brain_id');
+        }
         // dd($userRecords);
         return Inertia::render('UserRecords/Index', [
             'userRecords' => $userRecords,
@@ -40,7 +45,16 @@ class UserRecordController extends Controller
      */
     public function store(StoreUserRecordRequest $request)
     {
-        //
+        try {
+            UserRecord::create([
+                'user_id' => $request->user_id,
+                'brain_id' => $request->brain_id,
+                'result' => $request->result,
+            ]);
+            return to_route('challenge');
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**

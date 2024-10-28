@@ -39,8 +39,6 @@ Route::get('/play', function () {
     return Inertia::render('Play');
 })->name('play');
 
-
-
 // Route::get('/watch', [WatchController::class, 'index'])->name('watch');
 Route::get('/challenge', [ChallengeController::class, 'index'])->name('challenge');
 

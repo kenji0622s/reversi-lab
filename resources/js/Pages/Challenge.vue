@@ -1,12 +1,21 @@
 <script setup>
 import BasicLayout from '@/Layouts/BasicLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
 
 import { brains, strategies } from '../strategies/brains';
+
+const props = defineProps({
+    user: Object,
+});
+
+const user = props.user;
+if (user) {
+    console.log(user.id);
+}
 
 const turns = ['black', 'white'];
 
@@ -26,6 +35,7 @@ const whiteAvailableCells = ref([]);
 const selectedCell = ref(null);
 const isGameEnd = ref(false);
 const gameEndMessage = ref('');
+let result;
 const selectCell = (cell) => {
     selectedCell.value = cell;
     if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
@@ -78,12 +88,28 @@ const selectCell = (cell) => {
         const whiteCellsLength = whiteCells.value.length;
         if (blackCellsLength > whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength < whiteCellsLength && yourTurn.value === turns[1]) {
             gameEndMessage.value = 'あなたの勝利';
+            result = 'win';
         } else if (blackCellsLength < whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength > whiteCellsLength && yourTurn.value === turns[1]) {
             gameEndMessage.value = 'Brainの勝利';
+            result = 'lose';
         } else {
             gameEndMessage.value = '引き分け';
+            result = 'draw';
         }
         isGameEnd.value = true;
+        if (user) {
+            router.post('/user-records', {
+                user_id: user.id,
+                brain_id: brains.indexOf(brain.value) + 1,
+                result: result,
+            });
+        } else {
+            router.post('/user-records', {
+                user_id: 0,
+                brain_id: brains.indexOf(brain.value) + 1,
+                result: result,
+            });
+        }
     }
 }
 
@@ -106,14 +132,19 @@ const readyGame = () => {
         <template #title>
             Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ brain }}</span>
         </template>
+
+
+
         <!-- <div class="relative">
-            <h2 class="text-center text-2xl font-bold bg-neutral-200 py-2 border-b-2 border-emerald-500">Play Mode</h2>
+                <h2 class="text-center text-2xl font-bold bg-neutral-200 py-2 border-b-2 border-emerald-500">Play Mode</h2>
             <a href="/watch" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Watch Mode</a>
         </div> -->
 
         <div class="text-center mt-4">
             <span v-if="isGameEnd" class="text-xl font-bold">{{ gameEndMessage }}</span>
-            <span v-else class="text-xl font-bold">{{ (turn === turns[0] && yourTurn === turns[0]) || (turn === turns[1] && yourTurn === turns[1]) ? 'あなたの番' : 'Brainの番' }}</span>
+            <span v-else class="text-xl font-bold">{{ (turn === turns[0] && yourTurn === turns[0]) || (turn === turns[1]
+                &&
+                yourTurn === turns[1]) ? 'あなたの番' : 'Brainの番' }}</span>
         </div>
 
         <div class="text-center mb-4">
