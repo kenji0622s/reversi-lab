@@ -6,8 +6,17 @@ import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
 
-const players = ['black', 'white'];
-const turn = ref(players[0]);
+import { brains, strategies } from '../brains';
+
+const turns = ['black', 'white'];
+
+const brain = ref(brains[0]);
+const yourTurn = ref(turns[0]);
+const brainTurn = ref(turns[0]);
+const turn = ref(turns[0]);
+
+const isReady = ref(false);
+
 const blackCells = ref([[4, 5], [5, 4]]);
 const whiteCells = ref([[4, 4], [5, 5]]);
 const usedCells = ref([[4, 4], [5, 5], [4, 5], [5, 4]]);
@@ -20,19 +29,25 @@ const gameEndMessage = ref('');
 const selectCell = (cell) => {
     selectedCell.value = cell;
     if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
-        if (turn.value === players[0]) {
+        if (turn.value === turns[0]) {
             if (blackAvailableCells.value.some(blackAvailableCell => blackAvailableCell[0] === selectedCell.value[0] && blackAvailableCell[1] === selectedCell.value[1])) {
                 blackCells.value.push(selectedCell.value);
                 usedCells.value.push(selectedCell.value);
                 const allDirectionCells = getAllDirectionCells(selectedCell.value);
                 for (let i = 0; i < allDirectionCells.length; i++) {
-                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, players);
+                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
                 }
                 updateAvailableCells(availableCells, usedCells);
                 updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells);
                 updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells);
                 if (whiteAvailableCells.value.length > 0) {
-                    turn.value = players[1];
+                    turn.value = turns[1];
+                }
+                if (brainTurn.value === turns[1] && turn.value === turns[1]) {
+                    setTimeout(() => {
+                        const answerCell = strategies[brains.indexOf(brain.value)]({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        selectCell(answerCell);
+                    }, 500);
                 }
             }
         } else {
@@ -41,13 +56,19 @@ const selectCell = (cell) => {
                 usedCells.value.push(selectedCell.value);
                 const allDirectionCells = getAllDirectionCells(selectedCell.value);
                 for (let i = 0; i < allDirectionCells.length; i++) {
-                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, players);
+                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
                 }
                 updateAvailableCells(availableCells, usedCells);
                 updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells);
                 updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells);
                 if (blackAvailableCells.value.length > 0) {
-                    turn.value = players[0];
+                    turn.value = turns[0];
+                }
+                if (brainTurn.value === turns[0] && turn.value === turns[0]) {
+                    setTimeout(() => {
+                        const answerCell = strategies[brains.indexOf(brain.value)]({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        selectCell(answerCell);
+                    }, 500);
                 }
             }
         }
@@ -55,26 +76,35 @@ const selectCell = (cell) => {
     if (blackAvailableCells.value.length === 0 && whiteAvailableCells.value.length === 0 && usedCells.value.length > 4) {
         const blackCellsLength = blackCells.value.length;
         const whiteCellsLength = whiteCells.value.length;
-        if (blackCellsLength > whiteCellsLength) {
-            gameEndMessage.value = '黒の勝利';
-        } else if (blackCellsLength < whiteCellsLength) {
-            gameEndMessage.value = '白の勝利';
+        if (blackCellsLength > whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength < whiteCellsLength && yourTurn.value === turns[1]) {
+            gameEndMessage.value = 'あなたの勝利';
+        } else if (blackCellsLength < whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength > whiteCellsLength && yourTurn.value === turns[1]) {
+            gameEndMessage.value = 'Brainの勝利';
         } else {
             gameEndMessage.value = '引き分け';
         }
         isGameEnd.value = true;
     }
 }
+
+const readyGame = () => {
+    brainTurn.value = yourTurn.value === turns[0] ? turns[1] : turns[0];
+    isReady.value = true;
+    if (brainTurn.value === turns[0]) {
+        const blackAvailableCellLength = blackAvailableCells.value.length;
+        const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
+        selectCell(blackAvailableCells.value[randomIndex]);
+    }
+}
 </script>
 
 <template>
 
-    <Head title="Play" />
-
+    <Head title="Challenge" />
 
     <BasicLayout>
         <template #title>
-            Play Mode
+            Challenge
         </template>
         <!-- <div class="relative">
             <h2 class="text-center text-2xl font-bold bg-neutral-200 py-2 border-b-2 border-emerald-500">Play Mode</h2>
@@ -83,7 +113,7 @@ const selectCell = (cell) => {
 
         <div class="text-center mt-4">
             <span v-if="isGameEnd" class="text-xl font-bold">{{ gameEndMessage }}</span>
-            <span v-else class="text-xl font-bold">{{ turn === players[0] ? '黒の番' : '白の番' }}</span>
+            <span v-else class="text-xl font-bold">{{ (turn === turns[0] && yourTurn === turns[0]) || (turn === turns[1] && yourTurn === turns[1]) ? 'あなたの番' : 'Brainの番' }}</span>
         </div>
 
         <div class="text-center mb-4">
@@ -94,7 +124,7 @@ const selectCell = (cell) => {
             <template v-for="row in 8">
                 <template v-for="column in 8">
                     <div :id="[row, column]" class="w-full h-full border border-gray-500 relative"
-                        @click="selectCell([row, column])">
+                        @click="(!isGameEnd && ((turn === yourTurn) || (brainTurn === turn))) && selectCell([row, column])">
                         <span v-if="whiteCells.some(cell => cell[0] === row && cell[1] === column)"
                             class="w-4/5 h-4/5 rounded-full bg-neutral-50 text-[10px] text-black flex justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                             <!-- {{ row }},{{ column }} -->
@@ -125,5 +155,29 @@ const selectCell = (cell) => {
             <button @click="resetGame" onclick="window.location.reload()"
                 class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">ResetGame</button>
         </div>
+
+        <div v-if="!isReady" class="w-full h-screen bg-neutral-300/90 absolute top-0 left-0">
+            <div class="mt-24 p-8 w-4/5 mx-auto bg-white rounded-md">
+                <div class="mb-4">
+                    <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">挑戦するBrain</label>
+                    <select v-model="brain"
+                        class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
+                        <option v-for="brain in brains" :value="brain">{{ brain }}</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="yourTurn" class="block text-sm font-medium leading-6 text-gray-900">あなたの番</label>
+                    <select v-model="yourTurn"
+                        class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
+                        <option v-for="turn in turns" :value="turn">{{ turn === 'black' ? '黒' : '白' }}</option>
+                    </select>
+                </div>
+
+                <button @click="readyGame"
+                    class="bg-emerald-500 text-white text-lg font-bold block mx-auto px-4 py-2 rounded-md">Game
+                    Start</button>
+            </div>
+        </div>
+
     </BasicLayout>
 </template>

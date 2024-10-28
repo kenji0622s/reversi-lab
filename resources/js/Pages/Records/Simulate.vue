@@ -7,15 +7,14 @@ import singleDirectionReverse from '@/utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '@/utils/updateAvailableCells';
 import Board from '@/Components/Board.vue';
 
-import { askBrain1 } from '@/strategies/brain1';
-import { askBrain2 } from '@/strategies/brain2';
+import { brains, strategies } from '@/brains';
 
 defineProps({
     debug: Boolean,
 });
 
-const players = ['black', 'white'];
-const turn = ref(players[0]);
+const turns = ['black', 'white'];
+const turn = ref(turns[0]);
 const blackCells = ref([[4, 5], [5, 4]]);
 const whiteCells = ref([[4, 4], [5, 5]]);
 const usedCells = ref([[4, 4], [5, 5], [4, 5], [5, 4]]);
@@ -23,6 +22,7 @@ const availableCells = ref([]);
 const blackAvailableCells = ref([[3, 4], [4, 3], [5, 6], [6, 5]]);
 const whiteAvailableCells = ref([]);
 const selectedCell = ref(null);
+const isGameStart = ref(false);
 const isGameEnd = ref(false);
 const gameEndMessage = ref('');
 const countBlackWins = ref(0);
@@ -31,9 +31,6 @@ const countDraws = ref(0);
 const countGames = ref(0);
 const MAX_GAMES = 100;
 const INTERVAL = 1;
-
-const brains = ['Brain1', 'Brain2'];
-const strategies = [askBrain1, askBrain2];
 
 const blackPlayer = ref(brains[0]);
 const whitePlayer = ref(brains[0]);
@@ -62,20 +59,20 @@ const selectCell = (cell) => {
     }
     selectedCell.value = cell;
     if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
-        if (turn.value === players[0]) {
+        if (turn.value === turns[0]) {
             if (blackAvailableCells.value.some(blackAvailableCell => blackAvailableCell[0] === selectedCell.value[0] && blackAvailableCell[1] === selectedCell.value[1])) {
                 blackCells.value.push(selectedCell.value);
                 usedCells.value.push(selectedCell.value);
                 const allDirectionCells = getAllDirectionCells(selectedCell.value);
                 for (let i = 0; i < allDirectionCells.length; i++) {
-                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, players);
+                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
                 }
                 updateAvailableCells(availableCells, usedCells);
-                updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells, turn, players);
-                updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells, turn, players);
+                updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
+                updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
                 setTimeout(() => {
                     if (whiteAvailableCells.value.length > 0) {
-                        turn.value = players[1];
+                        turn.value = turns[1];
                         const answerCell = whitePlayerStrategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
                         selectCell(answerCell);
                     } else {
@@ -90,14 +87,14 @@ const selectCell = (cell) => {
                 usedCells.value.push(selectedCell.value);
                 const allDirectionCells = getAllDirectionCells(selectedCell.value);
                 for (let i = 0; i < allDirectionCells.length; i++) {
-                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, players);
+                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
                 }
                 updateAvailableCells(availableCells, usedCells);
-                updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells, turn, players);
-                updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells, turn, players);
+                updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
+                updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
                 setTimeout(() => {
                     if (blackAvailableCells.value.length > 0) {
-                        turn.value = players[0];
+                        turn.value = turns[0];
                         const answerCell = blackPlayerStrategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
                         selectCell(answerCell);
                     } else {
@@ -112,6 +109,7 @@ const selectCell = (cell) => {
 
 function startGame() {
     if (countGames.value === 0) {
+        isGameStart.value = true;
         blackPlayerStrategy = strategies[brains.indexOf(blackPlayer.value)];
         whitePlayerStrategy = strategies[brains.indexOf(whitePlayer.value)];
     }
@@ -128,7 +126,7 @@ function reStartGame() {
     if (countGames.value === MAX_GAMES) {
         return;
     }
-    turn.value = players[0];
+    turn.value = turns[0];
     blackCells.value = [[4, 5], [5, 4]];
     whiteCells.value = [[4, 4], [5, 5]];
     usedCells.value = [[4, 4], [5, 5], [4, 5], [5, 4]];
@@ -158,12 +156,12 @@ function storeRecords() {
         </template>
 
         <div class="flex justify-center items-center gap-4 mt-4 w-4/5 mx-auto">
-            <select v-model="blackPlayer"
+            <select v-model="blackPlayer" :disabled="isGameStart"
                 class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                 <option v-for="brain in brains" :value="brain">{{ brain }}</option>
             </select>
             <span class="text-xl">vs</span>
-            <select v-model="whitePlayer"
+            <select v-model="whitePlayer" :disabled="isGameStart"
                 class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                 <option v-for="brain in brains" :value="brain">{{ brain }}</option>
             </select>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WatchController;
+use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\BrainController;
 use Illuminate\Foundation\Application;
@@ -37,7 +38,10 @@ Route::get('/play', function () {
     return Inertia::render('Play');
 })->name('play');
 
-Route::get('/watch', [WatchController::class, 'index'])->name('watch');
+
+
+// Route::get('/watch', [WatchController::class, 'index'])->name('watch');
+Route::get('/challenge', [ChallengeController::class, 'index'])->name('challenge');
 
 Route::resource('records', RecordController::class);
 Route::get('/brains/{brain}/records', [BrainController::class, 'showRecords'])->name('brains.records');
