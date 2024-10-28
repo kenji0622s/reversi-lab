@@ -9,6 +9,12 @@ class UserRecord extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'brain_id',
+        'result',
+    ];
+
     public function brain()
     {
         return $this->belongsTo(Brain::class);

@@ -8,6 +8,11 @@ class ChallengeController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Challenge');
+        $user = auth()->user();
+        // dd($user);
+
+        return Inertia::render('Challenge', [
+            'user' => $user,
+        ]);
     }
 }

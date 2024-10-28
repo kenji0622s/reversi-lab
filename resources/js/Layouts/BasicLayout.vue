@@ -35,8 +35,16 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('challenge')" :active="route().current('challenge')">
                                     Challenge
                                 </NavLink>
+                                <NavLink :href="route('user-records.index')" :active="route().current('user-records.index')">
+                                    <template v-if="$page.props.auth.user">
+                                        My Records
+                                    </template>
+                                    <template v-else>
+                                        Player Records
+                                    </template>
+                                </NavLink>
                                 <NavLink :href="route('brains.index')" :active="route().current('brains.index')">
-                                    Brains
+                                    Brain List
                                 </NavLink>
                                 <!-- <NavLink :href="route('watch')" :active="route().current('watch')">
                                     Watch
@@ -44,13 +52,20 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('records.create')" :active="route().current('records.create')">
                                     Simulation
                                 </NavLink>
-                                <NavLink :href="route('records.index')" :active="route().current('records.index')">
+                                <NavLink :href="route('records.index')" :active="route().current('records.index')"
+                                    v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
                                     Records
                                 </NavLink>
                                 <NavLink :href="route('play')" :active="route().current('play')">
                                     Play
                                 </NavLink>
+                                <NavLink :href="route('profile.edit')" v-if="$page.props.auth.user"> Profile
+                                </NavLink>
+                                <NavLink :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
+                                    Log Out
+                                </NavLink>
                             </div>
+
                         </div>
 
                         <!-- Hamburger -->
@@ -81,8 +96,16 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('challenge')" :active="route().current('challenge')">
                             Challenge
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('user-records.index')" :active="route().current('user-records.index')">
+                            <template v-if="$page.props.auth.user">
+                                My Records
+                            </template>
+                            <template v-else>
+                                Player Records
+                            </template>
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('brains.index')" :active="route().current('brains.index')">
-                            Brains
+                            Brain List
                         </ResponsiveNavLink>
                         <!-- <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
                             Watch
@@ -90,11 +113,18 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('records.create')" :active="route().current('records.create')">
                             Simulation
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')">
+                        <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')"
+                            v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
                             Records
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
                             Play
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('profile.edit')" v-if="$page.props.auth.user"> Profile
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('logout')" method="post" as="button"
+                            v-if="$page.props.auth.user">
+                            Log Out
                         </ResponsiveNavLink>
                     </div>
 

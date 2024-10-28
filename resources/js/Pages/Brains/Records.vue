@@ -75,7 +75,6 @@ const show_records = (index) => {
                         </p>
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500" v-if="!show_records_flag[i]"></i>
                         <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>
-
                     </div>
 
                 </div>
