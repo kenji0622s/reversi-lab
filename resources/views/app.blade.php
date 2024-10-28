@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <!-- faviconのリンク -->
+        <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -14,6 +17,8 @@
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
+
+        <script src="https://kit.fontawesome.com/048bdb03d3.js" crossorigin="anonymous"></script>
     </head>
     <body class="font-sans antialiased">
         @inertia

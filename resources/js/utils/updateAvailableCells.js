@@ -191,5 +191,4 @@ export {
     updateAvailableCells,
     updateBlackAvailableCells,
     updateWhiteAvailableCells,
-    checkSingleDirectionCells,
 };

@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WatchController;
+use App\Http\Controllers\RecordController;
+use App\Http\Controllers\BrainController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,12 +30,18 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', function () {
-    return Inertia::render('Play');
-});
+    return Inertia::render('Home');
+})->name('home');
 
-Route::get('/watch', function () {
-    return Inertia::render('Watch');
-});
+Route::get('/play', function () {
+    return Inertia::render('Play');
+})->name('play');
+
+Route::get('/watch', [WatchController::class, 'index'])->name('watch');
+
+Route::resource('records', RecordController::class);
+Route::get('/brains/{brain}/records', [BrainController::class, 'showRecords'])->name('brains.records');
+Route::resource('brains', BrainController::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
