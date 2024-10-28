@@ -1,4 +1,4 @@
-function singleDirectionReverse(singleDirectionCells, blackCells, whiteCells, turn, players) {
+function singleDirectionReverse(singleDirectionCells, blackCells, whiteCells, turn, turns) {
     const blackJudges = [];
     for (let i = 0; i < singleDirectionCells.length; i++) {
         blackJudges.push(blackCells.some(blackCell => blackCell[0] === singleDirectionCells[i][0] && blackCell[1] === singleDirectionCells[i][1]));
@@ -8,7 +8,7 @@ function singleDirectionReverse(singleDirectionCells, blackCells, whiteCells, tu
         whiteJudges.push(whiteCells.some(whiteCell => whiteCell[0] === singleDirectionCells[i][0] && whiteCell[1] === singleDirectionCells[i][1]));
     }
 
-    if (turn === players[0]) {
+    if (turn === turns[0]) {
         if (whiteJudges[0] && blackJudges[1]) {
             whiteCells.splice(whiteCells.findIndex(whiteCell => whiteCell[0] === singleDirectionCells[0][0] && whiteCell[1] === singleDirectionCells[0][1]), 1);
             blackCells.push(singleDirectionCells[0]);

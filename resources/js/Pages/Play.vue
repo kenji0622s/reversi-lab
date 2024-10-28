@@ -6,8 +6,8 @@ import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
 
-const players = ['black', 'white'];
-const turn = ref(players[0]);
+const turns = ['black', 'white'];
+const turn = ref(turns[0]);
 const blackCells = ref([[4, 5], [5, 4]]);
 const whiteCells = ref([[4, 4], [5, 5]]);
 const usedCells = ref([[4, 4], [5, 5], [4, 5], [5, 4]]);
@@ -20,19 +20,19 @@ const gameEndMessage = ref('');
 const selectCell = (cell) => {
     selectedCell.value = cell;
     if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
-        if (turn.value === players[0]) {
+        if (turn.value === turns[0]) {
             if (blackAvailableCells.value.some(blackAvailableCell => blackAvailableCell[0] === selectedCell.value[0] && blackAvailableCell[1] === selectedCell.value[1])) {
                 blackCells.value.push(selectedCell.value);
                 usedCells.value.push(selectedCell.value);
                 const allDirectionCells = getAllDirectionCells(selectedCell.value);
                 for (let i = 0; i < allDirectionCells.length; i++) {
-                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, players);
+                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
                 }
                 updateAvailableCells(availableCells, usedCells);
                 updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells);
                 updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells);
                 if (whiteAvailableCells.value.length > 0) {
-                    turn.value = players[1];
+                    turn.value = turns[1];
                 }
             }
         } else {
@@ -41,13 +41,13 @@ const selectCell = (cell) => {
                 usedCells.value.push(selectedCell.value);
                 const allDirectionCells = getAllDirectionCells(selectedCell.value);
                 for (let i = 0; i < allDirectionCells.length; i++) {
-                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, players);
+                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
                 }
                 updateAvailableCells(availableCells, usedCells);
                 updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells);
                 updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells);
                 if (blackAvailableCells.value.length > 0) {
-                    turn.value = players[0];
+                    turn.value = turns[0];
                 }
             }
         }
@@ -83,7 +83,7 @@ const selectCell = (cell) => {
 
         <div class="text-center mt-4">
             <span v-if="isGameEnd" class="text-xl font-bold">{{ gameEndMessage }}</span>
-            <span v-else class="text-xl font-bold">{{ turn === players[0] ? '黒の番' : '白の番' }}</span>
+            <span v-else class="text-xl font-bold">{{ turn === turns[0] ? '黒の番' : '白の番' }}</span>
         </div>
 
         <div class="text-center mb-4">

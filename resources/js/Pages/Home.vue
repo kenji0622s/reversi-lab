@@ -10,6 +10,10 @@ import { Head, Link } from '@inertiajs/vue3';
     <BasicLayout>
         <template #title>Home</template>
         <div class="flex flex-col gap-4 items-center mt-8">
+            <Link :href="route('challenge')"
+                class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">
+                Challenge<span class="text-sm ml-2">vs Brains</span>
+            </Link>
             <Link :href="route('brains.index')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Brains
             </Link>
