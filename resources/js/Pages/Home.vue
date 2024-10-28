@@ -22,7 +22,7 @@ import { Head, Link } from '@inertiajs/vue3';
             <Link :href="route('play')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60">Play
             </Link>
-            <Link :href="route('dashboard')"
+            <Link :href="route('dashboard')" v-if="$page.props.auth.user"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60">Dashboard</Link>
         </div>
     </BasicLayout>
