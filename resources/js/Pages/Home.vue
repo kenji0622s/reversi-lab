@@ -14,8 +14,12 @@ import { Head, Link } from '@inertiajs/vue3';
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">
                 Challenge<span class="text-sm ml-2">vs Brains</span>
             </Link>
+            <Link :href="route('user-records.index')"
+                class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Your Records
+            </Link>
             <Link :href="route('brains.index')"
-                class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Brains
+                class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">
+                Brain List
             </Link>
             <!-- <Link :href="route('watch')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Watch
@@ -23,7 +27,7 @@ import { Head, Link } from '@inertiajs/vue3';
             <Link :href="route('records.create')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Simulation
             </Link>
-            <Link :href="route('records.index')"
+            <Link :href="route('records.index')" v-if="$page.props.auth.user && $page.props.auth.user.is_admin"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Records
             </Link>
             <Link :href="route('play')"

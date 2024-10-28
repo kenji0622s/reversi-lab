@@ -5,6 +5,7 @@ use App\Http\Controllers\WatchController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\BrainController;
+use App\Http\Controllers\UserRecordController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,6 +47,7 @@ Route::get('/challenge', [ChallengeController::class, 'index'])->name('challenge
 Route::resource('records', RecordController::class);
 Route::get('/brains/{brain}/records', [BrainController::class, 'showRecords'])->name('brains.records');
 Route::resource('brains', BrainController::class);
+Route::resource('user-records', UserRecordController::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

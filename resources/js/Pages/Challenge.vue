@@ -47,7 +47,7 @@ const selectCell = (cell) => {
                     setTimeout(() => {
                         const answerCell = strategies[brains.indexOf(brain.value)]({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
                         selectCell(answerCell);
-                    }, 500);
+                    }, 300);
                 }
             }
         } else {
@@ -68,7 +68,7 @@ const selectCell = (cell) => {
                     setTimeout(() => {
                         const answerCell = strategies[brains.indexOf(brain.value)]({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
                         selectCell(answerCell);
-                    }, 500);
+                    }, 300);
                 }
             }
         }
@@ -104,7 +104,7 @@ const readyGame = () => {
 
     <BasicLayout>
         <template #title>
-            Challenge
+            Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ brain }}</span>
         </template>
         <!-- <div class="relative">
             <h2 class="text-center text-2xl font-bold bg-neutral-200 py-2 border-b-2 border-emerald-500">Play Mode</h2>

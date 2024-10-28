@@ -18,10 +18,12 @@ class BrainSeeder extends Seeder
             [
                 'name' => 'Brain1',
                 'description' => 'ランダムに置く',
+                'description_en' => 'Put randomly',
             ],
             [
                 'name' => 'Brain2',
                 'description' => '角に置ける場合は角に置く、角に置けない場合はランダムに置く',
+                'description_en' => 'Put in the corner if possible, otherwise put randomly',
             ],
             // [
             //     'name' => 'Brain3',
