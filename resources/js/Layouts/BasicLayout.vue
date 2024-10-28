@@ -119,7 +119,7 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main class="pt-16">
+            <main class="pt-16" v-show="!showingNavigationDropdown">
                 <slot />
             </main>
         </div>
