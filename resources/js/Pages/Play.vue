@@ -81,7 +81,7 @@ const selectCell = (cell) => {
             <a href="/watch" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Watch Mode</a>
         </div> -->
 
-        <div class="text-center mt-4 mb-2">
+        <div class="text-center mt-4">
             <span v-if="isGameEnd" class="text-xl font-bold">{{ gameEndMessage }}</span>
             <span v-else class="text-xl font-bold">{{ turn === players[0] ? '黒の番' : '白の番' }}</span>
         </div>
