@@ -112,8 +112,8 @@ function startGame() {
 
 
         <div class="text-center mt-4 mb-2">
-            <span v-if="isGameEnd" class="text-2xl font-bold">{{ gameEndMessage }}</span>
-            <span v-else class="text-2xl font-bold">{{ turn === players[0] ? '黒の番' : '白の番' }}</span>
+            <span v-if="isGameEnd" class="text-xl font-bold">{{ gameEndMessage }}</span>
+            <span v-else class="text-xl font-bold">{{ turn === players[0] ? '黒の番' : '白の番' }}</span>
         </div>
 
         <div class="text-center mb-4">
