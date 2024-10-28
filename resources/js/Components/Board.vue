@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="grid grid-cols-8 w-80 aspect-square border border-black mx-auto bg-emerald-500">
+    <div class="grid grid-cols-8 w-72 aspect-square border border-black mx-auto bg-emerald-500">
         <template v-for="row in 8">
             <template v-for="column in 8">
                 <div :id="[row, column]" class="w-full h-full border border-gray-500 relative">
