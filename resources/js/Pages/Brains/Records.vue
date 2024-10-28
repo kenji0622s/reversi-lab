@@ -68,10 +68,16 @@ const show_records = (index) => {
                 <div @click="show_records(i)">
                     <p class="text-lg font-bold">vs {{ other_brain.name }}</p>
                     <p class="mb-2">{{ other_brain.description }}</p>
-                    <p class="font-bold">勝率{{ result[i].rate }}（{{
+                    <div class="flex justify-between items-center">
+                        <p class="font-bold">勝率{{ result[i].rate }}（{{
                             result[i].win
                         }}勝 {{ result[i].draw }}分 {{ result[i].lose }}敗）
                         </p>
+                        <i class="fa-solid fa-angle-down text-lg text-emerald-500" v-if="!show_records_flag[i]"></i>
+                        <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>
+
+                    </div>
+
                 </div>
                 <table class="text-center mx-auto mt-4" v-if="show_records_flag[i]">
                     <thead>

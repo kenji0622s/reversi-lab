@@ -13,9 +13,9 @@ import { Head, Link } from '@inertiajs/vue3';
             <Link :href="route('brains.index')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Brains
             </Link>
-            <Link :href="route('watch')"
+            <!-- <Link :href="route('watch')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Watch
-            </Link>
+            </Link> -->
             <Link :href="route('records.create')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Simulation
             </Link>

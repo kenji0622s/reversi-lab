@@ -37,18 +37,8 @@ const strategies = [askBrain1, askBrain2];
 
 const blackPlayer = ref(brains[0]);
 const whitePlayer = ref(brains[0]);
-const blackPlayerStrategy = strategies[0];
-const whitePlayerStrategy = strategies[0];
-
-function changeBlackPlayer(brain) {
-    blackPlayer.value = brain;
-    blackPlayerStrategy.value = strategies[brains.indexOf(brain)];
-}
-
-function changeWhitePlayer(brain) {
-    whitePlayer.value = brain;
-    whitePlayerStrategy.value = strategies[brains.indexOf(brain)];
-}
+let blackPlayerStrategy;
+let whitePlayerStrategy;
 
 const results = [];
 const selectCell = (cell) => {
@@ -121,6 +111,11 @@ const selectCell = (cell) => {
 }
 
 function startGame() {
+    if (countGames.value === 0) {
+        blackPlayerStrategy = strategies[brains.indexOf(blackPlayer.value)];
+        whitePlayerStrategy = strategies[brains.indexOf(whitePlayer.value)];
+    }
+
     countGames.value++;
     const blackAvailableCellLength = blackAvailableCells.value.length;
     const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
@@ -163,12 +158,12 @@ function storeRecords() {
         </template>
 
         <div class="flex justify-center items-center gap-4 mt-4 w-4/5 mx-auto">
-            <select @change="changeBlackPlayer"
+            <select v-model="blackPlayer"
                 class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                 <option v-for="brain in brains" :value="brain">{{ brain }}</option>
             </select>
             <span class="text-xl">vs</span>
-            <select @change="changeWhitePlayer"
+            <select v-model="whitePlayer"
                 class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                 <option v-for="brain in brains" :value="brain">{{ brain }}</option>
             </select>

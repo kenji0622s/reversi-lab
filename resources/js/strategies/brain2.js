@@ -6,6 +6,7 @@ function askBrain2({
     whiteAvailableCells = [],
     turn = "black",
 }) {
+    console.log(turn + 'Brain2');
     if (turn === "black") {
         return _strategy(blackAvailableCells);
     } else {

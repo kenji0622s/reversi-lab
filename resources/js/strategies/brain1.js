@@ -1,8 +1,12 @@
 // ランダムに置く
 
-
-function askBrain1({ blackAvailableCells = [], whiteAvailableCells = [], turn = 'black' }) { 
-    if (turn === 'black') {
+function askBrain1({
+    blackAvailableCells = [],
+    whiteAvailableCells = [],
+    turn = "black",
+}) {
+    console.log(turn + "Brain1");
+    if (turn === "black") {
         return _strategy(blackAvailableCells);
     } else {
         return _strategy(whiteAvailableCells);

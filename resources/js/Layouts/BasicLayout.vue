@@ -35,9 +35,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('brains.index')" :active="route().current('brains.index')">
                                     Brains
                                 </NavLink>
-                                <NavLink :href="route('watch')" :active="route().current('watch')">
+                                <!-- <NavLink :href="route('watch')" :active="route().current('watch')">
                                     Watch
-                                </NavLink>
+                                </NavLink> -->
                                 <NavLink :href="route('records.create')" :active="route().current('records.create')">
                                     Simulation
                                 </NavLink>
@@ -78,9 +78,9 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('brains.index')" :active="route().current('brains.index')">
                             Brains
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
+                        <!-- <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
                             Watch
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('records.create')" :active="route().current('records.create')">
                             Simulation
                         </ResponsiveNavLink>
