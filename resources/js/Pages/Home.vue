@@ -20,7 +20,7 @@ import { Head, Link } from '@inertiajs/vue3';
                 My Records
             </template>
             <template v-else>
-                Player Records
+                Guest Records
             </template>
             </Link>
             <Link :href="route('brains.index')"

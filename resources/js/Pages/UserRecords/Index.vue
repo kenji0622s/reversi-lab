@@ -51,7 +51,7 @@ const checked = ref(false);
                 My Records
             </template>
             <template v-else>
-                Player Records
+                Guest Records
             </template>
         </template>
         <div class="w-4/5 mx-auto">
@@ -62,7 +62,7 @@ const checked = ref(false);
                         My Records
                     </template>
                     <template v-else>
-                        Player Records
+                        Guest Records
                     </template>
                 </div>
             </div>

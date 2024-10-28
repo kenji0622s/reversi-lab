@@ -40,7 +40,7 @@ const showingNavigationDropdown = ref(false);
                                         My Records
                                     </template>
                                     <template v-else>
-                                        Player Records
+                                        Guest Records
                                     </template>
                                 </NavLink>
                                 <NavLink :href="route('brains.index')" :active="route().current('brains.index')">
@@ -101,7 +101,7 @@ const showingNavigationDropdown = ref(false);
                                 My Records
                             </template>
                             <template v-else>
-                                Player Records
+                                Guest Records
                             </template>
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('brains.index')" :active="route().current('brains.index')">
