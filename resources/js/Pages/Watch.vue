@@ -1,11 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import BasicLayout from '@/Layouts/BasicLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { whiteStrategyModel1, blackStrategyModel1 } from '../strategies/model1';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells, checkSingleDirectionCells } from '../utils/updateAvailableCells';
-
+import Board from '@/Components/Board.vue';
 const players = ['black', 'white'];
 const turn = ref(players[0]);
 const blackCells = ref([[4, 5], [5, 4]]);
@@ -90,54 +91,29 @@ function startGame() {
 
 <template>
 
-    <Head title="Watch Mode" />
+    <Head title="Watch" />
 
-    <div class="relative">
-        <h2 class="text-center text-2xl font-bold bg-neutral-200 py-2 border-b-2 border-emerald-500">Watch Mode</h2>
-        <a href="/" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Play Mode</a>
-    </div>
-
-    <div class="text-center mt-4 mb-2">
-        <span v-if="isGameEnd" class="text-2xl font-bold">{{ gameEndMessage }}</span>
-        <span v-else class="text-2xl font-bold">{{ turn === players[0] ? '黒の番' : '白の番' }}</span>
-    </div>
-
-    <div class="text-center mb-4">
-        黒: {{ blackCells.length }} | 白: {{ whiteCells.length }}
-    </div>
-
-    <div class="grid grid-cols-8 w-80 aspect-square border border-black mx-auto bg-emerald-500">
-        <template v-for="row in 8">
-            <template v-for="column in 8">
-                <div :id="[row, column]" class="w-full h-full border border-gray-500 relative">
-                    <span v-if="whiteCells.some(cell => cell[0] === row && cell[1] === column)"
-                        class="w-4/5 h-4/5 rounded-full bg-neutral-50 text-[10px] text-black flex justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                        <!-- {{ row }},{{ column }} -->
-                    </span>
-                    <span v-else-if="blackCells.some(cell => cell[0] === row && cell[1] === column)"
-                        class="w-4/5 h-4/5 rounded-full bg-neutral-950 text-[10px] text-white flex justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                        <!-- {{ row }},{{ column }} -->
-                    </span>
-                    <span
-                        v-else-if="whiteAvailableCells.some(whiteAvailableCell => whiteAvailableCell[0] === row && whiteAvailableCell[1] === column) && turn === 'white'"
-                        :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', 'absolute', 'top-1/2', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', 'bg-amber-200', 'opacity-70']">
-                        <!-- {{ row }},{{ column }} -->
-                    </span>
-                    <span
-                        v-else-if="blackAvailableCells.some(blackAvailableCell => blackAvailableCell[0] === row && blackAvailableCell[1] === column) && turn === 'black'"
-                        :class="['w-4/5', 'h-4/5', 'text-[10px]', 'text-black', 'flex', 'justify-center', 'items-center', 'absolute', 'top-1/2', 'left-1/2', '-translate-x-1/2', '-translate-y-1/2', 'bg-amber-200', 'opacity-70']">
-                        <!-- {{ row }},{{ column }} -->
-                    </span>
-                    <span v-else class="w-full h-full text-[10px] text-black flex justify-center items-center">
-                        <!-- {{ row }},{{ column }} -->
-                    </span>
-                </div>
-            </template>
+    <BasicLayout>
+        <template #title>
+            Watch Mode
         </template>
-    </div>
-    <div class="flex justify-center items-center gap-4 mt-6">
-        <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md">Start Game</button>
-        <button @click="resetGame" onclick="window.location.reload()"
-            class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">Reset Game</button>
-    </div>
+
+
+        <div class="text-center mt-4 mb-2">
+            <span v-if="isGameEnd" class="text-2xl font-bold">{{ gameEndMessage }}</span>
+            <span v-else class="text-2xl font-bold">{{ turn === players[0] ? '黒の番' : '白の番' }}</span>
+        </div>
+
+        <div class="text-center mb-4">
+            黒: {{ blackCells.length }} | 白: {{ whiteCells.length }}
+        </div>
+
+        <Board :blackCells="blackCells" :whiteCells="whiteCells" :whiteAvailableCells="whiteAvailableCells" :blackAvailableCells="blackAvailableCells" :turn="turn" />
+
+        <div class="flex justify-center items-center gap-4 mt-6">
+            <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md">Start Game</button>
+            <button @click="resetGame" onclick="window.location.reload()"
+                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">Reset Game</button>
+        </div>
+    </BasicLayout>
 </template>
