@@ -165,7 +165,7 @@ const readyGame = () => {
                         <option v-for="brain in brains" :value="brain">{{ brain }}</option>
                     </select>
                 </div>
-                <div class="mb-4">
+                <div class="mb-6">
                     <label for="yourTurn" class="block text-sm font-medium leading-6 text-gray-900">あなたの番</label>
                     <select v-model="yourTurn"
                         class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
