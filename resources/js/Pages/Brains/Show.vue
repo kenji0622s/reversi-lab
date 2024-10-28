@@ -1,120 +1,62 @@
 <script setup>
 import BasicLayout from '@/Layouts/BasicLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
     brain: Object,
-    records: Object,
-    other_brains: Object,
 });
 
-const brain = props.brain;
-const records = props.records;
-const other_brains = props.other_brains;
-
-const result = [];
-for (let i = 0; i < records.length; i++) {
-    let win = 0;
-    let draw = 0;
-    let lose = 0;
-    for (let j = 0; j < records[i].length; j++) {
-        if (
-            records[i][j].black_model === brain.name && records[i][j].count_black > records[i][j].count_white ||
-            records[i][j].white_model === brain.name && records[i][j].count_white > records[i][j].count_black
-        ) {
-            win++;
-        } else if (records[i][j].count_black === records[i][j].count_white) {
-            draw++;
-        } else {
-            lose++;
-        }
-    }
-    result.push({
-        'win': win,
-        'draw': draw,
-        'lose': lose,
-        'rate': ((win / (win + draw + lose)) * 100).toFixed(2) + '%',
-    });
+const deleteBrain = (id) => {
+    router.delete(route('brains.destroy', { brain: id }));
 }
-
-console.log(result);
-
-const show_records_flag = ref(Array(other_brains.length).fill(false));
-console.log(show_records_flag);
-const show_records = (index) => {
-    show_records_flag.value[index] = !show_records_flag.value[index];
-}
-
 </script>
 
 <template>
 
-    <Head :title="`${brain.name} Records`" />
+    <Head title="Brain" />
 
     <BasicLayout>
+
         <template #title>
-            {{ brain.name }} Records
+            {{ brain.name }}
         </template>
-        <div class="w-4/5 mx-auto">
 
-            <div class="my-4">
-                <div class="text-lg font-bold">{{ brain.name }}の思考</div>
-                <div>{{ brain.description }}</div>
-            </div>
-
-            <div v-for="(other_brain, i) in other_brains" :key="i" class="mb-4 bg-neutral-100 border-2 border-neutral-200 p-4 rounded-md shadow-sm">
-                <div class="flex justify-between mb-4" @click="show_records(i)">
-                    <div class="w-3/4">
-                        <h3 class="text-lg font-bold">vs {{ other_brain.name }}</h3>
-                        <p>{{ other_brain.description }}</p>
-
-                        <div>勝率{{ result[i].rate }}（{{ result[i].win }}勝 {{ result[i].draw }}分 {{ result[i].lose }}敗）
-                        </div>
+        <div class="w-4/5 mx-auto mt-8 bg-neutral-100 p-4 rounded-md shadow-sm border-2 border-neutral-300">
+            <div class="p-2 w-full">
+                <div class="flex items-center gap-2">
+                    <label for="id" class="leading-7 text-sm text-gray-600">ID</label>
+                    <div id="id" class="w-full  text-base outline-none text-gray-700 py-1 leading-8">
+                        {{ brain.id }}
                     </div>
                 </div>
-                <table class="text-center mx-auto" v-if="show_records_flag[i]">
-                    <thead>
-                        <tr>
-                            <th class="w-4">ID</th>
-                            <th class="w-24">ターン</th>
-                            <th class="w-32">結果</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="record in records[i]" :key="record.id">
-                            <td>{{ record.id }}</td>
-                            <td>
-                                <template v-if="record.black_model === brain.name">
-                                    先行
-                                </template>
-                                <template v-else>
-                                    後攻
-                                </template>
-                            </td>
-                            <td>
-                                <template
-                                    v-if="record.black_model === brain.name && record.count_black > record.count_white || record.white_model === brain.name && record.count_white > record.count_black">
-                                    勝ち
-                                </template>
-                                <template v-else-if="record.count_black === record.count_white">
-                                    引き分け
-                                </template>
-                                <template v-else>
-                                    負け
-                                </template>
-                                <template v-if="record.black_model === brain.name">
-                                    (<span class="font-bold">{{ record.count_black }}</span>:{{ record.count_white }})
-                                </template>
-                                <template v-else>
-                                    ({{ record.count_black }}:<span class="font-bold">{{ record.count_white }}</span>)
-                                </template>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
+            <div class="p-2 w-full">
+                <div>
+                    <label for="name" class="leading-7 text-sm text-gray-600 w-fit block">名前</label>
+                    <div id="name" class="w-full  text-base outline-none text-gray-700 py-1 leading-8">
+                        {{ brain.name }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2 w-full">
+                <div>
+                    <label for="name" class="leading-7 text-sm text-gray-600">説明</label>
+                    <div id="name" class="w-full  text-base outline-none text-gray-700 py-1 leading-8">
+                        {{ brain.description }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center items-center gap-4 mt-6">
+            <Link as="button" :href="route('brains.edit', { brain: brain.id })"
+                class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold">
+            編集する
+            </Link>
+            <button @click="deleteBrain(brain.id)"
+                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">
+                削除する
+            </button>
         </div>
     </BasicLayout>
 </template>

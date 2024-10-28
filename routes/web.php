@@ -29,6 +29,10 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', function () {
+    return Inertia::render('Home');
+})->name('home');
+
+Route::get('/play', function () {
     return Inertia::render('Play');
 })->name('play');
 
@@ -37,6 +41,7 @@ Route::get('/watch', function () {
 })->name('watch');
 
 Route::resource('records', RecordController::class);
+Route::get('/brains/{brain}/records', [BrainController::class, 'showRecords'])->name('brains.records');
 Route::resource('brains', BrainController::class);
 
 Route::get('/dashboard', function () {

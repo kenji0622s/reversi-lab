@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateBrainRequest;
 use App\Models\Brain;
 use App\Models\Record;
 use Inertia\Inertia;
+
 class BrainController extends Controller
 {
     /**
@@ -28,7 +29,7 @@ class BrainController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Brains/Create');
     }
 
     /**
@@ -39,7 +40,13 @@ class BrainController extends Controller
      */
     public function store(StoreBrainRequest $request)
     {
-        //
+        Brain::create(
+            [
+                'name' => $request->name,
+                'description' => $request->description,
+            ]
+        );
+        return to_route('brains.index');
     }
 
     /**
@@ -50,12 +57,18 @@ class BrainController extends Controller
      */
     public function show(Brain $brain)
     {
+        return Inertia::render('Brains/Show', [
+            'brain' => $brain,
+        ]);
+    }
+    public function showRecords(Brain $brain)
+    {
         $records = [];
         $other_brains = Brain::where('id', '!=', $brain->id)->get();
         foreach ($other_brains as $other_brain) {
-            $records[] = Record::where('black_model', $brain->name)->where('white_model', $other_brain->name)->orWhere('white_model', $brain->name)->where('black_model', $other_brain->name)->get();
+            $records[] = Record::where('black_player', $brain->name)->where('white_player', $other_brain->name)->orWhere('white_player', $brain->name)->where('black_player', $other_brain->name)->get();
         }
-        return Inertia::render('Brains/Show', [
+        return Inertia::render('Brains/Records', [
             'brain' => $brain,
             'records' => $records,
             'other_brains' => $other_brains,
@@ -70,7 +83,9 @@ class BrainController extends Controller
      */
     public function edit(Brain $brain)
     {
-        //
+        return Inertia::render('Brains/Edit', [
+            'brain' => $brain,
+        ]);
     }
 
     /**
@@ -82,7 +97,13 @@ class BrainController extends Controller
      */
     public function update(UpdateBrainRequest $request, Brain $brain)
     {
-        //
+        $brain->update(
+            [
+                'name' => $request->name,
+                'description' => $request->description,
+            ]
+        );
+        return to_route('brains.index');
     }
 
     /**
@@ -93,6 +114,7 @@ class BrainController extends Controller
      */
     public function destroy(Brain $brain)
     {
-        //
+        $brain->delete();
+        return redirect()->route('brains.index');
     }
 }

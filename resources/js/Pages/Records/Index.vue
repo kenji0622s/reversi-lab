@@ -1,5 +1,6 @@
 <script setup>
 import BasicLayout from '@/Layouts/BasicLayout.vue';
+import { Link } from '@inertiajs/vue3';
 
 defineProps({
     records: Array,
@@ -24,8 +25,8 @@ defineProps({
                 <tbody>
                     <tr v-for="record in records" :key="record.id">
                         <td>{{ record.id }}</td>
-                        <td>{{ record.black_model }}</td>
-                        <td>{{ record.white_model }}</td>
+                        <td>{{ record.black_player }}</td>
+                        <td>{{ record.white_player }}</td>
                         <td>
                             <template v-if="record.count_black > record.count_white">
                                 黒勝ち
@@ -39,6 +40,11 @@ defineProps({
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="fixed bottom-4 right-4" v-if="$page.props.auth.user">
+            <Link as="button" :href="route('records.create')" class="bg-emerald-500 text-white text-2xl rounded-md font-bold md:w-16 md:h-16 w-12 h-12 flex items-center justify-center">
+                +
+            </Link>
         </div>
     </BasicLayout>
 </template>

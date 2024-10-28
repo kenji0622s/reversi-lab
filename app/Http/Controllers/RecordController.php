@@ -15,8 +15,10 @@ class RecordController extends Controller
      */
     public function index()
     {
+
+        $records = Record::all()->sortByDesc('id')->values()->toArray();
         return Inertia::render('Records/Index', [
-            'records' => Record::all(),
+            'records' => $records,
         ]);
     }
 
@@ -27,7 +29,7 @@ class RecordController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Records/Simulate');
     }
 
     /**
@@ -38,7 +40,17 @@ class RecordController extends Controller
      */
     public function store(StoreRecordRequest $request)
     {
-        //
+        $results = $request->results;
+        // dd($results);
+        foreach ($results as $result) {
+            Record::create([
+                'black_player' => $result['black_player'],
+                'white_player' => $result['white_player'],
+                'count_black' => $result['count_black'],
+                'count_white' => $result['count_white'],
+            ]);
+        }
+        return to_route('records.index');
     }
 
     /**

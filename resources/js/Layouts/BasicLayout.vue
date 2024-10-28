@@ -20,7 +20,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex items-center">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center mr-4">
-                                <Link :href="route('brains.index')">
+                                <Link :href="route('home')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
@@ -34,17 +34,22 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('play')" :active="route().current('play')">
-                                    Play
+                                <NavLink :href="route('brains.index')" :active="route().current('brains.index')">
+                                    Brains
                                 </NavLink>
                                 <NavLink :href="route('watch')" :active="route().current('watch')">
                                     Watch
                                 </NavLink>
-                                <NavLink :href="route('records.index')" :active="route().current('records.index')">
+                                <NavLink :href="route('records.create')" v-if="$page.props.auth.user"
+                                    :active="route().current('records.create')">
+                                    Simulation
+                                </NavLink>
+                                <NavLink :href="route('records.index')" :active="route().current('records.index')"
+                                    v-if="$page.props.auth.user">
                                     Records
                                 </NavLink>
-                                <NavLink :href="route('brains.index')" :active="route().current('brains.index')">
-                                    Brains
+                                <NavLink :href="route('play')" :active="route().current('play')">
+                                    Play
                                 </NavLink>
                             </div>
                         </div>
@@ -74,17 +79,22 @@ const showingNavigationDropdown = ref(false);
                 <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
                     class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
-                            Play
+                        <ResponsiveNavLink :href="route('brains.index')" :active="route().current('brains.index')">
+                            Brains
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
                             Watch
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')">
+                        <ResponsiveNavLink :href="route('records.create')" v-if="$page.props.auth.user"
+                            :active="route().current('records.create')">
+                            Simulation
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')"
+                            v-if="$page.props.auth.user">
                             Records
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('brains.index')" :active="route().current('brains.index')">
-                            Brains
+                        <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
+                            Play
                         </ResponsiveNavLink>
                     </div>
 

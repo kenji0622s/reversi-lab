@@ -13,7 +13,7 @@ class StoreBrainRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreBrainRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:30',
+            'description' => 'nullable|string|max:255',
         ];
     }
 }

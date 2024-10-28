@@ -21,8 +21,8 @@ class RecordFactory extends Factory
         $count_black = mt_rand(0, 64);
         $count_white = 64 - $count_black;
         return [
-            'black_model' => $models[mt_rand(0, 3)],
-            'white_model' => $models[mt_rand(0, 3)],
+            'black_player' => $models[mt_rand(0, 3)],
+            'white_player' => $models[mt_rand(0, 3)],
             'count_black' => $count_black,
             'count_white' => $count_white,
         ];

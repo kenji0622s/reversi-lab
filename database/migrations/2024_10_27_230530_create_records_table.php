@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->string('black_model');
-            $table->string('white_model');
+            $table->string('black_player');
+            $table->string('white_player');
             $table->integer('count_black');
             $table->integer('count_white');
             $table->timestamps();
