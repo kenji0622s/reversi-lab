@@ -47,12 +47,24 @@ const checked = ref(false);
 <template>
     <BasicLayout>
         <template #title>
-            My Records
+            <template v-if="$page.props.auth.user">
+                My Records
+            </template>
+            <template v-else>
+                Player Records
+            </template>
         </template>
         <div class="w-4/5 mx-auto">
 
             <div class="my-4">
-                <div class="text-lg font-bold">My Records</div>
+                <div class="text-lg font-bold">
+                    <template v-if="$page.props.auth.user">
+                        My Records
+                    </template>
+                    <template v-else>
+                        Player Records
+                    </template>
+                </div>
             </div>
 
             <div v-for="(group, brainId) in groupedRecords" :key="brainId"
