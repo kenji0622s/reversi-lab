@@ -6,7 +6,7 @@ import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
 
-import { brains, strategies } from '../brains';
+import { brains, strategies } from '../strategies/brains';
 
 const turns = ['black', 'white'];
 

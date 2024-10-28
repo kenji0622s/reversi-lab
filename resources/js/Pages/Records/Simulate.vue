@@ -7,7 +7,7 @@ import singleDirectionReverse from '@/utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '@/utils/updateAvailableCells';
 import Board from '@/Components/Board.vue';
 
-import { brains, strategies } from '@/brains';
+import { brains, strategies } from '@/strategies/brains';
 
 defineProps({
     debug: Boolean,
