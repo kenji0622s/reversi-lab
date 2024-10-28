@@ -1,17 +1,41 @@
 <script setup>
 import BasicLayout from '@/Layouts/BasicLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
 import { ref } from 'vue';
 
 const props = defineProps({
     brain: Object,
     records: Object,
     other_brains: Object,
+    userRecords: Object,
 });
 
 const brain = props.brain;
 const records = props.records;
 const other_brains = props.other_brains;
+const userRecords = props.userRecords;
+let humanResult;
+let human_win = 0;
+let human_draw = 0;
+let human_lose = 0;
+for (let i = 0; i < userRecords.length; i++) {
+    console.log(userRecords[i])
+    if (userRecords[i].result === 'win') {
+        human_lose++;
+    } else if (userRecords[i].result === 'draw') {
+        human_draw++;
+    } else {
+        human_win++;
+    }
+}
+humanResult = {
+    'win': human_win,
+    'draw': human_draw,
+    'lose': human_lose,
+    'rate': ((human_win / (human_win + human_draw + human_lose)) * 100).toFixed(2) + '%',
+};
+const show_human_records_flag = ref(false);
 
 const result = [];
 for (let i = 0; i < records.length; i++) {
@@ -63,6 +87,47 @@ const show_records = (index) => {
                 <div>{{ brain.description }}</div>
             </div>
 
+            <div class="mb-4 bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm">
+                <div @click="show_human_records_flag = !show_human_records_flag">
+                    <p class="text-lg font-bold">vs Humans</p>
+                    <div class="flex justify-between items-center">
+                        <p class="font-bold">勝率{{ humanResult.rate }}（{{
+                            humanResult.win
+                            }}勝 {{ humanResult.draw }}分 {{ humanResult.lose }}敗）
+                        </p>
+                        <i class="fa-solid fa-angle-down text-lg text-emerald-500" v-if="!show_human_records_flag"></i>
+                        <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>
+                    </div>
+                </div>
+
+                <div v-if="show_human_records_flag">
+                    <table class="text-center mx-auto mt-4 w-full">
+                        <thead>
+                            <tr>
+                                <th class="w-1/2">日付</th>
+                                <th class="w-1/2">結果</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="userRecord in userRecords" :key="userRecord.id">
+                                <td>{{ dayjs(userRecord.created_at).format('YYYY/MM/DD') }}</td>
+                                <td>
+                                    <template v-if="userRecord.result === 'win'">
+                                        負け
+                                    </template>
+                                    <template v-else-if="userRecord.result === 'draw'">
+                                        引き分け
+                                    </template>
+                                    <template v-else>
+                                        勝ち
+                                    </template>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div v-for="(other_brain, i) in other_brains" :key="i"
                 class="mb-4 bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm">
                 <div @click="show_records(i)">
@@ -71,7 +136,7 @@ const show_records = (index) => {
                     <div class="flex justify-between items-center">
                         <p class="font-bold">勝率{{ result[i].rate }}（{{
                             result[i].win
-                        }}勝 {{ result[i].draw }}分 {{ result[i].lose }}敗）
+                            }}勝 {{ result[i].draw }}分 {{ result[i].lose }}敗）
                         </p>
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500" v-if="!show_records_flag[i]"></i>
                         <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>

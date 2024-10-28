@@ -6,6 +6,7 @@ use App\Http\Requests\StoreBrainRequest;
 use App\Http\Requests\UpdateBrainRequest;
 use App\Models\Brain;
 use App\Models\Record;
+use App\Models\UserRecord;
 use Inertia\Inertia;
 
 class BrainController extends Controller
@@ -65,6 +66,8 @@ class BrainController extends Controller
     {
         $records = [];
         $other_brains = Brain::where('id', '!=', $brain->id)->get();
+        $userRecords = UserRecord::where('brain_id', $brain->id)->get();
+        // dd($userRecords);
         foreach ($other_brains as $other_brain) {
             $records[] = Record::where('black_player', $brain->name)->where('white_player', $other_brain->name)->orWhere('white_player', $brain->name)->where('black_player', $other_brain->name)->get();
         }
@@ -72,6 +75,7 @@ class BrainController extends Controller
             'brain' => $brain,
             'records' => $records,
             'other_brains' => $other_brains,
+            'userRecords' => $userRecords,
         ]);
     }
 
