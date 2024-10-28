@@ -21,11 +21,11 @@ class DatabaseSeeder extends Seeder
 
         if (config('app.env') === 'local') {
         \App\Models\UserRecord::factory(100)->create();
+        \App\Models\Record::factory(300)->create();
         }
 
 
 
-        // \App\Models\Record::factory(100)->create();
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
