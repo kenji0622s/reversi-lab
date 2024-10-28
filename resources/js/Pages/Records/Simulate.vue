@@ -10,6 +10,10 @@ import Board from '@/Components/Board.vue';
 import { askBrain1 } from '@/strategies/brain1';
 import { askBrain2 } from '@/strategies/brain2';
 
+defineProps({
+    debug: Boolean,
+});
+
 const players = ['black', 'white'];
 const turn = ref(players[0]);
 const blackCells = ref([[4, 5], [5, 4]]);
@@ -151,7 +155,7 @@ function storeRecords() {
         </div>
 
         <Board :blackCells="blackCells" :whiteCells="whiteCells" :whiteAvailableCells="whiteAvailableCells"
-            :blackAvailableCells="blackAvailableCells" :turn="turn" />
+            :blackAvailableCells="blackAvailableCells" :turn="turn" :debug="debug" />
 
         <div class="flex justify-center items-center gap-4 mt-6" v-if="countGames === 0">
             <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold">Start

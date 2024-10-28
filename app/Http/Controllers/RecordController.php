@@ -29,7 +29,10 @@ class RecordController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Records/Simulate');
+        $debug = config('services.debug');
+        return Inertia::render('Records/Simulate', [
+            'debug' => $debug,
+        ]);
     }
 
     /**
