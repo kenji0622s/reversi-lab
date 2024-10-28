@@ -29,7 +29,7 @@ const countBlackWins = ref(0);
 const countWhiteWins = ref(0);
 const countDraws = ref(0);
 const countGames = ref(0);
-const MAX_GAMES = 100;
+const MAX_GAMES = 10;
 const INTERVAL = 1;
 const blackPlayer = 'Brain2';
 const whitePlayer = 'Brain1';
@@ -162,7 +162,8 @@ function storeRecords() {
                 Simulation</button>
         </div>
         <div class="flex justify-center items-center gap-4 mt-6" v-else-if="countGames === MAX_GAMES && isGameEnd">
-            <button @click="storeRecords" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold">Store
+            <button @click="storeRecords" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold"
+                v-if="$page.props.auth.user">Store
                 Records</button>
             <button @click="resetGame" onclick="window.location.reload()"
                 class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">Reset Game</button>

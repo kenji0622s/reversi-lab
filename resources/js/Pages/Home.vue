@@ -15,14 +15,14 @@ import { Head, Link } from '@inertiajs/vue3';
             <Link :href="route('watch')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60">
             Watch</Link>
-            <Link :href="route('records.create')" v-if="$page.props.auth.user"
+            <Link :href="route('records.create')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60">Simulation</Link>
-            <Link :href="route('records.index')" v-if="$page.props.auth.user"
+            <Link :href="route('records.index')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60">Records</Link>
             <Link :href="route('play')"
-                class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60  ">
-            Play</Link>
-            <Link :href="route('dashboard')" v-if="$page.props.auth.user"
+                class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60">Play
+            </Link>
+            <Link :href="route('dashboard')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60">Dashboard</Link>
         </div>
     </BasicLayout>

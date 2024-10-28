@@ -21,9 +21,7 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center mr-4">
                                 <Link :href="route('home')">
-                                    <ApplicationLogo
-                                        class="block"
-                                    />
+                                <ApplicationLogo class="block" />
                                 </Link>
                             </div>
                             <div>
@@ -40,12 +38,10 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('watch')" :active="route().current('watch')">
                                     Watch
                                 </NavLink>
-                                <NavLink :href="route('records.create')" v-if="$page.props.auth.user"
-                                    :active="route().current('records.create')">
+                                <NavLink :href="route('records.create')" :active="route().current('records.create')">
                                     Simulation
                                 </NavLink>
-                                <NavLink :href="route('records.index')" :active="route().current('records.index')"
-                                    v-if="$page.props.auth.user">
+                                <NavLink :href="route('records.index')" :active="route().current('records.index')">
                                     Records
                                 </NavLink>
                                 <NavLink :href="route('play')" :active="route().current('play')">
@@ -85,12 +81,10 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
                             Watch
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('records.create')" v-if="$page.props.auth.user"
-                            :active="route().current('records.create')">
+                        <ResponsiveNavLink :href="route('records.create')" :active="route().current('records.create')">
                             Simulation
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')"
-                            v-if="$page.props.auth.user">
+                        <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')">
                             Records
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
