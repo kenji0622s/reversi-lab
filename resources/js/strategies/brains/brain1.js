@@ -6,7 +6,7 @@ function askBrain1({
     whiteAvailableCells = [],
     turn = "black",
 }) {
-    console.log(turn + "Brain1");
+    console.log(turn + ": Brain1");
     if (turn === "black") {
         return randam(blackAvailableCells);
     } else {

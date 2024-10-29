@@ -1,4 +1,5 @@
 // 角に置ける場合は角に置く
+// 真ん中の周りに置ける場合は真ん中の周りに置く
 // 角の周りの隣に置ける場合は、角の周りの隣に置く
 // 角に置けない場合は、ランダムに置く
 // 角の隣にはできるだけ置かない
@@ -7,12 +8,14 @@ import { randam } from "@/strategies/logic/randam";
 import { putCorner } from "@/strategies/logic/put-corner";
 import { filterAroundCorner } from "@/strategies/logic/filter-around-corner";
 import { putAroundCornerNext } from "@/strategies/logic/put-around-corner-next";
-function askBrain4({
+import { putAroundCenter } from "@/strategies/logic/put-around-center";
+
+function askBrain5({
     blackAvailableCells = [],
     whiteAvailableCells = [],
     turn = "black",
 }) {
-    console.log(turn + ": Brain4");
+    console.log(turn + ": Brain5");
     if (turn === "black") {
         return _strategy(blackAvailableCells);
     } else {
@@ -26,6 +29,12 @@ function _strategy(colorAvailableCells) {
     const corner = putCorner(colorAvailableCells);
     if (corner) {
         return corner;
+    }
+
+    // putAroundCenter: 真ん中の周りに置ける場合は真ん中の周りに置く
+    const aroundCenter = putAroundCenter(colorAvailableCells);
+    if (aroundCenter) {
+        return aroundCenter;
     }
 
     // putAroundCornerNext: 角の周りの隣における場合は、角の周りの隣に置く
@@ -47,4 +56,4 @@ function _strategy(colorAvailableCells) {
     return randam(availableAroundCornerCells);
 }
 
-export { askBrain4 };
+export { askBrain5 };
