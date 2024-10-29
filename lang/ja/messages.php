@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "lang" => "ja",
     "common" => [
         "black" => "黒",
         "white" => "白",
@@ -35,7 +36,14 @@ return [
     ],
     "user_records" => [
         "guest_modal_message" => "ログイン・登録するとBrainとの対戦成績を確認できます",  
-        "guest_modal_link" => "ゲストユーザーの対戦成績を見る"
+        "guest_modal_link" => "ゲストユーザーの対戦成績を見る",
+        "win_rate" => "勝率",
+        "win" => "勝",
+        "draw" => "分",
+        "lose" => "敗",
+        "human" => "人間",
+        "date" => "対戦日",
+        "result" => "結果",
     ],
     "play" => [
         "black_run" => "黒の番",
@@ -44,7 +52,29 @@ return [
         "game_end_black_win" => "黒の勝利",
         "game_end_white_win" => "白の勝利",
         "game_end_draw" => "引き分け",
-    ],  
+    ],
+    "simulate" => [
+        "black_wins" => "黒勝ち",
+        "white_wins" => "白勝ち",
+        "draws" => "引き分け",
+        "simulate_start" => "スタート",
+        "simulate_stop" => "ストップ",
+        "simulate_reset" => "リセット",
+        "games" => "ゲーム",
+        "store_records" => "記録を保存",
+    ],
+    "brains" => [
+        "win_rate" => "勝率",
+        "win" => "勝",
+        "draw" => "分",
+        "lose" => "敗",
+        "human" => "人間",
+        "date" => "対戦日",
+        "result" => "結果",
+        "turn" => "先行/後攻",
+        "first_turn" => "先行",
+        "second_turn" => "後攻",
+    ],
     "register" => [
         "name" => "名前",
         "email" => "メールアドレス",

@@ -4,6 +4,7 @@ import { Head, Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
     brain: Object,
+    messages: Object,
 });
 
 const deleteBrain = (id) => {

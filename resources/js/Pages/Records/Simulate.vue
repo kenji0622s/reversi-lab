@@ -11,6 +11,7 @@ import { brains, strategies } from '@/strategies/brains';
 
 defineProps({
     debug: Boolean,
+    messages: Object,
 });
 
 const turns = ['black', 'white'];
@@ -29,7 +30,7 @@ const countBlackWins = ref(0);
 const countWhiteWins = ref(0);
 const countDraws = ref(0);
 const countGames = ref(0);
-const MAX_GAMES = 100;
+const MAX_GAMES = 10;
 const INTERVAL = 1;
 
 const blackPlayer = ref(brains[0]);
@@ -174,29 +175,25 @@ function storeRecords() {
         </div>
 
         <div class="text-center mt-4 mb-4">
-            <span class="font-bold">黒勝ち: {{ countBlackWins }} | 白勝ち: {{ countWhiteWins }} | 引き分け: {{ countDraws
-                }}</span>
+            <span class="font-bold">{{ messages.simulate.black_wins }}: {{ countBlackWins }} | {{ messages.simulate.white_wins }}: {{ countWhiteWins }} | {{ messages.simulate.draws }}: {{ countDraws }}</span>
         </div>
 
         <Board :blackCells="blackCells" :whiteCells="whiteCells" :whiteAvailableCells="whiteAvailableCells"
             :blackAvailableCells="blackAvailableCells" :turn="turn" :debug="debug" />
 
         <div class="flex justify-center items-center gap-4 mt-6" v-if="countGames === 0">
-            <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold">Start
-                Simulation</button>
+            <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold">{{ messages.simulate.simulate_start }}</button>
         </div>
         <div class="flex justify-center items-center gap-4 mt-6" v-else-if="countGames === MAX_GAMES && isGameEnd">
             <button @click="storeRecords" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold"
-                v-if="$page.props.auth.user">Store
-                Records</button>
+                v-if="$page.props.auth.user">{{ messages.simulate.store_records }}</button>
             <button @click="resetGame" onclick="window.location.reload()"
-                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">Reset Game</button>
+                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{ messages.simulate.simulate_reset }}</button>
         </div>
         <div class="text-center mt-4 mb-2 font-bold text-sm" v-else>
-            <div class="mt-6 mb-4">{{ countGames }}ゲーム / {{ MAX_GAMES }}ゲーム</div>
+            <div class="mt-6 mb-4">{{ countGames }} {{ messages.simulate.games }} / {{ MAX_GAMES }} {{ messages.simulate.games }}</div>
             <button @click="resetGame" onclick="window.location.reload()"
-                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold"> Stop
-                Simulation</button>
+                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{ messages.simulate.simulate_stop }}</button>
         </div>
     </BasicLayout>
 </template>

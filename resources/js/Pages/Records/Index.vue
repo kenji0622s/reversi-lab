@@ -4,6 +4,7 @@ import { Link } from '@inertiajs/vue3';
 
 defineProps({
     records: Array,
+    messages: Object,
 });
 </script>
 

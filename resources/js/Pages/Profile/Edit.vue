@@ -8,6 +8,7 @@ import { Head } from '@inertiajs/vue3';
 defineProps({
     mustVerifyEmail: Boolean,
     status: String,
+    messages: Object,
 });
 </script>
 

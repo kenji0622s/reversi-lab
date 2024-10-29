@@ -2,6 +2,10 @@
 import BasicLayout from '@/Layouts/BasicLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
+
+const props = defineProps({
+    messages: Object,
+});
 const form = reactive({
     name: '',
     description: '',

@@ -4,6 +4,7 @@ import BasicLayout from '@/Layouts/BasicLayout.vue';
 
 defineProps({
     brains: Object,
+    messages: Object,
 });
 </script>
 
@@ -21,7 +22,8 @@ defineProps({
                         class="bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm flex justify-between items-center gap-8">
                         <div>
                             <div class="text-lg font-bold mb-1">{{ brain.name }}</div>
-                            <div class="text-sm">{{ brain.description }}</div>
+                            <div class="text-sm" v-if="messages.lang === 'ja'">{{ brain.description }}</div>
+                            <div class="text-sm" v-else>{{ brain.description_en }}</div>
                         </div>
                         <i class="fa-solid fa-angle-right text-xl text-emerald-600"></i>
                     </div>

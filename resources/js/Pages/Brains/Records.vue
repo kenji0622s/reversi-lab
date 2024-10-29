@@ -9,6 +9,7 @@ const props = defineProps({
     records: Object,
     other_brains: Object,
     userRecords: Object,
+    messages: Object,
 });
 
 const brain = props.brain;
@@ -83,17 +84,18 @@ const show_records = (index) => {
         <div class="w-4/5 mx-auto">
 
             <div class="my-4">
-                <div class="text-lg font-bold">{{ brain.name }}の戦略</div>
-                <div>{{ brain.description }}</div>
+                <div class="text-lg font-bold">{{ brain.name }}</div>
+
+                <div v-if="messages.lang === 'ja'">{{ brain.description }}</div>
+                <div v-else>{{ brain.description_en }}</div>
             </div>
 
             <div class="mb-4 bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm">
                 <div @click="show_human_records_flag = !show_human_records_flag">
-                    <p class="text-lg font-bold">vs Humans</p>
+                    <p class="text-lg font-bold">vs {{ messages.brains.human }}</p>
                     <div class="flex justify-between items-center">
-                        <p class="font-bold">勝率{{ humanResult.rate }}（{{
-                            humanResult.win
-                            }}勝 {{ humanResult.draw }}分 {{ humanResult.lose }}敗）
+                        <p class="font-bold">{{ messages.brains.win_rate }} {{ humanResult.rate }}<br>
+                            {{humanResult.win}} {{ messages.brains.win }} | {{ humanResult.draw }} {{ messages.brains.draw }} | {{ humanResult.lose }} {{ messages.brains.lose }}
                         </p>
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500" v-if="!show_human_records_flag"></i>
                         <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>
@@ -104,8 +106,8 @@ const show_records = (index) => {
                     <table class="text-center mx-auto mt-4 w-full">
                         <thead>
                             <tr>
-                                <th class="w-1/2">日付</th>
-                                <th class="w-1/2">結果</th>
+                                <th class="w-1/2">{{ messages.brains.date }}</th>
+                                <th class="w-1/2">{{ messages.brains.result }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,13 +115,13 @@ const show_records = (index) => {
                                 <td>{{ dayjs(userRecord.created_at).format('YYYY/MM/DD') }}</td>
                                 <td>
                                     <template v-if="userRecord.result === 'win'">
-                                        負け
+                                        {{ messages.brains.lose }}
                                     </template>
                                     <template v-else-if="userRecord.result === 'draw'">
-                                        引き分け
+                                        {{ messages.brains.draw }}
                                     </template>
                                     <template v-else>
-                                        勝ち
+                                        {{ messages.brains.win }}
                                     </template>
                                 </td>
                             </tr>
@@ -132,46 +134,46 @@ const show_records = (index) => {
                 class="mb-4 bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm">
                 <div @click="show_records(i)">
                     <p class="text-lg font-bold">vs {{ other_brain.name }}</p>
-                    <p class="mb-2">{{ other_brain.description }}</p>
+                    <p class="mb-2" v-if="messages.lang === 'ja'">{{ other_brain.description }}</p>
+                    <p class="mb-2" v-else>{{ other_brain.description_en }}</p>
                     <div class="flex justify-between items-center">
-                        <p class="font-bold">勝率{{ result[i].rate }}（{{
-                            result[i].win
-                            }}勝 {{ result[i].draw }}分 {{ result[i].lose }}敗）
+                        <p class="font-bold">{{ messages.brains.win_rate }} {{ result[i].rate }}<br>
+                            {{ result[i].win }} {{ messages.brains.win }} | {{ result[i].draw }} {{ messages.brains.draw }} | {{ result[i].lose }} {{ messages.brains.lose }}
                         </p>
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500" v-if="!show_records_flag[i]"></i>
                         <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>
                     </div>
 
                 </div>
-                <table class="text-center mx-auto mt-4" v-if="show_records_flag[i]">
+                <table class="text-center mx-auto w-full mt-4" v-if="show_records_flag[i]">
                     <thead>
                         <tr>
-                            <th class="w-4">ID</th>
-                            <th class="w-24">ターン</th>
-                            <th class="w-32">結果</th>
+                            <!-- <th class="w-4">ID</th> -->
+                            <th class="w-1/2">{{ messages.brains.turn }}</th>
+                            <th class="w-1/2">{{ messages.brains.result }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="record in records[i]" :key="record.id">
-                            <td>{{ record.id }}</td>
+                            <!-- <td>{{ record.id }}</td> -->
                             <td>
                                 <template v-if="record.black_player === brain.name">
-                                    先行
+                                    {{ messages.brains.first_turn }}
                                 </template>
                                 <template v-else>
-                                    後攻
+                                    {{ messages.brains.second_turn }}
                                 </template>
                             </td>
                             <td>
                                 <template
                                     v-if="record.black_player === brain.name && record.count_black > record.count_white || record.white_player === brain.name && record.count_white > record.count_black">
-                                    勝ち
+                                    {{ messages.brains.win }}
                                 </template>
                                 <template v-else-if="record.count_black === record.count_white">
-                                    引き分け
+                                    {{ messages.brains.draw }}
                                 </template>
                                 <template v-else>
-                                    負け
+                                    {{ messages.brains.lose }}
                                 </template>
                                 <template v-if="record.black_player === brain.name">
                                     (<span class="font-bold">{{ record.count_black }}</span>:{{ record.count_white }})

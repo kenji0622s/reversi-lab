@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "lang" => "en",
     "common" => [
         "black" => "Black",
         "white" => "White",
@@ -35,13 +36,43 @@ return [
     ],
     "user_records" => [
         "guest_modal_message" => "Login or register to see your results with Brain",
-        "guest_modal_link" => "See results of guest users"
+        "guest_modal_link" => "See results of guest users",
+        "win_rate" => "Win Rate",
+        "win" => "Win",
+        "draw" => "Draw",
+        "lose" => "Lose",
+        "human" => "Human",
+        "date" => "Date",
+        "result" => "Result",
     ],
     "play" => [
         "black_run" => "Black turn",
         "white_run" => "White turn",
         "reset_game" => "Reset Game",
     ],
+    "simulate" => [
+        "black_wins" => "Black wins",
+        "white_wins" => "White wins",
+        "draws" => "Draws",
+        "simulate_start" => "Start",
+        "simulate_stop" => "Stop",
+        "simulate_reset" => "Reset",
+        "games" => "Games",
+        "store_records" => "Store Records",
+    ],
+    "brains" => [
+        "win_rate" => "Win Rate",
+        "win" => "Win",
+        "draw" => "Draw",
+        "lose" => "Lose",
+        "human" => "Human",
+        "date" => "Date",
+        "result" => "Result",
+        "turn" => "Turn",
+        "first_turn" => "First",
+        "second_turn" => "Second",
+    ],
+  
     "register" => [
         "name" => "Name",
         "email" => "Email",
