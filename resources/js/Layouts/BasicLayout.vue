@@ -100,7 +100,7 @@ const isShowLanguage = ref(false);
                 </div>
 
                 <div class="w-full h-screen bg-neutral-300/90 absolute top-16 left-0" v-if="isShowLanguage">
-                    <div class="w-52 bg-neutral-50 rounded-md p-8 text-center mx-auto mt-24 shadow-md">
+                    <div class="w-52 bg-neutral-50 rounded-md pt-10 pb-6 px-8 text-center mx-auto mt-24 shadow-md">
                         <div class="mb-6 text-center">
                             <a href="/switch-language/en"
                                 class="p-2 font-bold border-2 border-emerald-600 text-emerald-600 rounded-md block shadow-sm">English</a>
@@ -110,8 +110,8 @@ const isShowLanguage = ref(false);
                                 class="p-2 font-bold border-2 border-emerald-600 text-emerald-600 rounded-md block shadow-sm">日本語</a>
                         </div>
                         <button @click="isShowLanguage = false"
-                            class="text-emerald-600 underline px-4 py-2 rounded-md font-bold text-sm">{{
-                            messages.common.close
+                            class="text-emerald-800 px-4 py-2 rounded-md font-bold text-sm">{{
+                                messages.common.close
                             }}</button>
                     </div>
                 </div>
@@ -146,23 +146,19 @@ const isShowLanguage = ref(false);
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')"
-                        v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
-                        {{ messages.menu.records }}
-                    </ResponsiveNavLink>
-                    <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
-                        {{ messages.menu.play }}
-                    </ResponsiveNavLink>
-                    <ResponsiveNavLink :href="route('profile.edit')" v-if="$page.props.auth.user">
-                        {{ messages.menu.profile }}
-                    </ResponsiveNavLink>
-                    <ResponsiveNavLink :href="route('logout')" method="post" as="button"
-                    v-if="$page.props.auth.user">
-                    {{ messages.common.logout }}
-                </ResponsiveNavLink
-
-
-
-
+                            v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
+                            {{ messages.menu.records }}
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
+                            {{ messages.menu.play }}
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('profile.edit')" v-if="$page.props.auth.user">
+                            {{ messages.menu.profile }}
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('logout')" method="post" as="button"
+                            v-if="$page.props.auth.user">
+                            {{ messages.common.logout }}
+                        </ResponsiveNavLink>
                         <!-- Responsive Settings Options -->
                         <!-- <div class="pt-4 pb-1 border-t border-gray-200">
                             <div class="px-4">
