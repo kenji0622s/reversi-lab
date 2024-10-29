@@ -52,10 +52,14 @@ return [
         "reset_game" => "Reset Game",
     ],
     "simulate" => [
+        "select_black_brain" => "Select first turn brain (Black)",
+        "select_white_brain" => "Select second turn brain (White)",
+        "check_explain" => "The simulation will start. It will take about 1 minute.",
+        "simulate_start" => "Start",
+        "ready_game" => "Ready",
         "black_wins" => "Black wins",
         "white_wins" => "White wins",
         "draws" => "Draws",
-        "simulate_start" => "Start",
         "simulate_stop" => "Stop",
         "simulate_reset" => "Reset",
         "games" => "Games",
@@ -73,7 +77,7 @@ return [
         "first_turn" => "First",
         "second_turn" => "Second",
     ],
-  
+
     "register" => [
         "name" => "Name",
         "email" => "Email",

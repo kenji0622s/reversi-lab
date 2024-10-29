@@ -9,7 +9,8 @@ import Board from '@/Components/Board.vue';
 
 import { brains, strategies } from '@/strategies/brains';
 
-defineProps({
+const props = defineProps({
+    brainsModels: Object,
     debug: Boolean,
     messages: Object,
 });
@@ -32,6 +33,16 @@ const countDraws = ref(0);
 const countGames = ref(0);
 const MAX_GAMES = 100;
 const INTERVAL = 1;
+
+
+const blackBrainModel = ref(props.brainsModels[0]);
+const whiteBrainModel = ref(props.brainsModels[0]);
+function getBlackBrainModel() {
+    blackBrainModel.value = props.brainsModels[brains.indexOf(blackPlayer.value)];
+}
+function getWhiteBrainModel() {
+    whiteBrainModel.value = props.brainsModels[brains.indexOf(whitePlayer.value)];
+}
 
 const blackPlayer = ref(brains[0]);
 const whitePlayer = ref(brains[0]);
@@ -121,8 +132,6 @@ function startGame() {
     selectCell(blackAvailableCells.value[randomIndex]);
 }
 
-
-
 function reStartGame() {
     if (countGames.value === MAX_GAMES) {
         return;
@@ -145,6 +154,16 @@ function storeRecords() {
         results: results
     });
 }
+const isReady = ref(false);
+const readyGame = () => {
+    isReady.value = true;
+}
+
+const isCheckExplain = ref(false);
+const checkExplain = () => {
+    isCheckExplain.value = true;
+    startGame();
+}
 </script>
 
 <template>
@@ -159,41 +178,85 @@ function storeRecords() {
         <div class="flex justify-center items-center gap-4 mt-4 w-4/5 mx-auto">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-circle"></i>
-                <select v-model="blackPlayer" :disabled="isGameStart"
-                    class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
-                    <option v-for="brain in brains" :value="brain">{{ brain }}</option>
-                </select>
+                <span>{{ blackPlayer }}</span>
             </div>
             <span class="text-xl">vs</span>
             <div class="flex items-center gap-2">
                 <i class="fa-regular fa-circle"></i>
-                <select v-model="whitePlayer" :disabled="isGameStart"
-                class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
-                <option v-for="brain in brains" :value="brain">{{ brain }}</option>
-            </select>
-        </div>
+                <span>{{ whitePlayer }}</span>
+            </div>
         </div>
 
         <div class="text-center mt-4 mb-4">
-            <span class="font-bold">{{ messages.simulate.black_wins }}: {{ countBlackWins }} | {{ messages.simulate.white_wins }}: {{ countWhiteWins }} | {{ messages.simulate.draws }}: {{ countDraws }}</span>
+            <span class="font-bold">{{ messages.simulate.black_wins }}: {{ countBlackWins }} | {{
+                messages.simulate.white_wins
+                }}: {{ countWhiteWins }} | {{ messages.simulate.draws }}: {{ countDraws }}</span>
         </div>
 
         <Board :blackCells="blackCells" :whiteCells="whiteCells" :whiteAvailableCells="whiteAvailableCells"
             :blackAvailableCells="blackAvailableCells" :turn="turn" :debug="debug" />
 
         <div class="flex justify-center items-center gap-4 mt-6" v-if="countGames === 0">
-            <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold">{{ messages.simulate.simulate_start }}</button>
+            <button @click="startGame" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold">{{
+                messages.simulate.simulate_start }}</button>
         </div>
         <div class="flex justify-center items-center gap-4 mt-6" v-else-if="countGames === MAX_GAMES && isGameEnd">
             <button @click="storeRecords" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold"
                 v-if="$page.props.auth.user">{{ messages.simulate.store_records }}</button>
             <button @click="resetGame" onclick="window.location.reload()"
-                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{ messages.simulate.simulate_reset }}</button>
+                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
+                    messages.simulate.simulate_reset }}</button>
         </div>
         <div class="text-center mt-4 mb-2 font-bold text-sm" v-else>
-            <div class="mt-6 mb-4">{{ countGames }} {{ messages.simulate.games }} / {{ MAX_GAMES }} {{ messages.simulate.games }}</div>
+            <div class="mt-6 mb-4">{{ countGames }} {{ messages.simulate.games }} / {{ MAX_GAMES }} {{
+                messages.simulate.games
+                }}</div>
             <button @click="resetGame" onclick="window.location.reload()"
-                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{ messages.simulate.simulate_stop }}</button>
+                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
+                    messages.simulate.simulate_stop }}</button>
+        </div>
+
+        <div v-if="!isReady || !isCheckExplain"
+            class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-300/90 absolute top-0 left-0">
+            <div class="mt-24 p-8 w-4/5 mx-auto bg-white rounded-md">
+                <div v-if="!isReady">
+                    <div class="mb-4">
+                        <label for="blackBrain" class="block text-sm font-medium leading-6 text-gray-900">{{
+                            messages.simulate.select_black_brain }}</label>
+                        <select v-model="blackPlayer" @change="getBlackBrainModel"
+                            class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
+                            <option v-for="brain in brains" :value="brain">{{ brain }}</option>
+                        </select>
+                        <div class="mt-2 bg-neutral-100 p-2 rounded-md text-xs">
+                            <p v-if="messages.lang === 'ja'">{{ blackBrainModel.description }}</p>
+                            <p v-else>{{ blackBrainModel.description_en }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="whiteBrain" class="block text-sm font-medium leading-6 text-gray-900">{{
+                            messages.simulate.select_white_brain }}</label>
+                        <select v-model="whitePlayer" @change="getWhiteBrainModel"
+                            class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
+                            <option v-for="brain in brains" :value="brain">{{ brain }}</option>
+                        </select>
+                        <div class="mt-2 bg-neutral-100 p-2 rounded-md text-xs">
+                            <p v-if="messages.lang === 'ja'">{{ whiteBrainModel.description }}</p>
+                            <p v-else>{{ whiteBrainModel.description_en }}</p>
+                        </div>
+                    </div>
+
+                    <button @click="readyGame"
+                        class="bg-emerald-500 text-white font-bold block mx-auto px-4 py-2 rounded-md">{{
+                            messages.simulate.ready_game }}</button>
+                </div>
+                <div v-if="!isCheckExplain && isReady">
+                    <p class="mb-4 text-sm">{{ messages.simulate.check_explain }}</p>
+                    <button @click="checkExplain"
+                        class="bg-emerald-500 text-white font-bold block mx-auto px-4 py-2 rounded-md">{{
+                            messages.simulate.simulate_start }}</button>
+                </div>
+            </div>
         </div>
     </BasicLayout>
 </template>

@@ -195,13 +195,13 @@ const readyGame = () => {
                     messages.challenge.reset_game }}</button>
         </div>
 
-        <div v-if="!isReady" class="w-full h-screen bg-neutral-300/90 absolute top-0 left-0">
+        <div v-if="!isReady" class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-300/90 absolute top-0 left-0">
             <div class="mt-24 p-8 w-4/5 mx-auto bg-white rounded-md">
                 <div class="mb-4">
                     <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">{{
                         messages.challenge.select_brain }}</label>
                     <select v-model="brain" @change="getBrainModel"
-                        class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
+                        class="text-sm block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                         <option v-for="brain in brains" :value="brain">{{ brain }}</option>
                     </select>
                     <div class="mt-2 bg-neutral-100 p-2 rounded-md text-xs">
@@ -213,7 +213,7 @@ const readyGame = () => {
                     <label for="yourTurn" class="block text-sm font-medium leading-6 text-gray-900">{{
                         messages.challenge.select_turn }}</label>
                     <select v-model="yourTurn"
-                        class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
+                        class="text-sm block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                         <option v-for="turn in turns" :value="turn">{{ turn === 'black' ?
                             messages.challenge.select_turn_black :
                             messages.challenge.select_turn_white }}</option>
