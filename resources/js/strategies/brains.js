@@ -1,6 +1,7 @@
-import { askBrain1 } from '@/strategies/brain1';
-import { askBrain2 } from '@/strategies/brain2';
-import { askBrain3 } from '@/strategies/brain3';
+import { askBrain1 } from "@/strategies/brains/brain1";
+import { askBrain2 } from "@/strategies/brains/brain2";
+import { askBrain3 } from "@/strategies/brains/brain3";
+import { askBrain4 } from "@/strategies/brains/brain4";
 
-export const brains = ['Brain1', 'Brain2', 'Brain3'];
-export const strategies = [askBrain1, askBrain2, askBrain3];
+export const brains = ["Brain1", "Brain2", "Brain3", "Brain4"];
+export const strategies = [askBrain1, askBrain2, askBrain3, askBrain4];

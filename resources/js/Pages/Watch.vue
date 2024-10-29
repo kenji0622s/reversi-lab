@@ -6,8 +6,8 @@ import getAllDirectionCells from '@/utils/getAllDirectionCells';
 import singleDirectionReverse from '@/utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '@/utils/updateAvailableCells';
 
-import { askBrain1 } from '@/strategies/brain1';
-import { askBrain2 } from '@/strategies/brain2';
+import { askBrain1 } from '@/strategies/brains/brain1';
+import { askBrain2 } from '@/strategies/brains/brain2';
 
 import Board from '@/Components/Board.vue';
 

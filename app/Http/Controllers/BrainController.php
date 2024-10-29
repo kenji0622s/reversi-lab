@@ -126,7 +126,7 @@ class BrainController extends Controller
      */
     public function destroy(Brain $brain)
     {
-        $brain->delete();
-        return to_route('brains.index');
+        // $brain->delete();
+        // return to_route('brains.index');
     }
 }
