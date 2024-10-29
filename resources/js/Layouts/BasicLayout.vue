@@ -73,7 +73,7 @@ const isShowLanguage = ref(false);
                             </div>
                         </div>
 
-                        
+
                         <!-- Hamburger -->
                         <div class="-mr-2 flex items-center sm:hidden gap-2">
                             <button @click="isShowLanguage = !isShowLanguage">
@@ -102,12 +102,17 @@ const isShowLanguage = ref(false);
                 <div class="w-full h-screen bg-neutral-300/90 absolute top-16 left-0" v-if="isShowLanguage">
                     <div class="w-52 bg-neutral-50 rounded-md p-8 text-center mx-auto mt-24 shadow-md">
                         <div class="mb-6 text-center">
-                            <a href="/switch-language/en" class="p-2 font-bold border-2 border-emerald-600 text-emerald-600 rounded-md block shadow-sm">English</a>
+                            <a href="/switch-language/en"
+                                class="p-2 font-bold border-2 border-emerald-600 text-emerald-600 rounded-md block shadow-sm">English</a>
                         </div>
                         <div class="mb-6 text-center">
-                            <a href="/switch-language/ja" class="p-2 font-bold border-2 border-emerald-600 text-emerald-600 rounded-md block shadow-sm">日本語</a>
+                            <a href="/switch-language/ja"
+                                class="p-2 font-bold border-2 border-emerald-600 text-emerald-600 rounded-md block shadow-sm">日本語</a>
                         </div>
-                        <button @click="isShowLanguage = false" class="text-emerald-600 underline px-4 py-2 rounded-md font-bold text-sm">{{ messages.common.close }}</button>
+                        <button @click="isShowLanguage = false"
+                            class="text-emerald-600 underline px-4 py-2 rounded-md font-bold text-sm">{{
+                            messages.common.close
+                            }}</button>
                     </div>
                 </div>
 
@@ -118,6 +123,7 @@ const isShowLanguage = ref(false);
                         <ResponsiveNavLink :href="route('challenge')" :active="route().current('challenge')">
                             {{ messages.menu.challenge }}
                         </ResponsiveNavLink>
+
                         <ResponsiveNavLink :href="route('user-records.index')"
                             :active="route().current('user-records.index')">
                             <template v-if="$page.props.auth.user">
@@ -127,29 +133,32 @@ const isShowLanguage = ref(false);
                                 {{ messages.menu.guest_records }}
                             </template>
                         </ResponsiveNavLink>
+
                         <ResponsiveNavLink :href="route('brains.index')" :active="route().current('brains.index')">
                             {{ messages.menu.brain_list }}
                         </ResponsiveNavLink>
+
                         <!-- <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
                             Watch
                         </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('records.create')" :active="route().current('records.create')">
                             {{ messages.menu.simulation }}
                         </ResponsiveNavLink>
+
                         <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')"
-                            v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
-                            {{ messages.menu.records }}
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
-                            {{ messages.menu.play }}
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('profile.edit')" v-if="$page.props.auth.user">
-                            {{ messages.menu.profile }}
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('logout')" method="post" as="button"
-                            v-if="$page.props.auth.user">
-                            {{ messages.common.logout }}
-                        </ResponsiveNavLink>
+                        v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
+                        {{ messages.menu.records }}
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
+                        {{ messages.menu.play }}
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink :href="route('profile.edit')" v-if="$page.props.auth.user">
+                        {{ messages.menu.profile }}
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink :href="route('logout')" method="post" as="button"
+                    v-if="$page.props.auth.user">
+                    {{ messages.common.logout }}
+                </ResponsiveNavLink
 
 
 

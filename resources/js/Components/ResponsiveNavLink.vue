@@ -12,7 +12,9 @@ const classes = computed(() =>
 </script>
 
 <template>
-    <Link :href="href" :class="classes">
-        <slot />
-    </Link>
+    <div class="border-b border-neutral-300 mx-4 pb-1">
+        <Link :href="href" :class="classes">
+            <slot />
+        </Link>
+    </div>
 </template>
