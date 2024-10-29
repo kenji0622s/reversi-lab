@@ -8,6 +8,8 @@ use App\Models\Record;
 use Inertia\Inertia;
 use App\Models\UserRecord;
 use App\Models\User;
+use App\Models\Brain;
+
 class RecordController extends Controller
 {
     /**
@@ -37,7 +39,9 @@ class RecordController extends Controller
     public function create()
     {
         $debug = config('services.debug');
+        $brainsModels = Brain::all();
         return Inertia::render('Records/Simulate', [
+            'brainsModels' => $brainsModels,
             'debug' => $debug,
             'messages' => trans('messages'),
         ]);

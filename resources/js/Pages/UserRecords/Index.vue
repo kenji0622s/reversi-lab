@@ -101,7 +101,7 @@ const checked = ref(false);
         </div>
 
         <div v-if="!$page.props.auth.user && !checked">
-            <div class="w-full h-screen bg-neutral-300/90 absolute top-0 left-0">
+            <div class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-300/90 absolute top-0 left-0">
                 <div class="mt-24 p-8 w-4/5 mx-auto bg-white rounded-md">
                     <p class="mb-4 text-sm">
                         {{ messages.user_records.guest_modal_message }}
