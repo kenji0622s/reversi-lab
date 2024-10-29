@@ -25,8 +25,8 @@ return [
     "challenge" => [
         "select_brain" => "Select a challenge brain",
         "select_turn" => "Select a turn",
-        "select_turn_black" => "Black (First)",
-        "select_turn_white" => "White",
+        "select_turn_black" => "First (Black)",
+        "select_turn_white" => "Second (White)",
         "game_start" => "Start",
         "your_turn" => "Your turn",
         "brain_turn" => "Brain's turn",
