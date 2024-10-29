@@ -139,8 +139,6 @@ const readyGame = () => {
             Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ brain }}</span>
         </template>
 
-
-
         <!-- <div class="relative">
                 <h2 class="text-center text-2xl font-bold bg-neutral-200 py-2 border-b-2 border-emerald-500">Play Mode</h2>
             <a href="/watch" class="absolute top-1/2 right-4 -translate-y-1/2 text-sm">Watch Mode</a>
@@ -195,7 +193,7 @@ const readyGame = () => {
         </div>
 
         <div v-if="!isReady" class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-300/90 absolute top-0 left-0">
-            <div class="mt-12 p-8 w-4/5 mx-auto bg-white rounded-md">
+            <div class="mt-16 p-8 w-4/5 mx-auto bg-white rounded-md">
                 <div class="mb-4">
                     <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">{{
                         messages.challenge.select_brain }}</label>
