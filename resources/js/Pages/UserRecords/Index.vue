@@ -46,7 +46,7 @@ const checked = ref(false);
 </script>
 
 <template>
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             <template v-if="$page.props.auth.user">
                 My Records

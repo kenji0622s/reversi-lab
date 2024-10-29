@@ -15,7 +15,7 @@ defineProps({
 
     <Head title="Profile" />
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Profile
         </template>

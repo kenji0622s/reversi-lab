@@ -10,7 +10,7 @@ defineProps({
 <template>
 
     <Head title="Brains" />
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Brains
         </template>

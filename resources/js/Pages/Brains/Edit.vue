@@ -18,7 +18,7 @@ const updateBrain = () => {
 <template>
 
     <Head title="Edit Brain" />
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Edit Brain
         </template>

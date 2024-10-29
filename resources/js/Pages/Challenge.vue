@@ -129,7 +129,7 @@ const readyGame = () => {
 
     <Head title="Challenge" />
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ brain }}</span>
         </template>

@@ -15,7 +15,7 @@ const deleteBrain = (id) => {
 
     <Head title="Brain" />
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
 
         <template #title>
             {{ brain.name }}

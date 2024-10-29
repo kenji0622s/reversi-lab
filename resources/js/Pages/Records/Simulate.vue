@@ -150,7 +150,7 @@ function storeRecords() {
 
     <Head title="Simulation" />
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Simulation
         </template>

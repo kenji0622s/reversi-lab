@@ -10,6 +10,7 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 defineProps({
     canResetPassword: Boolean,
     status: String,
+    messages: Object,
 });
 
 const form = useForm({
@@ -26,7 +27,7 @@ const submit = () => {
 </script>
 
 <template>
-    <BasicLayout>
+    <BasicLayout :messages="messages">
 
         <Head title="Log in" />
 
@@ -39,7 +40,7 @@ const submit = () => {
 
             <form @submit.prevent="submit">
                 <div>
-                    <InputLabel for="email" value="Email" />
+                    <InputLabel for="email" :value="messages.login.email" />
 
                     <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
                         autocomplete="username" />
@@ -48,7 +49,7 @@ const submit = () => {
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="password" value="Password" />
+                    <InputLabel for="password" :value="messages.login.password" />
 
                     <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
                         autocomplete="current-password" />
@@ -59,19 +60,25 @@ const submit = () => {
                 <div class="block mt-4">
                     <label class="flex items-center">
                         <Checkbox name="remember" v-model:checked="form.remember" />
-                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                        <span class="ml-2 text-sm text-gray-600">{{ messages.login.remember_me }}</span>
                     </label>
                 </div>
                 <div class="text-center mt-4">
                     <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Log in
+                        {{ messages.common.login }}
                     </PrimaryButton>
                 </div>
 
                 <div class="text-center mt-4">
                     <Link v-if="canResetPassword" :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                        Forgot your password?
+                    class="underline text-xs text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                    {{ messages.login.forgot_password }}
+                    </Link>
+                </div>
+                <div class="text-center mt-2">
+                    <Link :href="route('register')"
+                        class="underline text-xs text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                        {{ messages.login.not_registered }}
                     </Link>
                 </div>
 

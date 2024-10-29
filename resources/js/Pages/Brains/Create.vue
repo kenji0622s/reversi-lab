@@ -15,7 +15,7 @@ const storeBrain = () => {
 <template>
 
     <Head title="Create Brain" />
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Create Brain
         </template>

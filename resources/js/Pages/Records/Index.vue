@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Records
         </template>

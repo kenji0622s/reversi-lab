@@ -76,7 +76,7 @@ const show_records = (index) => {
 
     <Head :title="`${brain.name} Records`" />
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             {{ brain.name }} Records
         </template>

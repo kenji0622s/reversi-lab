@@ -6,6 +6,10 @@ import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
 
+const props = defineProps({
+    messages: Object,
+});
+
 const turns = ['black', 'white'];
 const turn = ref(turns[0]);
 const blackCells = ref([[4, 5], [5, 4]]);
@@ -56,11 +60,11 @@ const selectCell = (cell) => {
         const blackCellsLength = blackCells.value.length;
         const whiteCellsLength = whiteCells.value.length;
         if (blackCellsLength > whiteCellsLength) {
-            gameEndMessage.value = '黒の勝利';
+            gameEndMessage.value = props.messages.play.game_end_black_win;
         } else if (blackCellsLength < whiteCellsLength) {
-            gameEndMessage.value = '白の勝利';
+            gameEndMessage.value = props.messages.play.game_end_white_win;
         } else {
-            gameEndMessage.value = '引き分け';
+            gameEndMessage.value = props.messages.play.game_end_draw;
         }
         isGameEnd.value = true;
     }
@@ -72,7 +76,7 @@ const selectCell = (cell) => {
     <Head title="Play" />
 
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Play Mode
         </template>
@@ -83,11 +87,11 @@ const selectCell = (cell) => {
 
         <div class="text-center mt-4">
             <span v-if="isGameEnd" class="text-xl font-bold">{{ gameEndMessage }}</span>
-            <span v-else class="text-xl font-bold">{{ turn === turns[0] ? '黒の番' : '白の番' }}</span>
+            <span v-else class="text-xl font-bold">{{ turn === turns[0] ? messages.play.black_run : messages.play.white_run }}</span>
         </div>
 
         <div class="text-center mb-4">
-            黒: {{ blackCells.length }} | 白: {{ whiteCells.length }}
+            {{ messages.common.black }}: {{ blackCells.length }} | {{ messages.common.white }}: {{ whiteCells.length }}
         </div>
 
         <div class="grid grid-cols-8 w-80 aspect-square border border-black bg-emerald-500 mx-auto">
@@ -123,7 +127,7 @@ const selectCell = (cell) => {
 
         <div class="flex justify-center items-center mt-6">
             <button @click="resetGame" onclick="window.location.reload()"
-                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">ResetGame</button>
+                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">{{ messages.play.reset_game }}</button>
         </div>
     </BasicLayout>
 </template>
