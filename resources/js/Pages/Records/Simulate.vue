@@ -30,7 +30,7 @@ const countBlackWins = ref(0);
 const countWhiteWins = ref(0);
 const countDraws = ref(0);
 const countGames = ref(0);
-const MAX_GAMES = 10;
+const MAX_GAMES = 100;
 const INTERVAL = 1;
 
 const blackPlayer = ref(brains[0]);
