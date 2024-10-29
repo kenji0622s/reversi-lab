@@ -13,11 +13,11 @@ return [
 
     "menu" => [
         "challenge" => "Challenge",
-        "brain_list" => "Brain List",
+        "brain_list" => "Brain Records",
         "guest_records" => "Guest Records",
         "my_records" => "My Records",
         "simulation" => "Simulation",
-        "records" => "Records (Admin)",
+        "records" => "Data (Admin)",
         "play" => "Two-player Play",
         "profile" => "Profile",
     ],

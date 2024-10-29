@@ -58,18 +58,19 @@ const isShowLanguage = ref(false);
                                 <NavLink :href="route('records.create')" :active="route().current('records.create')">
                                     {{ messages.menu.simulation }}
                                 </NavLink>
+                                <NavLink :href="route('play')" :active="route().current('play')">
+                                    {{ messages.menu.play }}
+                                </NavLink>
+                                <NavLink :href="route('profile.edit')" v-if="$page.props.auth.user">
+                                    {{ messages.menu.profile }}
+                                </NavLink>
+                                <NavLink :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
+                                    {{ messages.common.logout }}
+                                </NavLink>
                                 <NavLink :href="route('records.index')" :active="route().current('records.index')"
                                     v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
                                     {{ messages.menu.records }}
                                 </NavLink>
-                                <NavLink :href="route('play')" :active="route().current('play')">
-                                    {{ messages.menu.play }}
-                                </NavLink>
-                                <NavLink :href="route('profile.edit')" v-if="$page.props.auth.user"> Profile
-                                </NavLink>
-                                <Link :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
-                                    {{ messages.common.logout }}
-                                </Link>
                             </div>
                         </div>
 
@@ -137,17 +138,11 @@ const isShowLanguage = ref(false);
                         <ResponsiveNavLink :href="route('brains.index')" :active="route().current('brains.index')">
                             {{ messages.menu.brain_list }}
                         </ResponsiveNavLink>
-
                         <!-- <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
                             Watch
                         </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('records.create')" :active="route().current('records.create')">
                             {{ messages.menu.simulation }}
-                        </ResponsiveNavLink>
-
-                        <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')"
-                            v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
-                            {{ messages.menu.records }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
                             {{ messages.menu.play }}
@@ -156,9 +151,13 @@ const isShowLanguage = ref(false);
                             {{ messages.menu.profile }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('logout')" method="post" as="button"
-                            v-if="$page.props.auth.user">
-                            {{ messages.common.logout }}
-                        </ResponsiveNavLink>
+                        v-if="$page.props.auth.user">
+                        {{ messages.common.logout }}
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')"
+                        v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
+                        {{ messages.menu.records }}
+                    </ResponsiveNavLink>
                         <!-- Responsive Settings Options -->
                         <!-- <div class="pt-4 pb-1 border-t border-gray-200">
                             <div class="px-4">
