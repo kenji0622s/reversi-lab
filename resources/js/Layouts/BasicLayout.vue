@@ -126,6 +126,8 @@ const showingNavigationDropdown = ref(false);
                             v-if="$page.props.auth.user">
                             Log Out
                         </ResponsiveNavLink>
+                        <a href="/switch-language/ja">日本語</a>
+                        <a href="/switch-language/en">English</a>
                     </div>
 
                     <!-- Responsive Settings Options -->

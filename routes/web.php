@@ -6,6 +6,7 @@ use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\BrainController;
 use App\Http\Controllers\UserRecordController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,6 +35,8 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
+
+Route::get('/switch-language/{locale}', [LanguageController::class, 'switch']);
 
 Route::get('/play', function () {
     return Inertia::render('Play');
