@@ -7,7 +7,12 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
+defineProps({
+    messages: Object,
+});
+
 const showingNavigationDropdown = ref(false);
+const isShowLanguage = ref(false);
 </script>
 
 <template>
@@ -33,45 +38,50 @@ const showingNavigationDropdown = ref(false);
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('challenge')" :active="route().current('challenge')">
-                                    Challenge
+                                    {{ messages.menu.challenge }}
                                 </NavLink>
-                                <NavLink :href="route('user-records.index')" :active="route().current('user-records.index')">
+                                <NavLink :href="route('user-records.index')"
+                                    :active="route().current('user-records.index')">
                                     <template v-if="$page.props.auth.user">
-                                        My Records
+                                        {{ messages.menu.my_records }}
                                     </template>
                                     <template v-else>
-                                        Guest Records
+                                        {{ messages.menu.guest_records }}
                                     </template>
                                 </NavLink>
                                 <NavLink :href="route('brains.index')" :active="route().current('brains.index')">
-                                    Brain List
+                                    {{ messages.menu.brain_list }}
                                 </NavLink>
                                 <!-- <NavLink :href="route('watch')" :active="route().current('watch')">
                                     Watch
                                 </NavLink> -->
                                 <NavLink :href="route('records.create')" :active="route().current('records.create')">
-                                    Simulation
+                                    {{ messages.menu.simulation }}
                                 </NavLink>
                                 <NavLink :href="route('records.index')" :active="route().current('records.index')"
                                     v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
-                                    Records
+                                    {{ messages.menu.records }}
                                 </NavLink>
                                 <NavLink :href="route('play')" :active="route().current('play')">
-                                    Play
+                                    {{ messages.menu.play }}
                                 </NavLink>
                                 <NavLink :href="route('profile.edit')" v-if="$page.props.auth.user"> Profile
                                 </NavLink>
                                 <NavLink :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
-                                    Log Out
+                                    {{ messages.common.logout }}
                                 </NavLink>
                             </div>
-
                         </div>
 
+                        
                         <!-- Hamburger -->
-                        <div class="-mr-2 flex items-center sm:hidden">
+                        <div class="-mr-2 flex items-center sm:hidden gap-2">
+                            <button @click="isShowLanguage = !isShowLanguage">
+                                <!-- <i class="fa-solid fa-globe text-lg text-gray-500"></i> -->
+                                <i class="fa-solid fa-language text-lg text-gray-500"></i>
+                            </button>
                             <button @click="showingNavigationDropdown = !showingNavigationDropdown"
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path :class="{
                                         hidden: showingNavigationDropdown,
@@ -89,61 +99,79 @@ const showingNavigationDropdown = ref(false);
                     </div>
                 </div>
 
+                <div class="w-full h-screen bg-neutral-300/90 absolute top-16 left-0" v-if="isShowLanguage">
+                    <div class="w-40 bg-neutral-50 rounded-md p-8 text-center mx-auto mt-24">
+                        <div class="mb-4 text-center">
+                            <a href="/switch-language/en" class="p-2 font-bold">English</a>
+                        </div>
+                        <div class="mb-6 text-center">
+                            <a href="/switch-language/ja" class="p-2 font-bold">日本語</a>
+                        </div>
+                        <button @click="isShowLanguage = false" class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold text-sm">{{ messages.common.close }}</button>
+                    </div>
+                </div>
+
                 <!-- Responsive Navigation Menu -->
                 <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
                     class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('challenge')" :active="route().current('challenge')">
-                            Challenge
+                            {{ messages.menu.challenge }}
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('user-records.index')" :active="route().current('user-records.index')">
+                        <ResponsiveNavLink :href="route('user-records.index')"
+                            :active="route().current('user-records.index')">
                             <template v-if="$page.props.auth.user">
-                                My Records
+                                {{ messages.menu.my_records }}
                             </template>
                             <template v-else>
-                                Guest Records
+                                {{ messages.menu.guest_records }}
                             </template>
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('brains.index')" :active="route().current('brains.index')">
-                            Brain List
+                            {{ messages.menu.brain_list }}
                         </ResponsiveNavLink>
                         <!-- <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
                             Watch
                         </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('records.create')" :active="route().current('records.create')">
-                            Simulation
+                            {{ messages.menu.simulation }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')"
                             v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
-                            Records
+                            {{ messages.menu.records }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
-                            Play
+                            {{ messages.menu.play }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('profile.edit')" v-if="$page.props.auth.user"> Profile
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('logout')" method="post" as="button"
                             v-if="$page.props.auth.user">
-                            Log Out
+                            {{ messages.common.logout }}
                         </ResponsiveNavLink>
-                    </div>
 
-                    <!-- Responsive Settings Options -->
-                    <!-- <div class="pt-4 pb-1 border-t border-gray-200">
-                        <div class="px-4">
-                            <div class="font-medium text-base text-gray-800">
-                                {{ $page.props.auth.user.name }}
+
+
+
+                        <!-- Responsive Settings Options -->
+                        <!-- <div class="pt-4 pb-1 border-t border-gray-200">
+                            <div class="px-4">
+                                <div class="font-medium text-base text-gray-800">
+                                    {{ $page.props.auth.user.name }}
+                                      test
+                                </div>
+                                <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
+                                <div class="font-medium text-sm text-gray-500">test</div>
                             </div>
-                            <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
-                        </div>
 
-                        <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div> -->
+                            <div class="mt-3 space-y-1">
+                                <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+                                <ResponsiveNavLink :href="route('logout')" method="post" as="button">
+                                    Log Out
+                                </ResponsiveNavLink>
+                            </div>
+                        </div> -->
+                    </div>
                 </div>
             </nav>
 

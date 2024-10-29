@@ -13,6 +13,7 @@ class ChallengeController extends Controller
 
         return Inertia::render('Challenge', [
             'user' => $user,
+            'messages' => trans('messages'),
         ]);
     }
 }

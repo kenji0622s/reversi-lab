@@ -20,6 +20,7 @@ class BrainController extends Controller
     {
         return Inertia::render('Brains/Index', [
             'brains' => Brain::all(),
+            'messages' => trans('messages'),
         ]);
     }
 
@@ -30,7 +31,9 @@ class BrainController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Brains/Create');
+        return Inertia::render('Brains/Create', [
+            'messages' => trans('messages'),
+        ]);
     }
 
     /**
@@ -60,6 +63,7 @@ class BrainController extends Controller
     {
         return Inertia::render('Brains/Show', [
             'brain' => $brain,
+            'messages' => trans('messages'),
         ]);
     }
     public function showRecords(Brain $brain)
@@ -76,6 +80,7 @@ class BrainController extends Controller
             'records' => $records,
             'other_brains' => $other_brains,
             'userRecords' => $userRecords,
+            'messages' => trans('messages'),
         ]);
     }
 
@@ -89,6 +94,7 @@ class BrainController extends Controller
     {
         return Inertia::render('Brains/Edit', [
             'brain' => $brain,
+            'messages' => trans('messages'),
         ]);
     }
 
@@ -119,6 +125,6 @@ class BrainController extends Controller
     public function destroy(Brain $brain)
     {
         $brain->delete();
-        return redirect()->route('brains.index');
+        return to_route('brains.index');
     }
 }

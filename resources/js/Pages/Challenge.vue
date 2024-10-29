@@ -10,6 +10,7 @@ import { brains, strategies } from '../strategies/brains';
 
 const props = defineProps({
     user: Object,
+    messages: Object,
 });
 
 const user = props.user;
@@ -87,13 +88,13 @@ const selectCell = (cell) => {
         const blackCellsLength = blackCells.value.length;
         const whiteCellsLength = whiteCells.value.length;
         if (blackCellsLength > whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength < whiteCellsLength && yourTurn.value === turns[1]) {
-            gameEndMessage.value = 'あなたの勝利';
+            gameEndMessage.value = props.messages.challenge.game_end_win;
             result = 'win';
         } else if (blackCellsLength < whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength > whiteCellsLength && yourTurn.value === turns[1]) {
-            gameEndMessage.value = 'Brainの勝利';
+            gameEndMessage.value = props.messages.challenge.game_end_lose;
             result = 'lose';
         } else {
-            gameEndMessage.value = '引き分け';
+            gameEndMessage.value = props.messages.challenge.game_end_draw;
             result = 'draw';
         }
         isGameEnd.value = true;
@@ -128,7 +129,7 @@ const readyGame = () => {
 
     <Head title="Challenge" />
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ brain }}</span>
         </template>
@@ -144,11 +145,11 @@ const readyGame = () => {
             <span v-if="isGameEnd" class="text-xl font-bold">{{ gameEndMessage }}</span>
             <span v-else class="text-xl font-bold">{{ (turn === turns[0] && yourTurn === turns[0]) || (turn === turns[1]
                 &&
-                yourTurn === turns[1]) ? 'あなたの番' : 'Brainの番' }}</span>
+                yourTurn === turns[1]) ? messages.challenge.your_turn : messages.challenge.brain_turn }}</span>
         </div>
 
         <div class="text-center mb-4">
-            黒: {{ blackCells.length }} | 白: {{ whiteCells.length }}
+            {{ messages.common.black }}: {{ blackCells.length }} | {{ messages.common.white }}: {{ whiteCells.length }}
         </div>
 
         <div class="grid grid-cols-8 w-80 aspect-square border border-black bg-emerald-500 mx-auto">
@@ -184,29 +185,34 @@ const readyGame = () => {
 
         <div class="flex justify-center items-center mt-6">
             <button @click="resetGame" onclick="window.location.reload()"
-                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md">ResetGame</button>
+                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
+                    messages.challenge.reset_game }}</button>
         </div>
 
         <div v-if="!isReady" class="w-full h-screen bg-neutral-300/90 absolute top-0 left-0">
             <div class="mt-24 p-8 w-4/5 mx-auto bg-white rounded-md">
                 <div class="mb-4">
-                    <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">挑戦するBrain</label>
+                    <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">{{
+                        messages.challenge.select_brain }}</label>
                     <select v-model="brain"
                         class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                         <option v-for="brain in brains" :value="brain">{{ brain }}</option>
                     </select>
                 </div>
                 <div class="mb-6">
-                    <label for="yourTurn" class="block text-sm font-medium leading-6 text-gray-900">あなたの番</label>
+                    <label for="yourTurn" class="block text-sm font-medium leading-6 text-gray-900">{{
+                        messages.challenge.select_turn }}</label>
                     <select v-model="yourTurn"
                         class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
-                        <option v-for="turn in turns" :value="turn">{{ turn === 'black' ? '黒' : '白' }}</option>
+                        <option v-for="turn in turns" :value="turn">{{ turn === 'black' ?
+                            messages.challenge.select_turn_black :
+                            messages.challenge.select_turn_white }}</option>
                     </select>
                 </div>
 
                 <button @click="readyGame"
-                    class="bg-emerald-500 text-white text-lg font-bold block mx-auto px-4 py-2 rounded-md">Game
-                    Start</button>
+                    class="bg-emerald-500 text-white font-bold block mx-auto px-4 py-2 rounded-md">{{
+                        messages.challenge.game_start }}</button>
             </div>
         </div>
 

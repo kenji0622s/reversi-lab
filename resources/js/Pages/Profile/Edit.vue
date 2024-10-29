@@ -8,6 +8,7 @@ import { Head } from '@inertiajs/vue3';
 defineProps({
     mustVerifyEmail: Boolean,
     status: String,
+    messages: Object,
 });
 </script>
 
@@ -15,7 +16,7 @@ defineProps({
 
     <Head title="Profile" />
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Profile
         </template>

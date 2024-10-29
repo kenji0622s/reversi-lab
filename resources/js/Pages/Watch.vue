@@ -105,7 +105,7 @@ function startGame() {
 
     <Head title="Watch" />
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Watch
         </template>

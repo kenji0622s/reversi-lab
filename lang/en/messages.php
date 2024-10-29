@@ -1,0 +1,90 @@
+<?php
+
+return [
+    "lang" => "en",
+    "common" => [
+        "black" => "Black",
+        "white" => "White",
+        "login" => "Login",
+        "register" => "Register",
+        "logout" => "Logout",
+        "close" => "Close",
+    ],
+
+    "menu" => [
+        "challenge" => "Challenge",
+        "brain_list" => "Brain List",
+        "guest_records" => "Guest Records",
+        "my_records" => "My Records",
+        "simulation" => "Simulation",
+        "records" => "Records (Admin)",
+        "play" => "Two-player Play",
+    ],
+
+    "challenge" => [
+        "select_brain" => "Select a challenge brain",
+        "select_turn" => "Select a turn",
+        "select_turn_black" => "Black (First)",
+        "select_turn_white" => "White",
+        "game_start" => "Start",
+        "your_turn" => "Your turn",
+        "brain_turn" => "Brain's turn",
+        "reset_game" => "Reset Game",
+        "game_end_win" => "You win",
+        "game_end_lose" => "Brain wins",
+        "game_end_draw" => "Draw",
+    ],
+    "user_records" => [
+        "guest_modal_message" => "Login or register to see your results with Brain",
+        "guest_modal_link" => "See results of guest users",
+        "win_rate" => "Win Rate",
+        "win" => "Win",
+        "draw" => "Draw",
+        "lose" => "Lose",
+        "human" => "Human",
+        "date" => "Date",
+        "result" => "Result",
+    ],
+    "play" => [
+        "black_run" => "Black turn",
+        "white_run" => "White turn",
+        "reset_game" => "Reset Game",
+    ],
+    "simulate" => [
+        "black_wins" => "Black wins",
+        "white_wins" => "White wins",
+        "draws" => "Draws",
+        "simulate_start" => "Start",
+        "simulate_stop" => "Stop",
+        "simulate_reset" => "Reset",
+        "games" => "Games",
+        "store_records" => "Store Records",
+    ],
+    "brains" => [
+        "win_rate" => "Win Rate",
+        "win" => "Win",
+        "draw" => "Draw",
+        "lose" => "Lose",
+        "human" => "Human",
+        "date" => "Date",
+        "result" => "Result",
+        "turn" => "Turn",
+        "first_turn" => "First",
+        "second_turn" => "Second",
+    ],
+  
+    "register" => [
+        "name" => "Name",
+        "email" => "Email",
+        "password" => "Password",
+        "password_confirmation" => "Confirm Password",
+        "already_registered" => "Already registered?",
+    ],
+    "login" => [
+        "email" => "Email",
+        "password" => "Password",
+        "remember_me" => "Remember me",
+        "forgot_password" => "Forgot your password?",
+        "not_registered" => "Don't have an account?",
+    ]
+];

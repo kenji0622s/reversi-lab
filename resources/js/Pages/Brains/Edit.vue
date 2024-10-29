@@ -4,6 +4,7 @@ import { Head, router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 const props = defineProps({
     brain: Object,
+    messages: Object,
 });
 const form = reactive({
     name: props.brain.name,
@@ -18,7 +19,7 @@ const updateBrain = () => {
 <template>
 
     <Head title="Edit Brain" />
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Edit Brain
         </template>

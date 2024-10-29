@@ -4,11 +4,12 @@ import { Link } from '@inertiajs/vue3';
 
 defineProps({
     records: Array,
+    messages: Object,
 });
 </script>
 
 <template>
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             Records
         </template>

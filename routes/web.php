@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WatchController;
+use App\Http\Controllers\PlayController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\BrainController;
 use App\Http\Controllers\UserRecordController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\WatchController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,11 +34,17 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', function () {
-    return Inertia::render('Home');
+    return Inertia::render('Home', [
+        'messages' => trans('messages'),
+    ]);
 })->name('home');
 
+Route::get('/switch-language/{locale}', [LanguageController::class, 'switch']);
+
 Route::get('/play', function () {
-    return Inertia::render('Play');
+    return Inertia::render('Play', [
+        'messages' => trans('messages'),
+    ]);
 })->name('play');
 
 // Route::get('/watch', [WatchController::class, 'index'])->name('watch');

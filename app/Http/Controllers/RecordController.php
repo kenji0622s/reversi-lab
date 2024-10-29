@@ -19,6 +19,7 @@ class RecordController extends Controller
         $records = Record::all()->sortByDesc('id')->values()->toArray();
         return Inertia::render('Records/Index', [
             'records' => $records,
+            'messages' => trans('messages'),
         ]);
     }
 
@@ -32,6 +33,7 @@ class RecordController extends Controller
         $debug = config('services.debug');
         return Inertia::render('Records/Simulate', [
             'debug' => $debug,
+            'messages' => trans('messages'),
         ]);
     }
 

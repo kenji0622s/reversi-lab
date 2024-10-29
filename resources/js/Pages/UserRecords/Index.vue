@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 
 const props = defineProps({
     userRecords: Object,
+    messages: Object,
 });
 
 // グループ化されたデータを配列に変換
@@ -45,7 +46,7 @@ const checked = ref(false);
 </script>
 
 <template>
-    <BasicLayout>
+    <BasicLayout :messages="messages">
         <template #title>
             <template v-if="$page.props.auth.user">
                 My Records
@@ -54,29 +55,17 @@ const checked = ref(false);
                 Guest Records
             </template>
         </template>
-        <div class="w-4/5 mx-auto">
-
-            <div class="my-4">
-                <div class="text-lg font-bold">
-                    <template v-if="$page.props.auth.user">
-                        My Records
-                    </template>
-                    <template v-else>
-                        Guest Records
-                    </template>
-                </div>
-            </div>
-
+        <div class="w-4/5 mx-auto mt-6">
             <div v-for="(group, brainId) in groupedRecords" :key="brainId"
                 class="mb-4 bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm">
                 <div @click="show_records(brainId)">
                     <p class="text-lg font-bold">vs {{ group[0].brain.name }}</p>
-                    <p class="mb-2">{{ group[0].brain.description }}</p>
+                    <p class="mb-2" v-if="messages.lang === 'ja'">{{ group[0].brain.description }}</p>
+                    <p class="mb-2" v-else>{{ group[0].brain.description_en }}</p>
                     <div class="flex justify-between items-center">
                         <!-- <p class="font-bold">勝率 10%（ 12 勝 12 分 12 敗）</p> -->
-                        <p class="font-bold">勝率{{ groupedRecordsResult[brainId].rate }}（{{
-                            groupedRecordsResult[brainId].win
-                        }}勝 {{ groupedRecordsResult[brainId].draw }}分 {{ groupedRecordsResult[brainId].lose }}敗）
+                        <p class="font-bold">{{ messages.user_records.win_rate }} {{ groupedRecordsResult[brainId].rate }}<br>
+                            {{ groupedRecordsResult[brainId].win }} {{ messages.user_records.win }} | {{ groupedRecordsResult[brainId].draw }} {{ messages.user_records.draw }} | {{ groupedRecordsResult[brainId].lose }} {{ messages.user_records.lose }}
                         </p>
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500"
                             v-if="!show_records_flag[brainId]"></i>
@@ -84,11 +73,11 @@ const checked = ref(false);
                     </div>
 
                 </div>
-                <table class="text-center mx-auto mt-4" v-if="show_records_flag[brainId]">
+                <table class="text-center mx-auto mt-4 w-full" v-if="show_records_flag[brainId]">
                     <thead>
                         <tr>
-                            <th class="w-24">日付</th>
-                            <th class="w-24">結果</th>
+                            <th class="w-1/2">{{ messages.user_records.date }}</th>
+                            <th class="w-1/2">{{ messages.user_records.result }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,13 +85,13 @@ const checked = ref(false);
                             <td>{{ dayjs(record.created_at).format('YYYY/MM/DD') }}</td>
                             <td>
                                 <template v-if="record.result === 'win'">
-                                    勝ち
+                                    {{ messages.user_records.win }}
                                 </template>
                                 <template v-else-if="record.result === 'draw'">
-                                    引き分け
+                                    {{ messages.user_records.draw }}
                                 </template>
                                 <template v-else>
-                                    負け
+                                    {{ messages.user_records.lose }}
                                 </template>
                             </td>
                         </tr>
@@ -115,19 +104,19 @@ const checked = ref(false);
             <div class="w-full h-screen bg-neutral-300/90 absolute top-0 left-0">
                 <div class="mt-24 p-8 w-4/5 mx-auto bg-white rounded-md">
                     <p class="mb-4 text-sm">
-                        ログイン・登録するとBrainとの対戦成績を確認できます。
+                        {{ messages.user_records.guest_modal_message }}
                     </p>
                     <div class="flex justify-center items-center gap-4">
                         <Link :href="route('login')" class="text-sm border-2 border-emerald-500 bg-emerald-500 text-white font-bold block mx-auto px-4 py-2 rounded-md w-1/2 text-center">
-                            ログイン
+                            {{ messages.common.login }}
                         </Link>
                         <Link :href="route('register')" class="text-sm border-2 border-emerald-500 text-emerald-500 font-bold block mx-auto px-4 py-2 rounded-md w-1/2 text-center">
-                            新規登録
+                            {{ messages.common.register }}
                         </Link>
                     </div>
                     <div class="mt-4 text-center">
                         <button class="text-emerald-600 text-xs font-bold" @click="checked = true">
-                            未登録ユーザーの対戦成績を見る
+                            {{ messages.user_records.guest_modal_link }}
                         </button>
                     </div>
 

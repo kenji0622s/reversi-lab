@@ -4,6 +4,7 @@ import { Head, Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
     brain: Object,
+    messages: Object,
 });
 
 const deleteBrain = (id) => {
@@ -15,7 +16,7 @@ const deleteBrain = (id) => {
 
     <Head title="Brain" />
 
-    <BasicLayout>
+    <BasicLayout :messages="messages">
 
         <template #title>
             {{ brain.name }}
