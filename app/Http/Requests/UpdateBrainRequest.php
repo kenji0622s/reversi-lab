@@ -26,6 +26,7 @@ class UpdateBrainRequest extends FormRequest
         return [
             'name' => 'required|string|max:30',
             'description' => 'nullable|string|max:255',
+            'description_en' => 'nullable|string|max:255',
         ];
     }
 }

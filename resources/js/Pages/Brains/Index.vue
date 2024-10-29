@@ -15,7 +15,7 @@ defineProps({
         <template #title>
             Brains
         </template>
-        <div class="w-4/5 mx-auto mt-4">
+        <div class="w-4/5 mx-auto mt-6">
             <template v-for="(brain, i) in brains" :key="i">
                 <a :href="route('brains.records', brain.id)">
                     <div
@@ -29,7 +29,7 @@ defineProps({
                     </div>
                 </a>
 
-                <div class="text-right" v-if="$page.props.auth.user">
+                <div class="text-right" v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
                     <a :href="route('brains.show', brain.id)" class="text-emerald-600 text-xs inline-block py-1 px-2">
                         編集
                     </a>
@@ -37,7 +37,7 @@ defineProps({
                 <div class="mb-4"></div>
             </template>
         </div>
-        <div class="fixed bottom-4 right-4" v-if="$page.props.auth.user">
+        <div class="fixed bottom-4 right-4" v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
             <Link as="button" :href="route('brains.create')"
                 class="bg-emerald-500 text-white text-2xl rounded-md font-bold md:w-16 md:h-16 w-12 h-12 flex items-center justify-center">
             +

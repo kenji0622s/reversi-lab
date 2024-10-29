@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
 
-const props = defineProps(['href', 'active']);
+const props = defineProps(['href', 'active', 'method', 'as']);
 
 const classes = computed(() =>
     props.active
@@ -13,7 +13,7 @@ const classes = computed(() =>
 
 <template>
     <div class="border-b border-neutral-300 mx-4 pb-1">
-        <Link :href="href" :class="classes">
+        <Link :href="href" :class="classes" :method="method" :as="as">
             <slot />
         </Link>
     </div>

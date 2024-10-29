@@ -48,6 +48,7 @@ class BrainController extends Controller
             [
                 'name' => $request->name,
                 'description' => $request->description,
+                'description_en' => $request->description_en,
             ]
         );
         return to_route('brains.index');
@@ -111,6 +112,7 @@ class BrainController extends Controller
             [
                 'name' => $request->name,
                 'description' => $request->description,
+                'description_en' => $request->description_en,
             ]
         );
         return to_route('brains.index');

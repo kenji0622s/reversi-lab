@@ -67,9 +67,9 @@ const isShowLanguage = ref(false);
                                 </NavLink>
                                 <NavLink :href="route('profile.edit')" v-if="$page.props.auth.user"> Profile
                                 </NavLink>
-                                <NavLink :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
+                                <Link :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
                                     {{ messages.common.logout }}
-                                </NavLink>
+                                </Link>
                             </div>
                         </div>
 

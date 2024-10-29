@@ -9,6 +9,7 @@ return [
         "register" => "新規登録",
         "logout" => "ログアウト",
         "close" => "閉じる",
+        "back" => "戻る",
     ],
 
     "menu" => [
@@ -17,7 +18,7 @@ return [
         "guest_records" => "ゲスト成績",
         "my_records" => "自分の成績",
         "simulation" => "シミュレーション",
-        "records" => "記録 (Admin)",
+        "records" => "成績 (Admin)",
         "play" => "二人対戦",
         "profile" => "プロフィール",
     ],

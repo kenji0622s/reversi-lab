@@ -39,10 +39,6 @@ defineProps({
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">
             {{ messages.menu.simulation }}
             </Link>
-            <Link :href="route('records.index')" v-if="$page.props.auth.user && $page.props.auth.user.is_admin"
-                class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">
-            {{ messages.menu.records }}
-            </Link>
             <Link :href="route('play')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">
             {{ messages.menu.play }}
@@ -57,6 +53,11 @@ defineProps({
                 {{ messages.common.register }}
                 </Link>
             </div>
+            <Link :href="route('records.index')" v-if="$page.props.auth.user && $page.props.auth.user.is_admin"
+                class="border-2 border-emerald-500 text-lg font-bold text-center text-emerald-500 p-2 rounded-md shadow-md w-60">
+            {{ messages.menu.records }}
+            </Link>
+
 
         </div>
     </BasicLayout>

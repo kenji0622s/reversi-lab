@@ -83,7 +83,12 @@ const show_records = (index) => {
         </template>
         <div class="w-4/5 mx-auto">
 
-            <div class="my-4">
+            <a :href="route('brains.index')" class="text-emerald-600 text-xs inline-block py-1 mt-2">
+                <i class="fa-solid fa-angle-left"></i>
+                {{ messages.common.back }}
+            </a>
+
+            <div class="mb-4">
                 <div class="text-lg font-bold">{{ brain.name }}</div>
 
                 <div v-if="messages.lang === 'ja'">{{ brain.description }}</div>
