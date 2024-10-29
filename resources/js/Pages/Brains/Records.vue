@@ -94,8 +94,8 @@ const show_records = (index) => {
                 <div @click="show_human_records_flag = !show_human_records_flag">
                     <p class="text-lg font-bold">vs {{ messages.brains.human }}</p>
                     <div class="flex justify-between items-center">
-                        <p class="font-bold">{{ messages.brains.win_rate }} {{ humanResult.rate }}<br>
-                            {{humanResult.win}} {{ messages.brains.win }} | {{ humanResult.draw }} {{ messages.brains.draw }} | {{ humanResult.lose }} {{ messages.brains.lose }}
+                        <p class="font-bold">{{ messages.brains.win_rate }} {{ humanResult.rate }}
+                            <span class="block text-sm">{{ messages.brains.win }} {{ humanResult.win }} | {{ messages.brains.lose }} {{ humanResult.lose }} | {{ messages.brains.draw }} {{ humanResult.draw }}</span>
                         </p>
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500" v-if="!show_human_records_flag"></i>
                         <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>
@@ -137,8 +137,8 @@ const show_records = (index) => {
                     <p class="mb-2" v-if="messages.lang === 'ja'">{{ other_brain.description }}</p>
                     <p class="mb-2" v-else>{{ other_brain.description_en }}</p>
                     <div class="flex justify-between items-center">
-                        <p class="font-bold">{{ messages.brains.win_rate }} {{ result[i].rate }}<br>
-                            {{ result[i].win }} {{ messages.brains.win }} | {{ result[i].draw }} {{ messages.brains.draw }} | {{ result[i].lose }} {{ messages.brains.lose }}
+                        <p class="font-bold">{{ messages.brains.win_rate }} {{ result[i].rate }}
+                            <span class="block text-sm">{{ messages.brains.win }} {{ result[i].win }} | {{ messages.brains.lose }} {{ result[i].lose }} | {{ messages.brains.draw }} {{ result[i].draw }}</span>
                         </p>
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500" v-if="!show_records_flag[i]"></i>
                         <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>

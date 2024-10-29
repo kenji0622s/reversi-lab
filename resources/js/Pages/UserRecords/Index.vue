@@ -64,8 +64,8 @@ const checked = ref(false);
                     <p class="mb-2" v-else>{{ group[0].brain.description_en }}</p>
                     <div class="flex justify-between items-center">
                         <!-- <p class="font-bold">勝率 10%（ 12 勝 12 分 12 敗）</p> -->
-                        <p class="font-bold">{{ messages.user_records.win_rate }} {{ groupedRecordsResult[brainId].rate }}<br>
-                            {{ groupedRecordsResult[brainId].win }} {{ messages.user_records.win }} | {{ groupedRecordsResult[brainId].draw }} {{ messages.user_records.draw }} | {{ groupedRecordsResult[brainId].lose }} {{ messages.user_records.lose }}
+                        <p class="font-bold">{{ messages.user_records.win_rate }} {{ groupedRecordsResult[brainId].rate }}
+                            <span class="block text-sm">{{ messages.user_records.win }} {{ groupedRecordsResult[brainId].win }} | {{ messages.user_records.lose }} {{ groupedRecordsResult[brainId].lose }} | {{ messages.user_records.draw }} {{ groupedRecordsResult[brainId].draw }}</span>
                         </p>
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500"
                             v-if="!show_records_flag[brainId]"></i>
