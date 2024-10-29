@@ -110,7 +110,7 @@ const isShowLanguage = ref(false);
                                 class="p-2 font-bold border-2 border-emerald-600 text-emerald-600 rounded-md block shadow-sm">日本語</a>
                         </div>
                         <button @click="isShowLanguage = false"
-                            class="text-emerald-700 px-4 py-2 rounded-md font-bold text-sm">{{
+                            class="text-emerald-600 px-4 py-2 rounded-md font-bold text-sm">{{
                                 messages.common.close
                             }}</button>
                     </div>
