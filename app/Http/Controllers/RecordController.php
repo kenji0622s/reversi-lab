@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateRecordRequest;
 use App\Models\Record;
 use Inertia\Inertia;
 use App\Models\UserRecord;
+use App\Models\User;
 class RecordController extends Controller
 {
     /**
@@ -19,9 +20,11 @@ class RecordController extends Controller
 
         $records = Record::all()->sortByDesc('id')->values()->toArray();
         $userRecords = UserRecord::all()->sortByDesc('id')->values()->toArray();
+        $users = User::all();
         return Inertia::render('Records/Index', [
             'records' => $records,
             'userRecords' => $userRecords,
+            'users' => $users,
             'messages' => trans('messages'),
         ]);
     }

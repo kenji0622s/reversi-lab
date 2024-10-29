@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 defineProps({
     records: Array,
     userRecords: Array,
+    users: Array,
     messages: Object,
 });
 
@@ -71,7 +72,9 @@ const show_users_flag = ref(false);
                     <tbody>
                         <tr v-for="userRecord in userRecords" :key="userRecord.id">
                             <td>{{ userRecord.id }}</td>
-                            <td>{{ userRecord.user_id }}</td>
+                            <td>
+                                {{ users.find(user => user.id === userRecord.user_id)?.name || 'Guest' }}
+                            </td>
                             <td>{{ userRecord.brain_id }}</td>
                             <td>
                                 <template v-if="userRecord.result == 'win'">
