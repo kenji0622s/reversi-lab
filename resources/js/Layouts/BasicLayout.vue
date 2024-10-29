@@ -143,7 +143,8 @@ const isShowLanguage = ref(false);
                         <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
                             {{ messages.menu.play }}
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('profile.edit')" v-if="$page.props.auth.user"> Profile
+                        <ResponsiveNavLink :href="route('profile.edit')" v-if="$page.props.auth.user">
+                            {{ messages.menu.profile }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('logout')" method="post" as="button"
                             v-if="$page.props.auth.user">

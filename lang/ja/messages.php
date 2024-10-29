@@ -19,6 +19,7 @@ return [
         "simulation" => "シミュレーション",
         "records" => "記録 (Admin)",
         "play" => "二人対戦",
+        "profile" => "プロフィール",
     ],
 
     "challenge" => [

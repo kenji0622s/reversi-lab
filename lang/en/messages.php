@@ -19,6 +19,7 @@ return [
         "simulation" => "Simulation",
         "records" => "Records (Admin)",
         "play" => "Two-player Play",
+        "profile" => "Profile",
     ],
 
     "challenge" => [
