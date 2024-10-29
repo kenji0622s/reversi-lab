@@ -75,7 +75,6 @@ const selectCell = (cell) => {
 
     <Head title="Play" />
 
-
     <BasicLayout :messages="messages">
         <template #title>
             Play Mode

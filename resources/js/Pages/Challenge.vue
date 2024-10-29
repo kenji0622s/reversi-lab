@@ -5,7 +5,6 @@ import { ref } from 'vue';
 import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
-
 import { brains, strategies } from '../strategies/brains';
 
 const props = defineProps({
@@ -196,7 +195,7 @@ const readyGame = () => {
         </div>
 
         <div v-if="!isReady" class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-300/90 absolute top-0 left-0">
-            <div class="mt-24 p-8 w-4/5 mx-auto bg-white rounded-md">
+            <div class="mt-12 p-8 w-4/5 mx-auto bg-white rounded-md">
                 <div class="mb-4">
                     <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">{{
                         messages.challenge.select_brain }}</label>
