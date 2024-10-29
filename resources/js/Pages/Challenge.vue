@@ -10,6 +10,7 @@ import { brains, strategies } from '../strategies/brains';
 
 const props = defineProps({
     user: Object,
+    brainsModels: Object,
     messages: Object,
 });
 
@@ -21,6 +22,11 @@ if (user) {
 const turns = ['black', 'white'];
 
 const brain = ref(brains[0]);
+const brainModel = ref(props.brainsModels[0]);
+function getBrainModel() {
+    brainModel.value = props.brainsModels[brains.indexOf(brain.value)];
+}
+
 const yourTurn = ref(turns[0]);
 const brainTurn = ref(turns[0]);
 const turn = ref(turns[0]);
@@ -194,10 +200,14 @@ const readyGame = () => {
                 <div class="mb-4">
                     <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">{{
                         messages.challenge.select_brain }}</label>
-                    <select v-model="brain"
+                    <select v-model="brain" @change="getBrainModel"
                         class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                         <option v-for="brain in brains" :value="brain">{{ brain }}</option>
                     </select>
+                    <div class="mt-2 bg-neutral-100 p-2 rounded-md text-xs">
+                        <p v-if="messages.lang === 'ja'">{{ brainModel.description }}</p>
+                        <p v-else>{{ brainModel.description_en }}</p>
+                    </div>
                 </div>
                 <div class="mb-6">
                     <label for="yourTurn" class="block text-sm font-medium leading-6 text-gray-900">{{
