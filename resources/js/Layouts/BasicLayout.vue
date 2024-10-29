@@ -100,7 +100,7 @@ const isShowLanguage = ref(false);
                 </div>
 
                 <div class="w-full h-screen bg-neutral-300/90 absolute top-16 left-0" v-if="isShowLanguage">
-                    <div class="w-52 bg-neutral-50 rounded-md p-8 text-center mx-auto mt-24">
+                    <div class="w-52 bg-neutral-50 rounded-md p-8 text-center mx-auto mt-24 shadow-md">
                         <div class="mb-6 text-center">
                             <a href="/switch-language/en" class="p-2 font-bold border-2 border-emerald-600 text-emerald-600 rounded-md block shadow-sm">English</a>
                         </div>
