@@ -4,6 +4,8 @@ return [
     "common" => [
         "black" => "黒",
         "white" => "白",
+        "login" => "ログイン",
+        "register" => "新規登録",
     ],
     "challenge" => [
         "select_brain" => "挑戦するBrainを選択してください",
@@ -17,5 +19,9 @@ return [
         "game_end_win" => "あなたの勝ち",
         "game_end_lose" => "Brainの勝ち",
         "game_end_draw" => "引き分け",
-    ]
+    ],
+    "user_records" => [
+        "guest_modal_message" => "ログイン・登録するとBrainとの対戦成績を確認できます",  
+        "guest_modal_link" => "ゲストユーザーの対戦成績を見る"
+    ],
 ];

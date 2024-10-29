@@ -24,6 +24,7 @@ class UserRecordController extends Controller
         // dd($userRecords);
         return Inertia::render('UserRecords/Index', [
             'userRecords' => $userRecords,
+            'messages' => trans('messages'),
         ]);
     }
 

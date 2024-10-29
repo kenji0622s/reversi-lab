@@ -4,6 +4,8 @@ return [
     "common" => [
         "black" => "Black",
         "white" => "White",
+        "login" => "Login",
+        "register" => "register",
     ],
     "challenge" => [
         "select_brain" => "Select a challenge brain",
@@ -17,5 +19,9 @@ return [
         "game_end_win" => "You win",
         "game_end_lose" => "Brain wins",
         "game_end_draw" => "Draw",
+    ],
+    "user_records" =>[
+        "guest_modal_message" => "Login or register to see your results with Brain",  
+        "guest_modal_link" => "See results of guest users"
     ]
 ];

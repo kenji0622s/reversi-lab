@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 
 const props = defineProps({
     userRecords: Object,
+    messages: Object,
 });
 
 // グループ化されたデータを配列に変換
@@ -115,19 +116,19 @@ const checked = ref(false);
             <div class="w-full h-screen bg-neutral-300/90 absolute top-0 left-0">
                 <div class="mt-24 p-8 w-4/5 mx-auto bg-white rounded-md">
                     <p class="mb-4 text-sm">
-                        ログイン・登録するとBrainとの対戦成績を確認できます。
+                        {{ messages.user_records.guest_modal_message }}
                     </p>
                     <div class="flex justify-center items-center gap-4">
                         <Link :href="route('login')" class="text-sm border-2 border-emerald-500 bg-emerald-500 text-white font-bold block mx-auto px-4 py-2 rounded-md w-1/2 text-center">
-                            ログイン
+                            {{ messages.common.login }}
                         </Link>
                         <Link :href="route('register')" class="text-sm border-2 border-emerald-500 text-emerald-500 font-bold block mx-auto px-4 py-2 rounded-md w-1/2 text-center">
-                            新規登録
+                            {{ messages.common.register }}
                         </Link>
                     </div>
                     <div class="mt-4 text-center">
                         <button class="text-emerald-600 text-xs font-bold" @click="checked = true">
-                            未登録ユーザーの対戦成績を見る
+                            {{ messages.user_records.guest_modal_link }}
                         </button>
                     </div>
 
