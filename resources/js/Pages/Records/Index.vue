@@ -33,10 +33,10 @@ const show_users_flag = ref(false);
                 <table class="w-full" v-if="show_brains_flag">
                     <thead>
                         <tr>
-                            <th class="w-4">ID</th>
-                            <th class="w-16">黒</th>
-                            <th class="w-16">白</th>
-                            <th>結果</th>
+                            <th>ID</th>
+                            <th>Black</th>
+                            <th>White</th>
+                            <th>Winner</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,12 +46,12 @@ const show_users_flag = ref(false);
                             <td>{{ record.white_player }}</td>
                             <td>
                                 <template v-if="record.count_black > record.count_white">
-                                    黒勝ち
+                                    Black
                                 </template>
                                 <template v-else-if="record.count_black < record.count_white">
-                                    白勝ち
+                                    White
                                 </template>
-                                <template v-else>引き分け</template>
+                                <template v-else>-</template>
                                 ({{ record.count_black }}:{{ record.count_white }})
                             </td>
                         </tr>
@@ -61,11 +61,11 @@ const show_users_flag = ref(false);
                 <table class="w-full" v-if="show_users_flag">
                     <thead>
                         <tr>
-                            <th class="w-4">ID</th>
+                            <th>ID</th>
                             <th>User ID</th>
                             <th>BrainID</th>
-                            <th>結果</th>
-                            <th>対戦日</th>
+                            <th>Winner</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,7 +73,16 @@ const show_users_flag = ref(false);
                             <td>{{ userRecord.id }}</td>
                             <td>{{ userRecord.user_id }}</td>
                             <td>{{ userRecord.brain_id }}</td>
-                            <td>{{ userRecord.result }}</td>
+                            <td>
+                                <template v-if="userRecord.result == 'win'">
+                                    user
+                                </template>
+                                <template v-else-if="userRecord.result == 'lose'">
+                                    brain
+                                </template>
+                                <template v-else>-</template>
+                             
+                            </td>
                             <td>{{ dayjs(userRecord.created_at).format('YYYY/MM/DD') }}</td>
                         </tr>
                     </tbody>
