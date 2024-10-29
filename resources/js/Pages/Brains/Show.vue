@@ -69,10 +69,10 @@ const deleteBrain = (id) => {
                     class="bg-emerald-500 text-white px-4 py-2 rounded-md font-bold">
                 編集する
                 </Link>
-                <button @click="deleteBrain(brain.id)"
+                <!-- <button @click="deleteBrain(brain.id)"
                     class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">
                     削除する
-                </button>
+                </button> -->
             </div>
         </div>
     </BasicLayout>
