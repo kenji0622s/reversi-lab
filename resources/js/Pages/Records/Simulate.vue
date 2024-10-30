@@ -217,8 +217,8 @@ const checkExplain = () => {
         </div>
 
         <div v-if="!isReady || !isCheckExplain"
-            class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-300/90 absolute top-0 left-0">
-            <div class="mt-12 p-8 w-4/5 mx-auto bg-white rounded-md">
+            class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-100/95 absolute top-0 left-0">
+            <div class="mt-12 p-8 w-4/5 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
                 <div v-if="!isReady">
                     <div class="mb-4">
                         <label for="blackBrain" class="block text-sm font-medium leading-6 text-gray-900">{{
@@ -227,7 +227,7 @@ const checkExplain = () => {
                             class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                             <option v-for="brain in brains" :value="brain">{{ brain }}</option>
                         </select>
-                        <div class="mt-2 bg-neutral-100 p-2 rounded-md text-xs">
+                        <div class="mt-2 bg-white py-2 px-4 rounded-md text-xs">
                             <p v-if="messages.lang === 'ja'" v-html="nl2br(blackBrainModel.description)"></p>
                             <p v-else v-html="nl2br(blackBrainModel.description_en)"></p>
                         </div>
@@ -240,7 +240,7 @@ const checkExplain = () => {
                             class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
                             <option v-for="brain in brains" :value="brain">{{ brain }}</option>
                         </select>
-                        <div class="mt-2 bg-neutral-100 p-2 rounded-md text-xs">
+                        <div class="mt-2 bg-white py-2 px-4 rounded-md text-xs">
                             <p v-if="messages.lang === 'ja'" v-html="nl2br(whiteBrainModel.description)"></p>
                             <p v-else v-html="nl2br(whiteBrainModel.description_en)"></p>
                         </div>

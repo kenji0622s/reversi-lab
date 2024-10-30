@@ -98,8 +98,8 @@ const isShowLanguage = ref(false);
                     </div>
                 </div>
 
-                <div class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-300/90 absolute top-0 left-0" v-if="isShowLanguage">
-                    <div class="w-52 bg-neutral-50 rounded-md pt-10 pb-6 px-8 text-center mx-auto mt-12 shadow-md">
+                <div class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-100/95 absolute top-0 left-0" v-if="isShowLanguage">
+                    <div class="w-52 bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md pt-10 pb-6 px-8 text-center mx-auto mt-16">
                         <div class="mb-6 text-center">
                             <a href="/switch-language/en"
                                 class="p-2 font-bold border-2 border-emerald-600 text-emerald-600 rounded-md block shadow-sm">English</a>
