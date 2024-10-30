@@ -45,11 +45,11 @@ defineProps({
             </Link>
             <div class="flex justify-center items-center gap-4 w-60 md:w-72" v-if="!$page.props.auth.user">
                 <Link :href="route('login')"
-                    class="border-2 border-emerald-500 text-lg font-bold text-center text-emerald-500 p-1 rounded-md shadow-md w-1/2">
+                    class="border-2 border-emerald-500 text-lg font-bold text-center text-emerald-500 bg-neutral-50 p-1 rounded-md shadow-md w-1/2">
                 {{ messages.common.login }}
                 </Link>
                 <Link :href="route('register')"
-                    class="border-2 border-emerald-500 text-lg font-bold text-center text-emerald-500 p-1 rounded-md shadow-md w-1/2">
+                    class="border-2 border-emerald-500 text-lg font-bold text-center text-emerald-500 bg-neutral-50 p-1 rounded-md shadow-md w-1/2">
                 {{ messages.common.register }}
                 </Link>
             </div>
