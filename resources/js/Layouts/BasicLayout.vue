@@ -20,7 +20,7 @@ console.log(isHeightScreen);
 
 <template>
     <div>
-        <div class="min-h-screen bg-neutral-100">
+        <div class="min-100-dvh bg-neutral-100">
             <nav class="bg-neutral-200 border-b-2 border-emerald-500 fixed top-0 w-full h-16 z-50">
                 <!-- Primary Navigation Menu -->
                 <div class="w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
@@ -205,3 +205,9 @@ console.log(isHeightScreen);
         </div>
     </div>
 </template>
+
+<style scoped>
+.min-100-dvh {
+    min-height: 100dvh;
+}
+</style>

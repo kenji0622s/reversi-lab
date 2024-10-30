@@ -54,7 +54,7 @@ defineProps({
                 </Link>
             </div>
             <Link :href="route('records.index')" v-if="$page.props.auth.user && $page.props.auth.user.is_admin"
-                class="border-2 border-emerald-500 text-lg font-bold text-center text-emerald-500 p-2 rounded-md shadow-md w-60 md:w-72">
+                class="border-2 border-emerald-500 text-lg font-bold text-center bg-neutral-50 text-emerald-500 p-2 rounded-md shadow-md w-60 md:w-72">
             {{ messages.menu.records }}
             </Link>
 
