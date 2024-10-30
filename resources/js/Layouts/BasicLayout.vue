@@ -18,9 +18,9 @@ const isShowLanguage = ref(false);
         <div class="min-h-screen bg-neutral-50">
             <nav class="bg-neutral-200 border-b-2 border-emerald-500 fixed top-0 w-full h-16 z-50">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
-                        <div class="flex items-center">
+                        <div class="flex items-center md:mx-auto">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center mr-4">
                                 <Link :href="route('home')">
@@ -28,7 +28,7 @@ const isShowLanguage = ref(false);
                                 </Link>
                             </div>
                             <div>
-                                <h2 class="text-2xl font-bold">
+                                <h2 class="text-2xl font-bold md:w-48">
                                     <slot name="title" />
                                 </h2>
                             </div>
@@ -65,10 +65,14 @@ const isShowLanguage = ref(false);
                                 <NavLink :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
                                     {{ messages.common.logout }}
                                 </NavLink>
+                                <NavLink :href="route('login')" v-if="!$page.props.auth.user">
+                                    {{ messages.common.login }}
+                                </NavLink>
                                 <NavLink :href="route('records.index')" :active="route().current('records.index')"
                                     v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
                                     {{ messages.menu.records }}
                                 </NavLink>
+
                                 <button @click="isShowLanguage = !isShowLanguage">
                                     <i class="fa-solid fa-language text-lg text-gray-500"></i>
                                 </button>
