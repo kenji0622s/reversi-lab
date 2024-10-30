@@ -23,7 +23,7 @@ const deleteBrain = (id) => {
             {{ brain.name }}
         </template>
 
-        <div class="w-4/5 mx-auto mt-4">
+        <div class="w-4/5 md:w-2/5 mx-auto mt-4">
             <a :href="route('brains.index')" class="text-emerald-600 text-xs inline-block py-1">
                 <i class="fa-solid fa-angle-left"></i>
                 戻る
@@ -32,7 +32,7 @@ const deleteBrain = (id) => {
             <div class="mt-2 bg-neutral-100 p-4 rounded-md shadow-sm border-2 border-neutral-300">
                 <div class="p-2 w-full">
                     <div class="flex items-center gap-2">
-                        <label for="id" class="leading-7 text-sm text-gray-600">ID</label>
+                        <label for="id" class="leading-7 text-sm text-gray-700 font-bold">ID</label>
                         <div id="id" class="w-full  text-base outline-none text-gray-700 py-1 leading-8">
                             {{ brain.id }}
                         </div>
@@ -40,7 +40,7 @@ const deleteBrain = (id) => {
                 </div>
                 <div class="p-2 w-full">
                     <div>
-                        <label for="name" class="leading-7 text-sm text-gray-600 w-fit block">名前</label>
+                        <label for="name" class="leading-7 text-sm text-gray-700 font-bold">名前</label>
                         <div id="name" class="w-full  text-base outline-none text-gray-700 py-1">
                             {{ brain.name }}
                         </div>
@@ -49,14 +49,14 @@ const deleteBrain = (id) => {
 
                 <div class="p-2 w-full">
                     <div>
-                        <label for="description" class="leading-7 text-sm text-gray-600">日本語説明</label>
+                        <label for="description" class="leading-7 text-sm text-gray-700 font-bold">日本語説明</label>
                         <div id="description" class="w-full  text-base outline-none text-gray-700 py-1" v-html="nl2br(brain.description)"></div>
                     </div>
                 </div>
 
                 <div class="p-2 w-full">
                     <div>
-                        <label for="description_en" class="leading-7 text-sm text-gray-600">英語説明</label>
+                        <label for="description_en" class="leading-7 text-sm text-gray-700 font-bold">英語説明</label>
                         <div id="description_en" class="w-full  text-base outline-none text-gray-700 py-1" v-html="nl2br(brain.description_en)"></div>
                     </div>
                 </div>

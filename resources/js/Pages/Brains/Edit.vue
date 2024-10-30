@@ -24,14 +24,14 @@ const updateBrain = () => {
         <template #title>
             Edit Brain
         </template>
-        <div class="w-4/5 mx-auto mt-4">
+        <div class="w-4/5 md:w-2/5 mx-auto mt-4">
             <a :href="route('brains.show', { brain: brain.id })" class="text-emerald-600 text-xs inline-block py-1">
                 <i class="fa-solid fa-angle-left"></i>
                 戻る
             </a>
             <form @submit.prevent="updateBrain">
                 <div class="container bg-neutral-100 mt-2 pt-4 pb-8 px-4 rounded-md shadow-sm border-2 border-neutral-300">
-                    <div class="lg:w-1/2 md:w-2/3 mx-auto">
+                    <div class="mx-auto">
                         <div class="flex flex-wrap -m-2">
                             <div class="p-2 w-full">
                                 <div class="relative">
