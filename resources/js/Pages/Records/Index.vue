@@ -37,7 +37,7 @@ const show_users_flag = ref(true);
                             <th>ID</th>
                             <th>User Name</th>
                             <th>BrainID</th>
-                            <th>Winner</th>
+                            <th>Result</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -58,7 +58,7 @@ const show_users_flag = ref(true);
                                 <template v-else>引き分け</template>
                              
                             </td>
-                            <td>{{ dayjs(userRecord.created_at).format('YYYY/MM/DD') }}</td>
+                            <td>{{ dayjs(userRecord.created_at).format('YYYY/MM/DD HH:mm') }}</td>
                         </tr>
                     </tbody>
                 </table>
