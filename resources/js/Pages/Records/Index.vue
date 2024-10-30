@@ -22,13 +22,16 @@ const show_users_flag = ref(true);
         </template>
 
         <div class="w-11/12 md:w-2/5 mx-auto mt-4">
-            <div class="flex items-center justify-center gap-4 mb-4">
+            <div class="flex items-center justify-center gap-4 mb-4 relative w-fit mx-auto">
                 <button class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold w-24 md:w-32"
                     :class="{ 'bg-emerald-500 text-white': show_users_flag, 'bg-neutral-100 text-neutral-900': !show_users_flag }"
                     @click="show_brains_flag = false; show_users_flag = true">Users</button>
                 <button class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold w-24 md:w-32"
                     :class="{ 'bg-emerald-500 text-white':  show_brains_flag, 'bg-neutral-100 text-neutral-900': !show_brains_flag }"
                     @click="show_brains_flag = true; show_users_flag = false">Brains</button>
+                <button class="absolute -right-12 p-2" @click="window.location.reload()">
+                    <i class="fa-solid fa-rotate-right text-lg text-emerald-600"></i>
+                </button>
             </div>
             <div class="bg-neutral-100 border-2 border-neutral-300 p-4 md:p-6 rounded-md shadow-sm text-center text-sm md:text-base w-full md:w-11/12 mx-auto">
                 <table class="w-full"v-if="show_users_flag">

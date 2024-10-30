@@ -11,10 +11,15 @@ defineProps({
 
 const showingNavigationDropdown = ref(false);
 const isShowLanguage = ref(false);
+
+const isHeightScreen = route().current('challenge') || route().current('records.create');
+
+console.log(isHeightScreen);
+
 </script>
 
 <template>
-    <div>
+    <div :class="{ 'h-[calc(100vh-4rem)]': isHeightScreen }">
         <div class="min-h-screen bg-neutral-50">
             <nav class="bg-neutral-200 border-b-2 border-emerald-500 fixed top-0 w-full h-16 z-50">
                 <!-- Primary Navigation Menu -->
