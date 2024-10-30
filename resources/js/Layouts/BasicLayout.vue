@@ -19,7 +19,7 @@ console.log(isHeightScreen);
 </script>
 
 <template>
-    <div :class="{ 'h-[calc(100vh-4rem)]': isHeightScreen }">
+    <div>
         <div class="min-h-screen bg-neutral-50">
             <nav class="bg-neutral-200 border-b-2 border-emerald-500 fixed top-0 w-full h-16 z-50">
                 <!-- Primary Navigation Menu -->
