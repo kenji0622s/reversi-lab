@@ -59,7 +59,8 @@ return [
         "select_black_brain" => "先攻のBrainを選択してください(黒)",
         "select_white_brain" => "後攻のBrainを選択してください(白)",
         "ready_game" => "準備完了",
-        "check_explain" => "シミュレーションを開始します。1分ほど時間がかかります。",
+        "check_explain" => 
+        "シミュレーションを開始します。\n1分ほど時間がかかります。",
         "simulate_start" => "スタート",
         "black_wins" => "黒勝ち",
         "white_wins" => "白勝ち",

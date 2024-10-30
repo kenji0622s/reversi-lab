@@ -1,6 +1,7 @@
 <script setup>
 import BasicLayout from '@/Layouts/BasicLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
+import { nl2br } from '@/common';
 
 const props = defineProps({
     brain: Object,
@@ -40,7 +41,7 @@ const deleteBrain = (id) => {
                 <div class="p-2 w-full">
                     <div>
                         <label for="name" class="leading-7 text-sm text-gray-600 w-fit block">名前</label>
-                        <div id="name" class="w-full  text-base outline-none text-gray-700 py-1 leading-8">
+                        <div id="name" class="w-full  text-base outline-none text-gray-700 py-1">
                             {{ brain.name }}
                         </div>
                     </div>
@@ -49,18 +50,14 @@ const deleteBrain = (id) => {
                 <div class="p-2 w-full">
                     <div>
                         <label for="description" class="leading-7 text-sm text-gray-600">日本語説明</label>
-                        <div id="description" class="w-full  text-base outline-none text-gray-700 py-1 leading-8">
-                            {{ brain.description }}
-                        </div>
+                        <div id="description" class="w-full  text-base outline-none text-gray-700 py-1" v-html="nl2br(brain.description)"></div>
                     </div>
                 </div>
 
                 <div class="p-2 w-full">
                     <div>
                         <label for="description_en" class="leading-7 text-sm text-gray-600">英語説明</label>
-                        <div id="description_en" class="w-full  text-base outline-none text-gray-700 py-1 leading-8">
-                            {{ brain.description_en }}
-                        </div>
+                        <div id="description_en" class="w-full  text-base outline-none text-gray-700 py-1" v-html="nl2br(brain.description_en)"></div>
                     </div>
                 </div>
             </div>

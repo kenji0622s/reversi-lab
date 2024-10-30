@@ -3,6 +3,7 @@ import BasicLayout from '@/Layouts/BasicLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import { ref } from 'vue';
+import { nl2br } from '@/common';
 
 const props = defineProps({
     brain: Object,
@@ -91,8 +92,8 @@ const show_records = (index) => {
             <div class="mb-4">
                 <div class="text-lg font-bold">{{ brain.name }}</div>
 
-                <div v-if="messages.lang === 'ja'">{{ brain.description }}</div>
-                <div v-else>{{ brain.description_en }}</div>
+                <div v-if="messages.lang === 'ja'" v-html="nl2br(brain.description)"></div>
+                <div v-else v-html="nl2br(brain.description_en)"></div>
             </div>
 
             <div class="mb-4 bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm">
@@ -139,8 +140,8 @@ const show_records = (index) => {
                 class="mb-4 bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm">
                 <div @click="show_records(i)">
                     <p class="text-lg font-bold">vs {{ other_brain.name }}</p>
-                    <p class="mb-2" v-if="messages.lang === 'ja'">{{ other_brain.description }}</p>
-                    <p class="mb-2" v-else>{{ other_brain.description_en }}</p>
+                    <div v-if="messages.lang === 'ja'" v-html="nl2br(other_brain.description)"></div>
+                    <div v-else v-html="nl2br(other_brain.description_en)"></div>
                     <div class="flex justify-between items-center">
                         <p class="font-bold">{{ messages.brains.win_rate }} {{ result[i].rate }}
                             <span class="block text-sm">{{ messages.brains.win }} {{ result[i].win }} | {{ messages.brains.lose }} {{ result[i].lose }} | {{ messages.brains.draw }} {{ result[i].draw }}</span>

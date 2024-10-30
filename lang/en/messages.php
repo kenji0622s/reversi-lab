@@ -54,7 +54,7 @@ return [
     "simulate" => [
         "select_black_brain" => "Select first turn brain (Black)",
         "select_white_brain" => "Select second turn brain (White)",
-        "check_explain" => "The simulation will start. It will take about 1 minute.",
+        "check_explain" => "The simulation will start.\nIt will take about 1 minute.",
         "simulate_start" => "Start",
         "ready_game" => "Ready",
         "black_wins" => "Black wins",

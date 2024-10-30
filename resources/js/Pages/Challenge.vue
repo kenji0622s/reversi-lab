@@ -6,7 +6,7 @@ import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
 import { brains, strategies } from '../strategies/brains';
-
+import { nl2br } from '@/common';
 const props = defineProps({
     user: Object,
     brainsModels: Object,
@@ -202,8 +202,8 @@ const readyGame = () => {
                         <option v-for="brain in brains" :value="brain">{{ brain }}</option>
                     </select>
                     <div class="mt-2 bg-neutral-100 p-2 rounded-md text-xs">
-                        <p v-if="messages.lang === 'ja'">{{ brainModel.description }}</p>
-                        <p v-else>{{ brainModel.description_en }}</p>
+                        <p v-if="messages.lang === 'ja'" v-html="nl2br(brainModel.description)"></p>
+                        <p v-else v-html="nl2br(brainModel.description_en)"></p>
                     </div>
                 </div>
                 <div class="mb-6">

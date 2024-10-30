@@ -6,7 +6,7 @@ import getAllDirectionCells from '@/utils/getAllDirectionCells';
 import singleDirectionReverse from '@/utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '@/utils/updateAvailableCells';
 import Board from '@/Components/Board.vue';
-
+import { nl2br } from '@/common';
 import { brains, strategies } from '@/strategies/brains';
 
 const props = defineProps({
@@ -228,8 +228,8 @@ const checkExplain = () => {
                             <option v-for="brain in brains" :value="brain">{{ brain }}</option>
                         </select>
                         <div class="mt-2 bg-neutral-100 p-2 rounded-md text-xs">
-                            <p v-if="messages.lang === 'ja'">{{ blackBrainModel.description }}</p>
-                            <p v-else>{{ blackBrainModel.description_en }}</p>
+                            <p v-if="messages.lang === 'ja'" v-html="nl2br(blackBrainModel.description)"></p>
+                            <p v-else v-html="nl2br(blackBrainModel.description_en)"></p>
                         </div>
                     </div>
 
@@ -241,8 +241,8 @@ const checkExplain = () => {
                             <option v-for="brain in brains" :value="brain">{{ brain }}</option>
                         </select>
                         <div class="mt-2 bg-neutral-100 p-2 rounded-md text-xs">
-                            <p v-if="messages.lang === 'ja'">{{ whiteBrainModel.description }}</p>
-                            <p v-else>{{ whiteBrainModel.description_en }}</p>
+                            <p v-if="messages.lang === 'ja'" v-html="nl2br(whiteBrainModel.description)"></p>
+                            <p v-else v-html="nl2br(whiteBrainModel.description_en)"></p>
                         </div>
                     </div>
 
@@ -251,7 +251,8 @@ const checkExplain = () => {
                             messages.simulate.ready_game }}</button>
                 </div>
                 <div v-if="!isCheckExplain && isReady">
-                    <p class="mb-4 text-sm">{{ messages.simulate.check_explain }}</p>
+                    <!-- <p class="mb-4 text-sm">{{ messages.simulate.check_explain }}</p> -->
+                    <p class="mb-4 text-sm" v-html="nl2br(messages.simulate.check_explain)"></p>
                     <button @click="checkExplain"
                         class="bg-emerald-500 text-white font-bold block mx-auto px-4 py-2 rounded-md">{{
                             messages.simulate.simulate_start }}</button>
