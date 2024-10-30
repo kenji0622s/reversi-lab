@@ -218,7 +218,7 @@ const checkExplain = () => {
 
         <div v-if="!isReady || !isCheckExplain"
             class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-100/95 absolute top-0 left-0">
-            <div class="mt-12 p-8 w-4/5 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
+            <div class="mt-12 p-8 w-4/5 md:w-96 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
                 <div v-if="!isReady">
                     <div class="mb-4">
                         <label for="blackBrain" class="block text-sm font-medium leading-6 text-gray-900">{{

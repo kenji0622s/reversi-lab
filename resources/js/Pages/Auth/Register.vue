@@ -32,7 +32,7 @@ defineProps({
 
     <BasicLayout :messages="messages">
         <template #title>Register</template>
-        <div class="w-4/5 mx-auto mt-8 border border-neutral-300 py-6 px-4 rounded-md shadow-md">
+        <div class="w-4/5 md:w-96 mx-auto mt-8 border border-neutral-300 py-6 px-4 rounded-md shadow-md">
             <form @submit.prevent="submit">
                 <div>
                     <InputLabel for="name" :value="messages.register.name" />

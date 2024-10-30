@@ -21,7 +21,7 @@ defineProps({
             Profile
         </template>
 
-        <div class="w-4/5 mx-auto mt-8">
+        <div class="w-4/5 md:w-2/5 mx-auto mt-8">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <UpdateProfileInformationForm :must-verify-email="mustVerifyEmail" :status="status" class="max-w-xl" />
             </div>

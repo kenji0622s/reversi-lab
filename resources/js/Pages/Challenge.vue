@@ -155,7 +155,7 @@ const readyGame = () => {
             {{ messages.common.black }}: {{ blackCells.length }} | {{ messages.common.white }}: {{ whiteCells.length }}
         </div>
 
-        <div class="grid grid-cols-8 w-80 aspect-square border border-black bg-emerald-500 mx-auto">
+        <div class="grid grid-cols-8 w-80 md:w-96 aspect-square border border-black bg-emerald-500 mx-auto">
             <template v-for="row in 8">
                 <template v-for="column in 8">
                     <div :id="[row, column]" class="w-full h-full border border-gray-500 relative"
@@ -193,7 +193,7 @@ const readyGame = () => {
         </div>
 
         <div v-if="!isReady" class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-100/95 absolute top-0 left-0">
-            <div class="mt-16 p-8 w-4/5 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
+            <div class="mt-16 p-8 w-4/5 md:w-96 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
                 <div class="mb-4">
                     <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">{{
                         messages.challenge.select_brain }}</label>

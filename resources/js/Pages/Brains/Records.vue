@@ -82,7 +82,7 @@ const show_records = (index) => {
         <template #title>
             {{ brain.name }} Records
         </template>
-        <div class="w-4/5 mx-auto">
+        <div class="w-4/5 md:w-2/5 mx-auto">
 
             <a :href="route('brains.index')" class="text-emerald-600 text-xs inline-block py-1 mt-2">
                 <i class="fa-solid fa-angle-left"></i>
@@ -109,15 +109,15 @@ const show_records = (index) => {
                 </div>
 
                 <div v-if="show_human_records_flag">
-                    <table class="text-center mx-auto mt-4 w-full">
+                    <table class="text-center mx-auto mt-4 w-full md:w-72">
                         <thead>
-                            <tr>
+                            <tr class="bg-neutral-300">
                                 <th class="w-1/2">{{ messages.brains.date }}</th>
                                 <th class="w-1/2">{{ messages.brains.result }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="userRecord in userRecords" :key="userRecord.id">
+                            <tr v-for="userRecord in userRecords" :key="userRecord.id" class="border-b border-neutral-300">
                                 <td>{{ dayjs(userRecord.created_at).format('YYYY/MM/DD') }}</td>
                                 <td>
                                     <template v-if="userRecord.result === 'win'">
@@ -151,16 +151,16 @@ const show_records = (index) => {
                     </div>
 
                 </div>
-                <table class="text-center mx-auto w-full mt-4" v-if="show_records_flag[i]">
+                <table class="text-center mx-auto w-full mt-4 md:w-72" v-if="show_records_flag[i]">
                     <thead>
-                        <tr>
+                        <tr class="bg-neutral-300">
                             <!-- <th class="w-4">ID</th> -->
                             <th class="w-1/2">{{ messages.brains.turn }}</th>
                             <th class="w-1/2">{{ messages.brains.result }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="record in records[i]" :key="record.id">
+                        <tr v-for="record in records[i]" :key="record.id" class="border-b border-neutral-300">
                             <!-- <td>{{ record.id }}</td> -->
                             <td>
                                 <template v-if="record.black_player === brain.name">

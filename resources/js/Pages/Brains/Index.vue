@@ -15,7 +15,7 @@ defineProps({
         <template #title>
             Brains
         </template>
-        <div class="w-4/5 mx-auto mt-6">
+        <div class="w-4/5 md:w-2/5 mx-auto mt-6">
             <template v-for="(brain, i) in brains" :key="i">
                 <a :href="route('brains.records', brain.id)">
                     <div

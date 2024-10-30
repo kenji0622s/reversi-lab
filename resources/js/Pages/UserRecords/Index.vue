@@ -55,7 +55,7 @@ const checked = ref(false);
                 Guest Records
             </template>
         </template>
-        <div class="w-4/5 mx-auto mt-6">
+        <div class="w-4/5 md:w-2/5 mx-auto mt-6">
             <div v-for="(group, brainId) in groupedRecords" :key="brainId"
                 class="mb-4 bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm">
                 <div @click="show_records(brainId)">
@@ -73,15 +73,15 @@ const checked = ref(false);
                     </div>
 
                 </div>
-                <table class="text-center mx-auto mt-4 w-full" v-if="show_records_flag[brainId]">
+                <table class="text-center mx-auto mt-4 w-full md:w-72" v-if="show_records_flag[brainId]">
                     <thead>
-                        <tr>
+                        <tr class="bg-neutral-300">
                             <th class="w-1/2">{{ messages.user_records.date }}</th>
                             <th class="w-1/2">{{ messages.user_records.result }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="record in group" :key="record.id">
+                        <tr v-for="record in group" :key="record.id" class="border-b border-neutral-300">
                             <td>{{ dayjs(record.created_at).format('YYYY/MM/DD') }}</td>
                             <td>
                                 <template v-if="record.result === 'win'">
@@ -101,8 +101,8 @@ const checked = ref(false);
         </div>
 
         <div v-if="!$page.props.auth.user && !checked">
-            <div class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-300/90 absolute top-0 left-0">
-                <div class="mt-24 p-8 w-4/5 mx-auto bg-white rounded-md">
+            <div class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-100/95  absolute top-0 left-0">
+                <div class="mt-24 p-8 w-4/5 md:w-96 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
                     <p class="mb-4 text-sm">
                         {{ messages.user_records.guest_modal_message }}
                     </p>

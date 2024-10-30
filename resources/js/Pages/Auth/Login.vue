@@ -33,7 +33,7 @@ const submit = () => {
 
         <template #title>Log in</template>
 
-        <div class="w-4/5 mx-auto mt-8 border border-neutral-300 py-6 px-4 rounded-md shadow-md">
+        <div class="w-4/5 md:w-96 mx-auto mt-8 border border-neutral-300 py-6 px-4 rounded-md shadow-md">
             <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
                 {{ status }}
             </div>

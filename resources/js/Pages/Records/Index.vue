@@ -21,19 +21,19 @@ const show_users_flag = ref(true);
             Records
         </template>
 
-        <div class="w-11/12 mx-auto mt-4">
+        <div class="w-11/12 md:w-2/5 mx-auto mt-4">
             <div class="flex items-center justify-center gap-4 mb-4">
-                <button class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold"
+                <button class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold w-24 md:w-32"
                     :class="{ 'bg-emerald-500 text-white': show_users_flag, 'bg-neutral-100 text-neutral-900': !show_users_flag }"
                     @click="show_brains_flag = false; show_users_flag = true">Users</button>
-                <button class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold"
+                <button class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold w-24 md:w-32"
                     :class="{ 'bg-emerald-500 text-white':  show_brains_flag, 'bg-neutral-100 text-neutral-900': !show_brains_flag }"
                     @click="show_brains_flag = true; show_users_flag = false">Brains</button>
             </div>
-            <div class="bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm text-center text-sm">
-                <table class="w-full" v-if="show_users_flag">
+            <div class="bg-neutral-100 border-2 border-neutral-300 p-4 md:p-6 rounded-md shadow-sm text-center text-sm md:text-base w-full md:w-11/12 mx-auto">
+                <table class="w-full"v-if="show_users_flag">
                     <thead>
-                        <tr>
+                        <tr class="bg-neutral-300">
                             <th>ID</th>
                             <th>Name</th>
                             <th>Brain</th>
@@ -42,7 +42,7 @@ const show_users_flag = ref(true);
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="userRecord in userRecords" :key="userRecord.id">
+                        <tr v-for="userRecord in userRecords" :key="userRecord.id" class="border-b border-neutral-300">
                             <td>{{ userRecord.id }}</td>
                             <td>
                                 {{ users.find(user => user.id === userRecord.user_id)?.name || 'Guest' }}
@@ -58,13 +58,13 @@ const show_users_flag = ref(true);
                                 <template v-else>引き分け</template>
                              
                             </td>
-                            <td>{{ dayjs(userRecord.created_at).format('YYYY/MM/DD HH:mm') }}</td>
+                            <td>{{ dayjs(userRecord.created_at).format('MM/DD HH:mm') }}</td>
                         </tr>
                     </tbody>
                 </table>
                 <table class="w-full" v-if="show_brains_flag">
                     <thead>
-                        <tr>
+                        <tr class="bg-neutral-300">
                             <th>ID</th>
                             <th>Black</th>
                             <th>White</th>
@@ -72,7 +72,7 @@ const show_users_flag = ref(true);
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="record in records" :key="record.id">
+                        <tr v-for="record in records" :key="record.id" class="border-b border-neutral-300">
                             <td>{{ record.id }}</td>
                             <td>{{ record.black_player }}</td>
                             <td>{{ record.white_player }}</td>
