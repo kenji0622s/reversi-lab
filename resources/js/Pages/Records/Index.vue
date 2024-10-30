@@ -36,7 +36,7 @@ const show_users_flag = ref(true);
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>BrainID</th>
+                            <th>Brain</th>
                             <th>Result</th>
                             <th>Date</th>
                         </tr>
