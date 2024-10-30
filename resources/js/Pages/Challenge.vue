@@ -151,11 +151,11 @@ const readyGame = () => {
                 yourTurn === turns[1]) ? messages.challenge.your_turn : messages.challenge.brain_turn }}</span>
         </div>
 
-        <div class="text-center mb-4">
+        <div class="text-center mb-2">
             {{ messages.common.black }}: {{ blackCells.length }} | {{ messages.common.white }}: {{ whiteCells.length }}
         </div>
 
-        <div class="grid grid-cols-8 w-72 md:w-96 aspect-square border border-black bg-emerald-500 mx-auto">
+        <div class="grid grid-cols-8 w-80 md:w-96 aspect-square border border-black bg-emerald-500 mx-auto">
             <template v-for="row in 8">
                 <template v-for="column in 8">
                     <div :id="[row, column]" class="w-full h-full border border-gray-500 relative"
