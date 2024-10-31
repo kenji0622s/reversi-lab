@@ -58,7 +58,7 @@ console.log(isHeightScreen);
                                 <!-- <NavLink :href="route('watch')" :active="route().current('watch')">
                                     Watch
                                 </NavLink> -->
-                                <NavLink :href="route('records.create')" :active="route().current('records.create')">
+                                <NavLink :href="route('brain-records.create')" :active="route().current('brain-records.create')">
                                     {{ messages.menu.simulation }}
                                 </NavLink>
                                 <NavLink :href="route('play')" :active="route().current('play')">
@@ -152,7 +152,7 @@ console.log(isHeightScreen);
                         <!-- <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
                             Watch
                         </ResponsiveNavLink> -->
-                        <ResponsiveNavLink :href="route('records.create')" :active="route().current('records.create')">
+                        <ResponsiveNavLink :href="route('brain-records.create')" :active="route().current('brain-records.create')">
                             {{ messages.menu.simulation }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('play')" :active="route().current('play')">
@@ -165,7 +165,7 @@ console.log(isHeightScreen);
                             v-if="$page.props.auth.user">
                             {{ messages.common.logout }}
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('records.index')" :active="route().current('records.index')"
+                        <ResponsiveNavLink :href="route('brain-records.index')" :active="route().current('brain-records.index')"
                             v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
                             {{ messages.menu.records }}
                         </ResponsiveNavLink>

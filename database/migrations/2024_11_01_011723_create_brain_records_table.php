@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('records', function (Blueprint $table) {
+        Schema::create('brain_records', function (Blueprint $table) {
             $table->id();
-            $table->string('black_player');
-            $table->string('white_player');
-            $table->integer('count_black');
-            $table->integer('count_white');
+            $table->foreignId('brain_id')->constrained('brains');
+            $table->foreignId('opponent_id')->constrained('brains');
+            $table->integer('brain_discs');
+            $table->integer('opponent_discs');
+            $table->boolean('is_first');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('records');
+        Schema::dropIfExists('brain_records');
     }
 };

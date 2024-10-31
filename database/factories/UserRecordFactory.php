@@ -18,13 +18,14 @@ class UserRecordFactory extends Factory
      */
     public function definition()
     {
-        $user_id = [1, 2, 3];
-        $brain_id = [1, 2];
-        $results = ['win', 'lose', 'draw'];
+        $user_discs = mt_rand(0, 64);
+        $brain_discs = 64 - $user_discs;
         return [
-            'user_id' => $user_id[mt_rand(0, 2)],
-            'brain_id' => $brain_id[mt_rand(0, 1)],
-            'result' => $results[mt_rand(0, 2)],
+            'user_id' => mt_rand(1, 10),
+            'brain_id' => mt_rand(1, 5),
+            'user_discs' => $user_discs,
+            'brain_discs' => $brain_discs,
+            'is_first' => fake()->boolean(),
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Record;
+use App\Models\BrainRecord;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class RecordPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\BrainRecord  $brainRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Record $record)
+    public function view(User $user, BrainRecord $brainRecord)
     {
         //
     }
@@ -48,10 +48,10 @@ class RecordPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\BrainRecord  $brainRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Record $record)
+    public function update(User $user, BrainRecord $brainRecord)
     {
         //
     }
@@ -60,10 +60,10 @@ class RecordPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\BrainRecord  $brainRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Record $record)
+    public function delete(User $user, BrainRecord $brainRecord)
     {
         //
     }
@@ -72,10 +72,10 @@ class RecordPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\BrainRecord  $brainRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Record $record)
+    public function restore(User $user, BrainRecord $brainRecord)
     {
         //
     }
@@ -84,10 +84,10 @@ class RecordPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\BrainRecord  $brainRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Record $record)
+    public function forceDelete(User $user, BrainRecord $brainRecord)
     {
         //
     }

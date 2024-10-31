@@ -27,14 +27,8 @@ class UserSeeder extends Seeder
                 'is_admin' => true,
             ],
             [
-                'name' => 'Test User',
-                'email' => 'test@test.com',
-                'password' => Hash::make('password'),
-                'is_admin' => false,
-            ],
-            [
-                'name' => 'Test User2',
-                'email' => 'test2@test.com',
+                'name' => 'Guest',
+                'email' => 'guest@guest.com',
                 'password' => Hash::make('password'),
                 'is_admin' => false,
             ],

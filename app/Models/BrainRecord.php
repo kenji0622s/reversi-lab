@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Record extends Model
+class BrainRecord extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'black_player',
-        'white_player',
-        'count_black',
-        'count_white',
+        'user_id',
+        'brain_id',
+        'user_discs',
+        'brain_discs',
+        'is_first',
     ];
 }

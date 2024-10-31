@@ -11,12 +11,12 @@ class ChallengeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $brainsModels = Brain::all();
+        $brains = Brain::all();
         // dd($user);
 
         return Inertia::render('Challenge', [
             'user' => $user,
-            'brainsModels' => $brainsModels,
+            'brains' => $brains,
             'messages' => trans('messages'),
         ]);
     }

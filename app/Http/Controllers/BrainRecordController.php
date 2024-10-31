@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRecordRequest;
-use App\Http\Requests\UpdateRecordRequest;
-use App\Models\Record;
+use App\Http\Requests\StoreBrainRecordRequest;
+use App\Http\Requests\UpdateBrainRecordRequest;
+use App\Models\BrainRecord;
 use Inertia\Inertia;
 use App\Models\UserRecord;
 use App\Models\User;
 use App\Models\Brain;
 
-class RecordController extends Controller
+class BrainRecordController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +20,11 @@ class RecordController extends Controller
     public function index()
     {
 
-        $records = Record::all()->sortByDesc('id')->values()->toArray();
+        $brainRecords = BrainRecord::all()->sortByDesc('id')->values()->toArray();
         $userRecords = UserRecord::all()->sortByDesc('id')->values()->toArray();
         $users = User::all();
         return Inertia::render('Records/Index', [
-            'records' => $records,
+            'brainRecords' => $brainRecords,
             'userRecords' => $userRecords,
             'users' => $users,
             'messages' => trans('messages'),
@@ -39,9 +39,9 @@ class RecordController extends Controller
     public function create()
     {
         $debug = config('services.debug');
-        $brainsModels = Brain::all();
+        $brains = Brain::all();
         return Inertia::render('Records/Simulate', [
-            'brainsModels' => $brainsModels,
+            'brains' => $brains,
             'debug' => $debug,
             'messages' => trans('messages'),
         ]);
@@ -50,19 +50,20 @@ class RecordController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreRecordRequest  $request
+     * @param  \App\Http\Requests\StoreBrainRecordRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRecordRequest $request)
+    public function store(StoreBrainRecordRequest $request)
     {
         $results = $request->results;
         // dd($results);
         foreach ($results as $result) {
-            Record::create([
-                'black_player' => $result['black_player'],
-                'white_player' => $result['white_player'],
-                'count_black' => $result['count_black'],
-                'count_white' => $result['count_white'],
+            BrainRecord::create([
+                'brain_id' => $result['brain_id'],
+                'opponent_id' => $result['opponent_id'],
+                'user_discs' => $result['user_discs'],
+                'brain_discs' => $result['brain_discs'],
+                'is_first' => $result['is_first'],
             ]);
         }
         return to_route('records.index');
@@ -71,10 +72,10 @@ class RecordController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\BrainRecord  $brainRecord
      * @return \Illuminate\Http\Response
      */
-    public function show(Record $record)
+    public function show(BrainRecord $brainRecord)
     {
         //
     }
@@ -82,10 +83,10 @@ class RecordController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\BrainRecord  $brainRecord
      * @return \Illuminate\Http\Response
      */
-    public function edit(Record $record)
+    public function edit(BrainRecord $brainRecord)
     {
         //
     }
@@ -93,11 +94,11 @@ class RecordController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateRecordRequest  $request
-     * @param  \App\Models\Record  $record
+     * @param  \App\Http\Requests\UpdateBrainRecordRequest  $request
+     * @param  \App\Models\BrainRecord  $brainRecord
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRecordRequest $request, Record $record)
+    public function update(UpdateBrainRecordRequest $request, BrainRecord $brainRecord)
     {
         //
     }
@@ -105,10 +106,10 @@ class RecordController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\BrainRecord  $brainRecord
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Record $record)
+    public function destroy(BrainRecord $brainRecord)
     {
         //
     }

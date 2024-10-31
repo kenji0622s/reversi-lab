@@ -11,7 +11,8 @@ class Brain extends Model
 
     protected $fillable = [
         'name',
-        'description',
-        'description_en',
+        'ja_description',
+        'en_description',
+        'created_by',
     ];
 }

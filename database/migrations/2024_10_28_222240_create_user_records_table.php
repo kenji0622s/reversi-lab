@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('user_records', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('brain_id')->constrained('brains');
-            $table->string('result');
+            $table->integer('user_discs');
+            $table->integer('brain_discs');
+            $table->boolean('is_first');
             $table->timestamps();
         });
     }

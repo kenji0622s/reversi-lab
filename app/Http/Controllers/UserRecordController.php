@@ -19,7 +19,7 @@ class UserRecordController extends Controller
         if (auth()->user()) {
             $userRecords = UserRecord::where('user_id', auth()->user()->id)->with('brain')->get()->groupBy('brain_id');
         } else {
-            $userRecords = UserRecord::where('user_id', 0)->with('brain')->get()->groupBy('brain_id');
+            $userRecords = UserRecord::where('user_id', 2)->with('brain')->get()->groupBy('brain_id');
         }
         // dd($userRecords);
         return Inertia::render('UserRecords/Index', [
@@ -50,7 +50,9 @@ class UserRecordController extends Controller
             UserRecord::create([
                 'user_id' => $request->user_id,
                 'brain_id' => $request->brain_id,
-                'result' => $request->result,
+                'user_discs' => $request->user_discs,
+                'brain_discs' => $request->brain_discs,
+                'is_first' => $request->is_first,
             ]);
             return to_route('challenge');
         } catch (\Exception $e) {

@@ -5,32 +5,55 @@ import { ref } from 'vue';
 import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
-import { brains, strategies } from '../strategies/brains';
+import { strategies } from '../strategies/brains';
 import { nl2br } from '@/common';
 const props = defineProps({
     user: Object,
-    brainsModels: Object,
+    brains: Object,
     messages: Object,
 });
 
+//未登録ユーザーの場合はuserId2(Guest)として処理
 const user = props.user;
+let userId;
 if (user) {
-    console.log(user.id);
+    userId = user.id;
+} else {
+    userId = 2;
 }
+
+const brains = props.brains;
+const brainId = ref(1);
+const brain = ref(brains.find(brain => brain.id === brainId.value));
+
+console.log('userId: ' + userId);
+console.log('brain: ' + brain.value);
+console.log('brainId: ' + brain.value.ja_description);
+
 
 const turns = ['black', 'white'];
-
-const brain = ref(brains[0]);
-const brainModel = ref(props.brainsModels[0]);
-function getBrainModel() {
-    brainModel.value = props.brainsModels[brains.indexOf(brain.value)];
-}
-
-const yourTurn = ref(turns[0]);
-const brainTurn = ref(turns[0]);
+//現在のターンを管理
 const turn = ref(turns[0]);
 
+//ユーザーのターン
+const yourTurn = ref(turns[0]);
+//ブレインのターン
+const brainTurn = ref(turns[0]);
+
+// ゲーム開始前のBrain選択・ターン選択
 const isReady = ref(false);
+const readyGame = () => {
+    if (yourTurn.value === turns[0]) {
+        brainTurn.value = turns[1];
+    }
+    isReady.value = true;
+    if (brainTurn.value === turns[0]) {
+        const blackAvailableCellLength = blackAvailableCells.value.length;
+        const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
+        selectCell(blackAvailableCells.value[randomIndex]);
+    }
+}
+
 
 const blackCells = ref([[4, 5], [5, 4]]);
 const whiteCells = ref([[4, 4], [5, 5]]);
@@ -41,7 +64,6 @@ const whiteAvailableCells = ref([]);
 const selectedCell = ref(null);
 const isGameEnd = ref(false);
 const gameEndMessage = ref('');
-let result;
 const selectCell = (cell) => {
     selectedCell.value = cell;
     if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
@@ -90,44 +112,29 @@ const selectCell = (cell) => {
         }
     }
     if (blackAvailableCells.value.length === 0 && whiteAvailableCells.value.length === 0 && usedCells.value.length > 4) {
-        const blackCellsLength = blackCells.value.length;
-        const whiteCellsLength = whiteCells.value.length;
-        if (blackCellsLength > whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength < whiteCellsLength && yourTurn.value === turns[1]) {
-            gameEndMessage.value = props.messages.challenge.game_end_win;
-            result = 'win';
-        } else if (blackCellsLength < whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength > whiteCellsLength && yourTurn.value === turns[1]) {
-            gameEndMessage.value = props.messages.challenge.game_end_lose;
-            result = 'lose';
-        } else {
-            gameEndMessage.value = props.messages.challenge.game_end_draw;
-            result = 'draw';
-        }
         isGameEnd.value = true;
-        if (user) {
-            router.post('/user-records', {
-                user_id: user.id,
-                brain_id: brains.indexOf(brain.value) + 1,
-                result: result,
-            });
+        if (yourTurn.value === turns[0]) {
+            user_discs = blackCells.value.length;
+            brain_discs = whiteCells.value.length;
+            isFirst = true;
         } else {
-            router.post('/user-records', {
-                user_id: 0,
-                brain_id: brains.indexOf(brain.value) + 1,
-                result: result,
-            });
+            user_discs = whiteCells.value.length;
+            brain_discs = blackCells.value.length;
+            isFirst = false;
         }
+        router.post('/user-records', {
+            user_id: userId,
+            brain_id: brain.value.id,
+            user_discs: blackCellsLength,
+            brain_discs: whiteCellsLength,
+            is_first: isFirst,
+        });
+
     }
 }
 
-const readyGame = () => {
-    brainTurn.value = yourTurn.value === turns[0] ? turns[1] : turns[0];
-    isReady.value = true;
-    if (brainTurn.value === turns[0]) {
-        const blackAvailableCellLength = blackAvailableCells.value.length;
-        const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
-        selectCell(blackAvailableCells.value[randomIndex]);
-    }
-}
+
+
 </script>
 
 <template>
@@ -136,7 +143,7 @@ const readyGame = () => {
 
     <BasicLayout :messages="messages">
         <template #title>
-            Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ brain }}</span>
+            Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ brain.name }}</span>
         </template>
 
         <!-- <div class="relative">
@@ -193,17 +200,18 @@ const readyGame = () => {
         </div>
 
         <div v-if="!isReady" class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-100/95 absolute top-0 left-0">
-            <div class="mt-16 p-8 w-4/5 md:w-96 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
+            <div
+                class="mt-16 p-8 w-4/5 md:w-96 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
                 <div class="mb-4">
                     <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">{{
                         messages.challenge.select_brain }}</label>
-                    <select v-model="brain" @change="getBrainModel"
+                    <select v-model="brain"
                         class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
-                        <option v-for="brain in brains" :value="brain">{{ brain }}</option>
+                        <option v-for="brain in brains" :value="brain">{{ brain.name }}</option>
                     </select>
                     <div class="mt-2 bg-white py-2 px-4 rounded-md text-xs">
-                        <p v-if="messages.lang === 'ja'" v-html="nl2br(brainModel.description)"></p>
-                        <p v-else v-html="nl2br(brainModel.description_en)"></p>
+                        <p v-if="messages.lang === 'ja'" v-html="nl2br(brain.ja_description)"></p>
+                        <p v-else v-html="nl2br(brain.en_description)"></p>
                     </div>
                 </div>
                 <div class="mb-6">

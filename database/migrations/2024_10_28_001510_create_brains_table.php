@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('brains', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->string('description_en')->nullable();
+            $table->string('ja_description');
+            $table->string('en_description');
+            $table->string('created_by')->nullable();
             $table->timestamps();
         });
     }
