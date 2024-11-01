@@ -5,7 +5,7 @@
 
     @if (env('APP_ENV') === 'production')
         <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XZV91W0YKV"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYG06L9185"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
 
@@ -14,7 +14,7 @@
             }
             gtag('js', new Date());
 
-            gtag('config', 'G-XZV91W0YKV');
+            gtag('config', 'G-PYG06L9185');
         </script>
     @endif
 
