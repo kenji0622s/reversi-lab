@@ -18,6 +18,9 @@ class UserSeeder extends Seeder
     {
         $adminEmail = config('services.admin.email');
         $adminPassword = config('services.admin.password');
+        $guestEmail = config('services.guest.email');
+        $guestPassword = config('services.guest.password');
+        
         DB::table('users')->insert([
             [
                 'name' => 'Admin',
@@ -27,8 +30,8 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Guest',
-                'email' => 'guest@guest.com',
-                'password' => Hash::make('password'),
+                'email' => $guestEmail,
+                'password' => Hash::make($guestPassword),
                 'is_admin' => false,
             ],
         ]);

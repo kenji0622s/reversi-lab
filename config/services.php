@@ -35,4 +35,9 @@ return [
         'email' => env('ADMIN_EMAIL'),
         'password' => env('ADMIN_PASSWORD'),
     ],
+
+    'guest' => [
+        'email' => env('GUEST_EMAIL'),
+        'password' => env('GUEST_PASSWORD'),
+    ],
 ];
