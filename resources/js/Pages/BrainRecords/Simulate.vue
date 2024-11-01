@@ -29,7 +29,7 @@ const isGameEnd = ref(false);
 const gameEndMessage = ref('');
 ;
 const countGames = ref(0);
-const MAX_GAMES = 3;
+const MAX_GAMES = 100;
 const INTERVAL = 1;
 
 const brains = props.brains;
