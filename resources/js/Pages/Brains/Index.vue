@@ -17,13 +17,13 @@ defineProps({
         </template>
         <div class="w-4/5 md:w-2/5 mx-auto mt-6">
             <template v-for="(brain, i) in brains" :key="i">
-                <a :href="route('brains.records', brain.id)">
+                <a :href="route('brains.detail', brain.id)">
                     <div
                         class="bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm flex justify-between items-center gap-8">
                         <div>
-                            <div class="text-lg font-bold mb-1">{{ brain.name }}</div>
-                            <div class="text-sm" v-if="messages.lang === 'ja'" v-html="nl2br(brain.description)"></div>
-                            <div class="text-sm" v-else v-html="nl2br(brain.description_en)"></div>
+                            <div class="text-lg font-bold mb-1">{{ messages.lang === 'ja' ? brain.ja_name : brain.en_name }}</div>
+                            <div class="text-sm" v-if="messages.lang === 'ja'" v-html="nl2br(brain.ja_description)"></div>
+                            <div class="text-sm" v-else v-html="nl2br(brain.en_description)"></div>
                         </div>
                         <i class="fa-solid fa-angle-right text-xl text-emerald-600"></i>
                     </div>

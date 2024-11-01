@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\UserRecord;
+use App\Models\BrainRecord;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,14 +21,11 @@ class DatabaseSeeder extends Seeder
             BrainSeeder::class,
         ]);
 
-        if (config('app.env') === 'local') {
-        \App\Models\UserRecord::factory(100)->create();
-        \App\Models\Record::factory(300)->create();
+        if (config('app.debug')) {
+            \App\Models\User::factory(10)->create();
+            \App\Models\UserRecord::factory(300)->create();
+            \App\Models\BrainRecord::factory(300)->create();
         }
-
-
-
-        // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

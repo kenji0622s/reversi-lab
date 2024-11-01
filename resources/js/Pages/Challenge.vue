@@ -5,32 +5,54 @@ import { ref } from 'vue';
 import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
-import { brains, strategies } from '../strategies/brains';
 import { nl2br } from '@/common';
+
+// { brain_id: strategy }の形でbrain.jsから取得
+import { strategies } from '../strategies/brains';
+
 const props = defineProps({
     user: Object,
-    brainsModels: Object,
+    brains: Object,
+    debug: Boolean,
     messages: Object,
 });
 
+//未登録ユーザーの場合はuserId2(Guest)として処理
 const user = props.user;
+let userId;
 if (user) {
-    console.log(user.id);
+    userId = user.id;
+} else {
+    userId = 2;
 }
+
+const brains = props.brains;
+const brain = ref(brains.find(brain => brain.id === 1));
+let strategy;
 
 const turns = ['black', 'white'];
-
-const brain = ref(brains[0]);
-const brainModel = ref(props.brainsModels[0]);
-function getBrainModel() {
-    brainModel.value = props.brainsModels[brains.indexOf(brain.value)];
-}
-
-const yourTurn = ref(turns[0]);
-const brainTurn = ref(turns[0]);
+//現在のターンを管理
 const turn = ref(turns[0]);
 
+//ユーザーのターン
+const yourTurn = ref(turns[0]);
+//ブレインのターン
+const brainTurn = ref(turns[0]);
+
+// ゲーム開始前のBrain選択・ターン選択
 const isReady = ref(false);
+const readyGame = () => {
+    if (yourTurn.value === turns[0]) {
+        brainTurn.value = turns[1];
+    }
+    strategy = strategies[brain.value.id];
+    isReady.value = true;
+    if (brainTurn.value === turns[0]) {
+        const blackAvailableCellLength = blackAvailableCells.value.length;
+        const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
+        selectCell(blackAvailableCells.value[randomIndex]);
+    }
+}
 
 const blackCells = ref([[4, 5], [5, 4]]);
 const whiteCells = ref([[4, 4], [5, 5]]);
@@ -41,7 +63,6 @@ const whiteAvailableCells = ref([]);
 const selectedCell = ref(null);
 const isGameEnd = ref(false);
 const gameEndMessage = ref('');
-let result;
 const selectCell = (cell) => {
     selectedCell.value = cell;
     if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
@@ -61,7 +82,7 @@ const selectCell = (cell) => {
                 }
                 if (brainTurn.value === turns[1] && turn.value === turns[1]) {
                     setTimeout(() => {
-                        const answerCell = strategies[brains.indexOf(brain.value)]({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        const answerCell = strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
                         selectCell(answerCell);
                     }, 300);
                 }
@@ -82,7 +103,7 @@ const selectCell = (cell) => {
                 }
                 if (brainTurn.value === turns[0] && turn.value === turns[0]) {
                     setTimeout(() => {
-                        const answerCell = strategies[brains.indexOf(brain.value)]({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        const answerCell = strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
                         selectCell(answerCell);
                     }, 300);
                 }
@@ -90,44 +111,35 @@ const selectCell = (cell) => {
         }
     }
     if (blackAvailableCells.value.length === 0 && whiteAvailableCells.value.length === 0 && usedCells.value.length > 4) {
-        const blackCellsLength = blackCells.value.length;
-        const whiteCellsLength = whiteCells.value.length;
-        if (blackCellsLength > whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength < whiteCellsLength && yourTurn.value === turns[1]) {
-            gameEndMessage.value = props.messages.challenge.game_end_win;
-            result = 'win';
-        } else if (blackCellsLength < whiteCellsLength && yourTurn.value === turns[0] || blackCellsLength > whiteCellsLength && yourTurn.value === turns[1]) {
-            gameEndMessage.value = props.messages.challenge.game_end_lose;
-            result = 'lose';
-        } else {
-            gameEndMessage.value = props.messages.challenge.game_end_draw;
-            result = 'draw';
-        }
         isGameEnd.value = true;
-        if (user) {
+        let user_discs;
+        let brain_discs;
+        let isFirst;
+        try{
+            if (yourTurn.value === turns[0]) {
+                user_discs = blackCells.value.length;
+                brain_discs = whiteCells.value.length;
+                isFirst = true;
+            } else {
+                user_discs = whiteCells.value.length;
+                brain_discs = blackCells.value.length;
+                isFirst = false;
+            }
             router.post('/user-records', {
-                user_id: user.id,
-                brain_id: brains.indexOf(brain.value) + 1,
-                result: result,
+                user_id: userId,
+                brain_id: brain.value.id,
+                user_discs: user_discs,
+                brain_discs: brain_discs,
+                is_first: isFirst,
             });
-        } else {
-            router.post('/user-records', {
-                user_id: 0,
-                brain_id: brains.indexOf(brain.value) + 1,
-                result: result,
-            });
+        } catch (error) {
+            console.error(error);
         }
     }
 }
 
-const readyGame = () => {
-    brainTurn.value = yourTurn.value === turns[0] ? turns[1] : turns[0];
-    isReady.value = true;
-    if (brainTurn.value === turns[0]) {
-        const blackAvailableCellLength = blackAvailableCells.value.length;
-        const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
-        selectCell(blackAvailableCells.value[randomIndex]);
-    }
-}
+
+
 </script>
 
 <template>
@@ -136,7 +148,7 @@ const readyGame = () => {
 
     <BasicLayout :messages="messages">
         <template #title>
-            Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ brain }}</span>
+            Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ messages.lang === 'ja' ? brain.ja_name : brain.en_name }}</span>
         </template>
 
         <!-- <div class="relative">
@@ -187,23 +199,51 @@ const readyGame = () => {
         </div>
 
         <div class="flex justify-center items-center mt-6">
-            <button @click="resetGame" onclick="window.location.reload()"
+            <button @click="resetGame" onclick="window.location.reload()" v-if="isGameEnd"
                 class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
-                    messages.challenge.reset_game }}</button>
+                    messages.challenge.again }}</button>
+        </div>
+
+        <div v-if="debug">
+            <table class="text-left">
+                <tr>
+                    <th>turn</th>
+                    <td>{{ turn }}</td>
+                </tr>
+                <tr>
+                    <th>usedCells</th>
+                    <td>{{ usedCells }}</td>
+                </tr>
+                <tr>
+                    <th>availableCells</th>
+                    <td>{{ availableCells }}</td>
+                </tr>
+                <tr>
+                    <th>blackAvailableCells</th>
+                    <td>{{ blackAvailableCells }}</td>
+                </tr>
+                <tr>
+                    <th>whiteAvailableCells</th>
+                    <td>{{ whiteAvailableCells }}</td>
+                </tr>
+            </table>
         </div>
 
         <div v-if="!isReady" class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-100/95 absolute top-0 left-0">
-            <div class="mt-16 p-8 w-4/5 md:w-96 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
+            <div
+                class="mt-16 p-8 w-4/5 md:w-96 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
                 <div class="mb-4">
                     <label for="brain" class="block text-sm font-medium leading-6 text-gray-900">{{
                         messages.challenge.select_brain }}</label>
-                    <select v-model="brain" @change="getBrainModel"
+                    <select v-model="brain"
                         class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
-                        <option v-for="brain in brains" :value="brain">{{ brain }}</option>
+                        <option v-for="brain in brains" :value="brain">
+                            {{ messages.lang === 'ja' ? brain.ja_name : brain.en_name }}
+                        </option>
                     </select>
                     <div class="mt-2 bg-white py-2 px-4 rounded-md text-xs">
-                        <p v-if="messages.lang === 'ja'" v-html="nl2br(brainModel.description)"></p>
-                        <p v-else v-html="nl2br(brainModel.description_en)"></p>
+                        <p v-if="messages.lang === 'ja'" v-html="nl2br(brain.ja_description)"></p>
+                        <p v-else v-html="nl2br(brain.en_description)"></p>
                     </div>
                 </div>
                 <div class="mb-6">

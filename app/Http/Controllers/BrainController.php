@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBrainRequest;
 use App\Http\Requests\UpdateBrainRequest;
 use App\Models\Brain;
-use App\Models\Record;
+use App\Models\BrainRecord;
 use App\Models\UserRecord;
 use Inertia\Inertia;
 
@@ -46,9 +46,11 @@ class BrainController extends Controller
     {
         Brain::create(
             [
-                'name' => $request->name,
-                'description' => $request->description,
-                'description_en' => $request->description_en,
+                'ja_name' => $request->ja_name,
+                'en_name' => $request->en_name,
+                'ja_description' => $request->ja_description,
+                'en_description' => $request->en_description,
+                'created_by' => $request->created_by,
             ]
         );
         return to_route('brains.index');
@@ -67,19 +69,16 @@ class BrainController extends Controller
             'messages' => trans('messages'),
         ]);
     }
-    public function showRecords(Brain $brain)
+
+    public function showDetail(Brain $brain) 
     {
-        $records = [];
-        $other_brains = Brain::where('id', '!=', $brain->id)->get();
+        $brains = Brain::all();
+        $brainRecords = BrainRecord::where('brain_id', $brain->id)->get()->groupBy('opponent_id');
         $userRecords = UserRecord::where('brain_id', $brain->id)->get();
-        // dd($userRecords);
-        foreach ($other_brains as $other_brain) {
-            $records[] = Record::where('black_player', $brain->name)->where('white_player', $other_brain->name)->orWhere('white_player', $brain->name)->where('black_player', $other_brain->name)->get();
-        }
-        return Inertia::render('Brains/Records', [
+        return Inertia::render('Brains/Detail', [
             'brain' => $brain,
-            'records' => $records,
-            'other_brains' => $other_brains,
+            'brains' => $brains,
+            'brainRecords' => $brainRecords,
             'userRecords' => $userRecords,
             'messages' => trans('messages'),
         ]);
@@ -108,11 +107,15 @@ class BrainController extends Controller
      */
     public function update(UpdateBrainRequest $request, Brain $brain)
     {
+
+        // dd($request->all());
         $brain->update(
             [
-                'name' => $request->name,
-                'description' => $request->description,
-                'description_en' => $request->description_en,
+                'ja_name' => $request->ja_name,
+                'en_name' => $request->en_name,
+                'ja_description' => $request->ja_description,
+                'en_description' => $request->en_description,
+                'created_by' => $request->created_by,
             ]
         );
         return to_route('brains.index');

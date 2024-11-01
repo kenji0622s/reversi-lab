@@ -8,9 +8,9 @@ const props = defineProps({
     messages: Object,
 });
 
-const deleteBrain = (id) => {
-    router.delete(route('brains.destroy', { brain: id }));
-}
+// const deleteBrain = (id) => {
+//     router.delete(route('brains.destroy', { brain: id }));
+// }
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const deleteBrain = (id) => {
     <BasicLayout :messages="messages">
 
         <template #title>
-            {{ brain.name }}
+            {{ messages.lang === 'ja' ? brain.ja_name : brain.en_name }}
         </template>
 
         <div class="w-4/5 md:w-2/5 mx-auto mt-4">
@@ -28,7 +28,6 @@ const deleteBrain = (id) => {
                 <i class="fa-solid fa-angle-left"></i>
                 戻る
             </a>
-
             <div class="mt-2 bg-neutral-100 p-4 rounded-md shadow-sm border-2 border-neutral-300">
                 <div class="p-2 w-full">
                     <div class="flex items-center gap-2">
@@ -40,24 +39,38 @@ const deleteBrain = (id) => {
                 </div>
                 <div class="p-2 w-full">
                     <div>
-                        <label for="name" class="leading-7 text-sm text-gray-700 font-bold">名前</label>
-                        <div id="name" class="w-full  text-base outline-none text-gray-700 py-1">
-                            {{ brain.name }}
+                        <label for="ja_ame" class="leading-7 text-sm text-gray-700 font-bold">日本語名前</label>
+                        <div id="ja_name" class="w-full  text-base outline-none text-gray-700 py-1">
+                            {{ brain.ja_name }}
                         </div>
                     </div>
                 </div>
-
                 <div class="p-2 w-full">
                     <div>
-                        <label for="description" class="leading-7 text-sm text-gray-700 font-bold">日本語説明</label>
-                        <div id="description" class="w-full  text-base outline-none text-gray-700 py-1" v-html="nl2br(brain.description)"></div>
+                        <label for="en_name" class="leading-7 text-sm text-gray-700 font-bold">英語名前</label>
+                        <div id="en_name" class="w-full  text-base outline-none text-gray-700 py-1">
+                            {{ brain.en_name }}
+                        </div>
                     </div>
                 </div>
-
                 <div class="p-2 w-full">
                     <div>
-                        <label for="description_en" class="leading-7 text-sm text-gray-700 font-bold">英語説明</label>
-                        <div id="description_en" class="w-full  text-base outline-none text-gray-700 py-1" v-html="nl2br(brain.description_en)"></div>
+                        <label for="ja_description" class="leading-7 text-sm text-gray-700 font-bold">日本語説明</label>
+                        <div id="ja_description" class="w-full  text-base outline-none text-gray-700 py-1" v-html="nl2br(brain.ja_description)"></div>
+                    </div>
+                </div>
+                <div class="p-2 w-full">
+                    <div>
+                        <label for="en_description" class="leading-7 text-sm text-gray-700 font-bold">英語説明</label>
+                        <div id="en_description" class="w-full  text-base outline-none text-gray-700 py-1" v-html="nl2br(brain.en_description)"></div>
+                    </div>
+                </div>
+                <div class="p-2 w-full">
+                    <div>
+                        <label for="created_by" class="leading-7 text-sm text-gray-700 font-bold">作成者</label>
+                        <div id="created_by" class="w-full  text-base outline-none text-gray-700 py-1">
+                            {{ brain.created_by }}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,9 @@ class UserRecord extends Model
     protected $fillable = [
         'user_id',
         'brain_id',
-        'result',
+        'user_discs',
+        'brain_discs',
+        'is_first',
     ];
 
     public function brain()

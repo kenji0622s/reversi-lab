@@ -24,9 +24,11 @@ class StoreBrainRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:30',
-            'description' => 'nullable|string|max:255',
-            'description_en' => 'nullable|string|max:255',
+            'ja_name' => 'required|string|max:30',
+            'en_name' => 'required|string|max:30',
+            'ja_description' => 'required|string|max:255',
+            'en_description' => 'required|string|max:255',
+            'created_by' => 'nullable|string|max:30',
         ];
     }
 }

@@ -10,8 +10,10 @@ class Brain extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
-        'description_en',
+        'ja_name',
+        'en_name',
+        'ja_description',
+        'en_description',
+        'created_by',
     ];
 }

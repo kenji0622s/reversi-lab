@@ -11,7 +11,6 @@ return [
         "close" => "閉じる",
         "back" => "戻る",
     ],
-
     "menu" => [
         "challenge" => "チャレンジ",
         "brain_list" => "Brain成績",
@@ -22,7 +21,6 @@ return [
         "play" => "二人対戦",
         "profile" => "プロフィール",
     ],
-
     "challenge" => [
         "select_brain" => "挑戦するBrainを選択してください",
         "select_turn" => "あなたの番",
@@ -31,13 +29,13 @@ return [
         "game_start" => "開始",
         "your_turn" => "あなたの番",
         "brain_turn" => "Brainの番",
-        "reset_game" => "リセット",
+        "again" => "もう1回",
         "game_end_win" => "あなたの勝ち",
         "game_end_lose" => "Brainの勝ち",
         "game_end_draw" => "引き分け",
     ],
     "user_records" => [
-        "guest_modal_message" => "ログイン・登録するとBrainとの対戦成績を確認できます",  
+        "guest_modal_message" => "ログイン・登録するとBrainとの対戦成績を確認できます",
         "guest_modal_link" => "ゲストユーザーの対戦成績を見る",
         "win_rate" => "勝率",
         "win" => "勝ち",
@@ -56,10 +54,9 @@ return [
         "game_end_draw" => "引き分け",
     ],
     "simulate" => [
-        "select_black_brain" => "先攻のBrainを選択してください(黒)",
-        "select_white_brain" => "後攻のBrainを選択してください(白)",
+        "select_brain" => "ブレインを選択してください",
         "ready_game" => "準備完了",
-        "check_explain" => 
+        "check_explain" =>
         "シミュレーションを開始します。\n1分ほど時間がかかります。",
         "simulate_start" => "スタート",
         "black_wins" => "黒勝ち",
@@ -81,6 +78,7 @@ return [
         "turn" => "先行/後攻",
         "first_turn" => "先行",
         "second_turn" => "後攻",
+        "no_record" => "対戦成績がありません",
     ],
     "register" => [
         "name" => "名前",
@@ -88,7 +86,7 @@ return [
         "password" => "パスワード",
         "password_confirmation" => "パスワード確認",
         "already_registered" => "登録済みの方はログインしてください",
-        ],
+    ],
     "login" => [
         "email" => "メールアドレス",
         "password" => "パスワード",

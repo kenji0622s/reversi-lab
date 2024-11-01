@@ -1,17 +1,17 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PlayController;
 use App\Http\Controllers\ChallengeController;
-use App\Http\Controllers\RecordController;
 use App\Http\Controllers\BrainController;
+use App\Http\Controllers\BrainRecordController;
 use App\Http\Controllers\UserRecordController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\WatchController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// use Illuminate\Foundation\Application;
+// use App\Http\Controllers\PlayController;
+// use App\Http\Controllers\WatchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,9 +50,12 @@ Route::get('/play', function () {
 // Route::get('/watch', [WatchController::class, 'index'])->name('watch');
 Route::get('/challenge', [ChallengeController::class, 'index'])->name('challenge');
 
-Route::resource('records', RecordController::class);
-Route::get('/brains/{brain}/records', [BrainController::class, 'showRecords'])->name('brains.records');
+Route::resource('brain-records', BrainRecordController::class);
+Route::get('/simulation', [BrainRecordController::class, 'create'])->name('simulation');
+
 Route::resource('brains', BrainController::class);
+Route::get('/brains/{brain}/detail', [BrainController::class, 'showDetail'])->name('brains.detail');
+
 Route::resource('user-records', UserRecordController::class);
 
 Route::get('/dashboard', function () {
@@ -65,4 +68,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
