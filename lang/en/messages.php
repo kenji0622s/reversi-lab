@@ -29,9 +29,10 @@ return [
         "your_turn" => "Your turn",
         "brain_turn" => "Brain's turn",
         "again" => "Again",
-        "game_end_win" => "You win",
-        "game_end_lose" => "Brain wins",
-        "game_end_draw" => "Draw",
+        "game_end_message_win" => "Congratulations! You win!",
+        "game_end_message_lose" => "You lose... Try again!",
+        "game_end_message_draw" => "Draw! Try again!",
+        "you" => "You",
     ],
     "user_records" => [
         "guest_modal_message" => "Login or register to see your results with Brain",

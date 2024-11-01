@@ -30,9 +30,10 @@ return [
         "your_turn" => "あなたの番",
         "brain_turn" => "Brainの番",
         "again" => "もう1回",
-        "game_end_win" => "あなたの勝ち",
-        "game_end_lose" => "Brainの勝ち",
-        "game_end_draw" => "引き分け",
+        "game_end_message_win" => "おめでとうございます！\nあなたの勝ちです！",
+        "game_end_message_lose" => "残念、負けてしまいました...\n次は勝てるかも！",
+        "game_end_message_draw" => "引き分け！\n次は勝てるかも！",
+        "you" => "あなた",
     ],
     "user_records" => [
         "guest_modal_message" => "ログイン・登録するとBrainとの対戦成績を確認できます",

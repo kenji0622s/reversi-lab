@@ -62,7 +62,15 @@ const blackAvailableCells = ref([[3, 4], [4, 3], [5, 6], [6, 5]]);
 const whiteAvailableCells = ref([]);
 const selectedCell = ref(null);
 const isGameEnd = ref(false);
-const gameEndMessage = ref('');
+const isGameEndMessage = ref(false);
+const gameEndMessage = ref(null);
+
+const INTERVAL = 250;
+
+let user_discs;
+let brain_discs;
+let isFirst;
+
 const selectCell = (cell) => {
     selectedCell.value = cell;
     if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
@@ -79,12 +87,12 @@ const selectCell = (cell) => {
                 updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells);
                 if (whiteAvailableCells.value.length > 0) {
                     turn.value = turns[1];
-                }
-                if (brainTurn.value === turns[1] && turn.value === turns[1]) {
-                    setTimeout(() => {
-                        const answerCell = strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
-                        selectCell(answerCell);
-                    }, 300);
+                    if (brainTurn.value === turns[1]) {
+                        setTimeout(() => {
+                            const answerCell = strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                            selectCell(answerCell);
+                        }, INTERVAL);
+                    }
                 }
             }
         } else {
@@ -100,31 +108,40 @@ const selectCell = (cell) => {
                 updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells);
                 if (blackAvailableCells.value.length > 0) {
                     turn.value = turns[0];
-                }
-                if (brainTurn.value === turns[0] && turn.value === turns[0]) {
-                    setTimeout(() => {
-                        const answerCell = strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
-                        selectCell(answerCell);
-                    }, 300);
+                    if (brainTurn.value === turns[0]) {
+                        setTimeout(() => {
+                            const answerCell = strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                            selectCell(answerCell);
+                        }, INTERVAL);
+                    }
                 }
             }
         }
     }
     if (blackAvailableCells.value.length === 0 && whiteAvailableCells.value.length === 0 && usedCells.value.length > 4) {
         isGameEnd.value = true;
-        let user_discs;
-        let brain_discs;
-        let isFirst;
-        try{
-            if (yourTurn.value === turns[0]) {
-                user_discs = blackCells.value.length;
-                brain_discs = whiteCells.value.length;
-                isFirst = true;
-            } else {
-                user_discs = whiteCells.value.length;
-                brain_discs = blackCells.value.length;
-                isFirst = false;
-            }
+        isGameEndMessage.value = true;
+
+        if (yourTurn.value === turns[0]) {
+            user_discs = blackCells.value.length;
+            brain_discs = whiteCells.value.length;
+            isFirst = true;
+        } else {
+            user_discs = whiteCells.value.length;
+            brain_discs = blackCells.value.length;
+            isFirst = false;
+        }
+
+        if (user_discs > brain_discs) {
+            gameEndMessage.value = props.messages.challenge.game_end_message_win;
+        } else if (user_discs === brain_discs) {
+            gameEndMessage.value = props.messages.challenge.game_end_message_draw;
+        } else {
+            gameEndMessage.value = props.messages.challenge.game_end_message_lose;
+        }
+
+        //データを保存
+        try {
             router.post('/user-records', {
                 user_id: userId,
                 brain_id: brain.value.id,
@@ -135,6 +152,7 @@ const selectCell = (cell) => {
         } catch (error) {
             console.error(error);
         }
+
     }
 }
 
@@ -148,7 +166,8 @@ const selectCell = (cell) => {
 
     <BasicLayout :messages="messages">
         <template #title>
-            Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ messages.lang === 'ja' ? brain.ja_name : brain.en_name }}</span>
+            Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ messages.lang === 'ja' ? brain.ja_name :
+                brain.en_name }}</span>
         </template>
 
         <!-- <div class="relative">
@@ -157,8 +176,7 @@ const selectCell = (cell) => {
         </div> -->
 
         <div class="text-center mt-4">
-            <span v-if="isGameEnd" class="text-xl font-bold">{{ gameEndMessage }}</span>
-            <span v-else class="text-xl font-bold">{{ (turn === turns[0] && yourTurn === turns[0]) || (turn === turns[1]
+            <span class="text-xl font-bold">{{ (turn === turns[0] && yourTurn === turns[0]) || (turn === turns[1]
                 &&
                 yourTurn === turns[1]) ? messages.challenge.your_turn : messages.challenge.brain_turn }}</span>
         </div>
@@ -198,11 +216,24 @@ const selectCell = (cell) => {
             </template>
         </div>
 
-        <div class="flex justify-center items-center mt-6">
-            <button @click="resetGame" onclick="window.location.reload()" v-if="isGameEnd"
-                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
-                    messages.challenge.again }}</button>
+
+        <div class="absolute top-40 left-0 w-full z-30 text-center" v-if="isGameEnd && isGameEndMessage">
+            <div
+                class="w-4/5 md:w-[32rem] mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md pt-16 pb-12 relative text-neutral-900">
+                <p class="text-center font-bold mb-4">{{ messages.challenge.you }} {{ user_discs }} :  AI {{ brain_discs }}</p>
+                <p class="text-center font-bold mb-6" v-html="nl2br(gameEndMessage)"></p>
+                <button @click="resetGame" onclick="window.location.reload()"
+                    class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
+                        messages.challenge.again }}</button>
+                <i class="fa-solid fa-xmark absolute top-2 right-4 text-xl cursor-pointer" @click="isGameEndMessage = false"></i>
+            </div>
         </div>
+
+        <div class="text-center mt-8" v-if="isGameEnd && !isGameEndMessage">
+    <button @click="resetGame" onclick="window.location.reload()"
+                    class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
+                        messages.challenge.again }}</button>
+   </div>
 
         <div v-if="debug">
             <table class="text-left">
