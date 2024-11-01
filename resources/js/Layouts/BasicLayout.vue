@@ -37,7 +37,7 @@ const isShowLanguage = ref(false);
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('challenge')" :active="route().current('challenge')">
-                                    {{ messages.menu.challenge }} <span class="text-sm ml-1">vs Brain</span>
+                                    {{ messages.menu.challenge }}
                                 </NavLink>
                                 <NavLink :href="route('user-records.index')"
                                     :active="route().current('user-records.index')">
@@ -129,7 +129,7 @@ const isShowLanguage = ref(false);
                     class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('challenge')" :active="route().current('challenge')">
-                            {{ messages.menu.challenge }}<span class="text-sm ml-1">vs Brain</span>
+                            {{ messages.menu.challenge }}
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink :href="route('user-records.index')"

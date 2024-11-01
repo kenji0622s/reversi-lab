@@ -17,7 +17,7 @@ defineProps({
         <div class="flex flex-col gap-4 md:gap-6 items-center mt-8">
             <Link :href="route('challenge')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 md:w-72 shadow-md">
-            {{ messages.menu.challenge }}<span class="text-sm ml-2">vs Brain</span>
+            {{ messages.menu.challenge }}
             </Link>
             <Link :href="route('user-records.index')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 md:w-72 shadow-md">

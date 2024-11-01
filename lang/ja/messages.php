@@ -12,9 +12,9 @@ return [
         "back" => "戻る",
     ],
     "menu" => [
-        "challenge" => "チャレンジ",
-        "brain_list" => "Brain成績",
-        "guest_records" => "ゲスト成績",
+        "challenge" => "AIと対戦",
+        "guest_records" => "ゲストの成績",
+        "brain_list" => "AIの成績",
         "my_records" => "自分の成績",
         "simulation" => "シミュレーション",
         "records" => "データ (Admin)",

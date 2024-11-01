@@ -11,8 +11,8 @@ return [
         "close" => "Close",
     ],
     "menu" => [
-        "challenge" => "Challenge",
-        "brain_list" => "Brain Records",
+        "challenge" => "Challenge AI",
+        "brain_list" => "AI Records",
         "guest_records" => "Guest Records",
         "my_records" => "My Records",
         "simulation" => "Simulation",
