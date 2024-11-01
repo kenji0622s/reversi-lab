@@ -51,7 +51,7 @@ Route::get('/play', function () {
 Route::get('/challenge', [ChallengeController::class, 'index'])->name('challenge');
 
 Route::resource('brain-records', BrainRecordController::class);
-Route::get('/brains/{brain}/records', [BrainController::class, 'showRecords'])->name('brains.records');
+Route::get('/brains/{brain}/detail', [BrainController::class, 'showDetail'])->name('brains.detail');
 Route::resource('brains', BrainController::class);
 Route::resource('user-records', UserRecordController::class);
 

@@ -5,8 +5,11 @@ import { ref } from 'vue';
 import getAllDirectionCells from '../utils/getAllDirectionCells';
 import singleDirectionReverse from '../utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '../utils/updateAvailableCells';
-import { strategies } from '../strategies/brains';
 import { nl2br } from '@/common';
+
+// { brain_id: strategy }の形でbrain.jsから取得
+import { strategies } from '../strategies/brains';
+
 const props = defineProps({
     user: Object,
     brains: Object,
@@ -23,13 +26,8 @@ if (user) {
 }
 
 const brains = props.brains;
-const brainId = ref(1);
-const brain = ref(brains.find(brain => brain.id === brainId.value));
-
-console.log('userId: ' + userId);
-console.log('brain: ' + brain.value);
-console.log('brainId: ' + brain.value.ja_description);
-
+const brain = ref(brains.find(brain => brain.id === 1));
+let strategy;
 
 const turns = ['black', 'white'];
 //現在のターンを管理
@@ -46,6 +44,7 @@ const readyGame = () => {
     if (yourTurn.value === turns[0]) {
         brainTurn.value = turns[1];
     }
+    strategy = strategies[brain.value.id];
     isReady.value = true;
     if (brainTurn.value === turns[0]) {
         const blackAvailableCellLength = blackAvailableCells.value.length;
@@ -53,7 +52,6 @@ const readyGame = () => {
         selectCell(blackAvailableCells.value[randomIndex]);
     }
 }
-
 
 const blackCells = ref([[4, 5], [5, 4]]);
 const whiteCells = ref([[4, 4], [5, 5]]);
@@ -83,7 +81,7 @@ const selectCell = (cell) => {
                 }
                 if (brainTurn.value === turns[1] && turn.value === turns[1]) {
                     setTimeout(() => {
-                        const answerCell = strategies[brains.indexOf(brain.value)]({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        const answerCell = strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
                         selectCell(answerCell);
                     }, 300);
                 }
@@ -104,7 +102,7 @@ const selectCell = (cell) => {
                 }
                 if (brainTurn.value === turns[0] && turn.value === turns[0]) {
                     setTimeout(() => {
-                        const answerCell = strategies[brains.indexOf(brain.value)]({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        const answerCell = strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
                         selectCell(answerCell);
                     }, 300);
                 }
@@ -207,7 +205,9 @@ const selectCell = (cell) => {
                         messages.challenge.select_brain }}</label>
                     <select v-model="brain"
                         class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
-                        <option v-for="brain in brains" :value="brain">{{ brain.name }}</option>
+                        <option v-for="brain in brains" :value="brain">
+                            {{ messages.lang === 'ja' ? brain.ja_name : brain.en_name }}
+                        </option>
                     </select>
                     <div class="mt-2 bg-white py-2 px-4 rounded-md text-xs">
                         <p v-if="messages.lang === 'ja'" v-html="nl2br(brain.ja_description)"></p>

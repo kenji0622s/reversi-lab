@@ -6,8 +6,8 @@ use App\Http\Requests\StoreBrainRecordRequest;
 use App\Http\Requests\UpdateBrainRecordRequest;
 use App\Models\BrainRecord;
 use Inertia\Inertia;
-use App\Models\UserRecord;
 use App\Models\User;
+use App\Models\UserRecord;
 use App\Models\Brain;
 
 class BrainRecordController extends Controller
@@ -23,10 +23,10 @@ class BrainRecordController extends Controller
         $brainRecords = BrainRecord::all()->sortByDesc('id')->values()->toArray();
         $userRecords = UserRecord::all()->sortByDesc('id')->values()->toArray();
         $users = User::all();
-        return Inertia::render('Records/Index', [
+        return Inertia::render('BrainRecords/Index', [
+            'users' => $users,
             'brainRecords' => $brainRecords,
             'userRecords' => $userRecords,
-            'users' => $users,
             'messages' => trans('messages'),
         ]);
     }
@@ -40,7 +40,7 @@ class BrainRecordController extends Controller
     {
         $debug = config('services.debug');
         $brains = Brain::all();
-        return Inertia::render('Records/Simulate', [
+        return Inertia::render('BrainRecords/Simulate', [
             'brains' => $brains,
             'debug' => $debug,
             'messages' => trans('messages'),
@@ -61,12 +61,12 @@ class BrainRecordController extends Controller
             BrainRecord::create([
                 'brain_id' => $result['brain_id'],
                 'opponent_id' => $result['opponent_id'],
-                'user_discs' => $result['user_discs'],
                 'brain_discs' => $result['brain_discs'],
+                'opponent_discs' => $result['opponent_discs'],
                 'is_first' => $result['is_first'],
             ]);
         }
-        return to_route('records.index');
+        return to_route('brain-records.index');
     }
 
     /**

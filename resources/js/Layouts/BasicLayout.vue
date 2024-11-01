@@ -12,10 +12,6 @@ defineProps({
 const showingNavigationDropdown = ref(false);
 const isShowLanguage = ref(false);
 
-const isHeightScreen = route().current('challenge') || route().current('records.create');
-
-console.log(isHeightScreen);
-
 </script>
 
 <template>
@@ -73,7 +69,7 @@ console.log(isHeightScreen);
                                 <NavLink :href="route('login')" v-if="!$page.props.auth.user">
                                     {{ messages.common.login }}
                                 </NavLink>
-                                <NavLink :href="route('records.index')" :active="route().current('records.index')"
+                                <NavLink :href="route('brain-records.index')" :active="route().current('brain-records.index')"
                                     v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
                                     {{ messages.menu.records }}
                                 </NavLink>

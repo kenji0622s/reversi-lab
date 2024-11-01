@@ -68,12 +68,14 @@ class BrainController extends Controller
         ]);
     }
 
-    public function showBrainRecords(Brain $brain) 
+    public function showDetail(Brain $brain) 
     {
-        $brainRecords = BrainRecord::where('brain_id', $brain->id)->get();
+        $brains = Brain::all();
+        $brainRecords = BrainRecord::where('brain_id', $brain->id)->get()->groupBy('opponent_id');
         $userRecords = UserRecord::where('brain_id', $brain->id)->get();
-        return Inertia::render('Brains/Records', [
+        return Inertia::render('Brains/Detail', [
             'brain' => $brain,
+            'brains' => $brains,
             'brainRecords' => $brainRecords,
             'userRecords' => $userRecords,
             'messages' => trans('messages'),

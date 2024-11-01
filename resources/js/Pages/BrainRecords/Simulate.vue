@@ -7,10 +7,10 @@ import singleDirectionReverse from '@/utils/singleDirectionReverse';
 import { updateAvailableCells, updateBlackAvailableCells, updateWhiteAvailableCells } from '@/utils/updateAvailableCells';
 import Board from '@/Components/Board.vue';
 import { nl2br } from '@/common';
-import { brains, strategies } from '@/strategies/brains';
+import { strategies } from '@/strategies/brains';
 
 const props = defineProps({
-    brainsModels: Object,
+    brains: Object,
     debug: Boolean,
     messages: Object,
 });
@@ -27,105 +27,39 @@ const selectedCell = ref(null);
 const isGameStart = ref(false);
 const isGameEnd = ref(false);
 const gameEndMessage = ref('');
-const countBlackWins = ref(0);
-const countWhiteWins = ref(0);
-const countDraws = ref(0);
+;
 const countGames = ref(0);
-const MAX_GAMES = 100;
+const MAX_GAMES = 10;
 const INTERVAL = 1;
 
+const brains = props.brains;
 
-const blackBrainModel = ref(props.brainsModels[0]);
-const whiteBrainModel = ref(props.brainsModels[0]);
-function getBlackBrainModel() {
-    blackBrainModel.value = props.brainsModels[brains.indexOf(blackPlayer.value)];
-}
-function getWhiteBrainModel() {
-    whiteBrainModel.value = props.brainsModels[brains.indexOf(whitePlayer.value)];
+// function getBrain1() {
+//     brain1.value = brain1.;
+// }
+// function getBrain2() {
+//     brain2.value = brain2.value.id;
+// }
+
+const brain1 = ref(brains.find(brain => brain.id === 1));
+const brain2 = ref(brains.find(brain => brain.id === 2));
+
+function test() {
+    console.log(brain1.value);
 }
 
-const blackPlayer = ref(brains[0]);
-const whitePlayer = ref(brains[0]);
-let blackPlayerStrategy;
-let whitePlayerStrategy;
+// const brain1Id = ref(1);
+// const brain2Id = ref(2);
+// const brain1 = ref(brains.find(brain => brain.id === brain1Id.value));
+// const brain2 = ref(brains.find(brain => brain.id === brain2Id.value));
 
-const results = [];
-const selectCell = (cell) => {
-    if (blackAvailableCells.value.length === 0 && whiteAvailableCells.value.length === 0 && usedCells.value.length > 4) {
-        const blackCellsLength = blackCells.value.length;
-        const whiteCellsLength = whiteCells.value.length;
-        if (blackCellsLength > whiteCellsLength) {
-            gameEndMessage.value = '黒の勝利';
-            countBlackWins.value++;
-        } else if (blackCellsLength < whiteCellsLength) {
-            gameEndMessage.value = '白の勝利';
-            countWhiteWins.value++;
-        } else {
-            gameEndMessage.value = '引き分け';
-            countDraws.value++;
-        }
-        results.push({ 'black_player': blackPlayer.value, 'white_player': whitePlayer.value, 'count_black': blackCellsLength, 'count_white': whiteCellsLength });
-        isGameEnd.value = true;
-        reStartGame();
-        return;
-    }
-    selectedCell.value = cell;
-    if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
-        if (turn.value === turns[0]) {
-            if (blackAvailableCells.value.some(blackAvailableCell => blackAvailableCell[0] === selectedCell.value[0] && blackAvailableCell[1] === selectedCell.value[1])) {
-                blackCells.value.push(selectedCell.value);
-                usedCells.value.push(selectedCell.value);
-                const allDirectionCells = getAllDirectionCells(selectedCell.value);
-                for (let i = 0; i < allDirectionCells.length; i++) {
-                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
-                }
-                updateAvailableCells(availableCells, usedCells);
-                updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
-                updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
-                setTimeout(() => {
-                    if (whiteAvailableCells.value.length > 0) {
-                        turn.value = turns[1];
-                        const answerCell = whitePlayerStrategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
-                        selectCell(answerCell);
-                    } else {
-                        const answerCell = blackPlayerStrategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
-                        selectCell(answerCell);
-                    }
-                }, INTERVAL);
-            }
-        } else {
-            if (whiteAvailableCells.value.some(whiteAvailableCell => whiteAvailableCell[0] === selectedCell.value[0] && whiteAvailableCell[1] === selectedCell.value[1])) {
-                whiteCells.value.push(selectedCell.value);
-                usedCells.value.push(selectedCell.value);
-                const allDirectionCells = getAllDirectionCells(selectedCell.value);
-                for (let i = 0; i < allDirectionCells.length; i++) {
-                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
-                }
-                updateAvailableCells(availableCells, usedCells);
-                updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
-                updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
-                setTimeout(() => {
-                    if (blackAvailableCells.value.length > 0) {
-                        turn.value = turns[0];
-                        const answerCell = blackPlayerStrategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
-                        selectCell(answerCell);
-                    } else {
-                        const answerCell = whitePlayerStrategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
-                        selectCell(answerCell);
-                    }
-                }, INTERVAL);
-            }
-        }
-    }
-}
+let brain1Strategy;
+let brain2Strategy;
 
 function startGame() {
     if (countGames.value === 0) {
         isGameStart.value = true;
-        blackPlayerStrategy = strategies[brains.indexOf(blackPlayer.value)];
-        whitePlayerStrategy = strategies[brains.indexOf(whitePlayer.value)];
     }
-
     countGames.value++;
     const blackAvailableCellLength = blackAvailableCells.value.length;
     const randomIndex = Math.floor(Math.random() * blackAvailableCellLength);
@@ -149,8 +83,10 @@ function reStartGame() {
     startGame();
 }
 
+
 function storeRecords() {
-    router.post('/records', {
+    console.log(results);
+    router.post('/brain-records', {
         results: results
     });
 }
@@ -162,8 +98,82 @@ const readyGame = () => {
 const isCheckExplain = ref(false);
 const checkExplain = () => {
     isCheckExplain.value = true;
+    brain1Strategy = strategies[brain1.value.id];
+    brain2Strategy = strategies[brain2.value.id];
     startGame();
 }
+
+const countBrain1Wins = ref(0);
+const countBrain2Wins = ref(0);
+const countDraws = ref(0)
+
+const results = [];
+const selectCell = (cell) => {
+    if (blackAvailableCells.value.length === 0 && whiteAvailableCells.value.length === 0 && usedCells.value.length > 4) {
+        if (blackCells.value.length > whiteCells.value.length) {
+            countBrain1Wins.value++;
+        } else if (blackCells.value.length < whiteCells.value.length) {
+            countBrain2Wins.value++;
+        } else {
+            countDraws.value++;
+        }
+        const blackCellsLength = blackCells.value.length;
+        const whiteCellsLength = whiteCells.value.length;
+        results.push({ 'brain_id': brain1.value.id, 'opponent_id': brain2.value.id, 'brain_discs': blackCellsLength, 'opponent_discs': whiteCellsLength, 'is_first': true });
+        isGameEnd.value = true;
+        reStartGame();
+        return;
+    }
+    selectedCell.value = cell;
+    if (!usedCells.value.some(usedCell => usedCell[0] === selectedCell.value[0] && usedCell[1] === selectedCell.value[1])) {
+        if (turn.value === turns[0]) {
+            if (blackAvailableCells.value.some(blackAvailableCell => blackAvailableCell[0] === selectedCell.value[0] && blackAvailableCell[1] === selectedCell.value[1])) {
+                blackCells.value.push(selectedCell.value);
+                usedCells.value.push(selectedCell.value);
+                const allDirectionCells = getAllDirectionCells(selectedCell.value);
+                for (let i = 0; i < allDirectionCells.length; i++) {
+                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
+                }
+                updateAvailableCells(availableCells, usedCells);
+                updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
+                updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
+                setTimeout(() => {
+                    if (whiteAvailableCells.value.length > 0) {
+                        turn.value = turns[1];
+                        const answerCell = brain1Strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        selectCell(answerCell);
+                    } else {
+                        const answerCell = brain2Strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        selectCell(answerCell);
+                    }
+                }, INTERVAL);
+            }
+        } else {
+            if (whiteAvailableCells.value.some(whiteAvailableCell => whiteAvailableCell[0] === selectedCell.value[0] && whiteAvailableCell[1] === selectedCell.value[1])) {
+                whiteCells.value.push(selectedCell.value);
+                usedCells.value.push(selectedCell.value);
+                const allDirectionCells = getAllDirectionCells(selectedCell.value);
+                for (let i = 0; i < allDirectionCells.length; i++) {
+                    singleDirectionReverse(allDirectionCells[i], blackCells.value, whiteCells.value, turn.value, turns);
+                }
+                updateAvailableCells(availableCells, usedCells);
+                updateBlackAvailableCells(blackAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
+                updateWhiteAvailableCells(whiteAvailableCells, availableCells, blackCells, whiteCells, turn, turns);
+                setTimeout(() => {
+                    if (blackAvailableCells.value.length > 0) {
+                        turn.value = turns[0];
+                        const answerCell = brain2Strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        selectCell(answerCell);
+                    } else {
+                        const answerCell = brain1Strategy({ blackAvailableCells: blackAvailableCells.value, whiteAvailableCells: whiteAvailableCells.value, turn: turn.value });
+                        selectCell(answerCell);
+                    }
+                }, INTERVAL);
+            }
+        }
+    }
+}
+
 </script>
 
 <template>
@@ -175,23 +185,21 @@ const checkExplain = () => {
             Simulation
         </template>
 
-        <div class="flex justify-center items-center gap-4 mt-4 w-4/5 mx-auto">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-circle"></i>
-                <span>{{ blackPlayer }}</span>
-            </div>
-            <span class="text-xl">vs</span>
-            <div class="flex items-center gap-2">
-                <i class="fa-regular fa-circle"></i>
-                <span>{{ whitePlayer }}</span>
-            </div>
+        <div class="mt-4 mb-4">
+          <p class="text-center text-lg font-bold">
+              <span>{{ brain1.name }} 勝ち: {{ countBrain1Wins }}</span>
+              <span> | </span>
+              <span>{{ brain2.name }} 勝ち: {{ countBrain2Wins }}</span>
+              <br>
+              <span>引き分け: {{ countDraws }}</span>
+            </p>
         </div>
 
-        <div class="text-center mt-4 mb-4">
+        <!-- <div class="text-center mt-4 mb-4">
             <span class="font-bold">{{ messages.simulate.black_wins }}: {{ countBlackWins }} | {{
                 messages.simulate.white_wins
                 }}: {{ countWhiteWins }} | {{ messages.simulate.draws }}: {{ countDraws }}</span>
-        </div>
+        </div> -->
 
         <Board :blackCells="blackCells" :whiteCells="whiteCells" :whiteAvailableCells="whiteAvailableCells"
             :blackAvailableCells="blackAvailableCells" :turn="turn" :debug="debug" />
@@ -221,28 +229,28 @@ const checkExplain = () => {
             <div class="mt-12 p-8 w-4/5 md:w-96 mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md">
                 <div v-if="!isReady">
                     <div class="mb-4">
-                        <label for="blackBrain" class="block text-sm font-medium leading-6 text-gray-900">{{
+                        <label for="brain1" class="block text-sm font-medium leading-6 text-gray-900">{{
                             messages.simulate.select_black_brain }}</label>
-                        <select v-model="blackPlayer" @change="getBlackBrainModel"
+                        <select v-model="brain1" @change="test"
                             class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
-                            <option v-for="brain in brains" :value="brain">{{ brain }}</option>
+                            <option v-for="brain in brains" :value="brain">{{ messages.lang === 'ja' ? brain.ja_name : brain.en_name }}</option>
                         </select>
                         <div class="mt-2 bg-white py-2 px-4 rounded-md text-xs">
-                            <p v-if="messages.lang === 'ja'" v-html="nl2br(blackBrainModel.description)"></p>
-                            <p v-else v-html="nl2br(blackBrainModel.description_en)"></p>
+                            <p v-if="messages.lang === 'ja'" v-html="nl2br(brain1.ja_description)"></p>
+                            <p v-else v-html="nl2br(brain1.en_description)"></p>
                         </div>
                     </div>
 
                     <div class="mb-6">
-                        <label for="whiteBrain" class="block text-sm font-medium leading-6 text-gray-900">{{
+                        <label for="brain2" class="block text-sm font-medium leading-6 text-gray-900">{{
                             messages.simulate.select_white_brain }}</label>
-                        <select v-model="whitePlayer" @change="getWhiteBrainModel"
+                        <select v-model="brain2" 
                             class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-emerald-500 sm:text-sm sm:leading-6">
-                            <option v-for="brain in brains" :value="brain">{{ brain }}</option>
+                            <option v-for="brain in brains" :value="brain">{{ messages.lang === 'ja' ? brain.ja_name : brain.en_name }}</option>
                         </select>
                         <div class="mt-2 bg-white py-2 px-4 rounded-md text-xs">
-                            <p v-if="messages.lang === 'ja'" v-html="nl2br(whiteBrainModel.description)"></p>
-                            <p v-else v-html="nl2br(whiteBrainModel.description_en)"></p>
+                            <p v-if="messages.lang === 'ja'" v-html="nl2br(brain2.ja_description)"></p>
+                            <p v-else v-html="nl2br(brain2.en_description)"></p>
                         </div>
                     </div>
 

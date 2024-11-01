@@ -35,7 +35,7 @@ defineProps({
             <!-- <Link :href="route('watch')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Watch
             </Link> -->
-            <Link :href="route('records.create')"
+            <Link :href="route('brain-records.create')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 md:w-72 shadow-md">
             {{ messages.menu.simulation }}
             </Link>
@@ -53,7 +53,7 @@ defineProps({
                 {{ messages.common.register }}
                 </Link>
             </div>
-            <Link :href="route('records.index')" v-if="$page.props.auth.user && $page.props.auth.user.is_admin"
+            <Link :href="route('brain-records.index')" v-if="$page.props.auth.user && $page.props.auth.user.is_admin"
                 class="border-2 border-emerald-500 text-lg font-bold text-center bg-neutral-50 text-emerald-500 p-2 rounded-md shadow-md w-60 md:w-72">
             {{ messages.menu.records }}
             </Link>

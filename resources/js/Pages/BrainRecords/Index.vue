@@ -4,14 +4,14 @@ import BasicLayout from '@/Layouts/BasicLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 defineProps({
-    records: Array,
-    userRecords: Array,
     users: Array,
+    brainRecords: Array,
+    userRecords: Array,
     messages: Object,
 });
 
-const show_brains_flag = ref(false);
-const show_users_flag = ref(true);
+const showBrainRecordsFlag = ref(false);
+const showUserRecordsFlag = ref(true);
 
 </script>
 
@@ -23,18 +23,22 @@ const show_users_flag = ref(true);
 
         <div class="w-11/12 md:w-2/5 mx-auto mt-4">
             <div class="flex items-center justify-center gap-4 mb-4 relative w-fit mx-auto">
-                <button class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold w-24 md:w-32"
-                    :class="{ 'bg-emerald-500 text-white': show_users_flag, 'bg-neutral-100 text-neutral-900': !show_users_flag }"
-                    @click="show_brains_flag = false; show_users_flag = true">Users</button>
-                <button class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold w-24 md:w-32"
-                    :class="{ 'bg-emerald-500 text-white':  show_brains_flag, 'bg-neutral-100 text-neutral-900': !show_brains_flag }"
-                    @click="show_brains_flag = true; show_users_flag = false">Brains</button>
+                <button
+                    class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold w-24 md:w-32"
+                    :class="{ 'bg-emerald-500 text-white': showUserRecordsFlag, 'bg-neutral-100 text-neutral-900': !showUserRecordsFlag }"
+                    @click="showBrainRecordsFlag = false; showUserRecordsFlag = true">Users</button>
+                <button
+                    class="border-2 border-neutral-300 py-2 px-4 rounded-md shadow-sm text-sm font-bold w-24 md:w-32"
+                    :class="{ 'bg-emerald-500 text-white': showBrainRecordsFlag, 'bg-neutral-100 text-neutral-900': !showBrainRecordsFlag }"
+                    @click="showBrainRecordsFlag = true; showUserRecordsFlag = false">Brains</button>
                 <button class="absolute -right-12 p-2" onclick="window.location.reload()">
                     <i class="fa-solid fa-rotate-right text-lg text-emerald-600"></i>
                 </button>
             </div>
-            <div class="bg-neutral-100 border-2 border-neutral-300 p-4 md:p-6 rounded-md shadow-sm text-center text-sm md:text-base w-full md:w-11/12 mx-auto">
-                <table class="w-full"v-if="show_users_flag">
+            <div
+                class="bg-neutral-100 border-2 border-neutral-300 p-4 md:p-6 rounded-md shadow-sm text-center text-sm md:text-base w-full md:w-11/12 mx-auto">
+                <!-- ユーザーの対戦成績 -->
+                <table class="w-full" v-if="showUserRecordsFlag">
                     <thead>
                         <tr class="bg-neutral-300">
                             <th>ID</th>
@@ -52,20 +56,22 @@ const show_users_flag = ref(true);
                             </td>
                             <td>{{ userRecord.brain_id }}</td>
                             <td>
-                                <template v-if="userRecord.result == 'win'">
+                                <template v-if="userRecord.user_discs > userRecord.opponent_discs">
                                     勝ち
                                 </template>
-                                <template v-else-if="userRecord.result == 'lose'">
+                                <template v-else-if="userRecord.user_discs === userRecord.opponent_discs">
+                                    引き分け
+                                </template>
+                                <template v-else>
                                     負け
                                 </template>
-                                <template v-else>引き分け</template>
-                             
                             </td>
                             <td>{{ dayjs(userRecord.created_at).format('MM/DD HH:mm') }}</td>
                         </tr>
                     </tbody>
                 </table>
-                <table class="w-full" v-if="show_brains_flag">
+                <!-- ブレインの対戦成績 -->
+                <table class="w-full" v-if="showBrainRecordsFlag">
                     <thead>
                         <tr class="bg-neutral-300">
                             <th>ID</th>
@@ -75,26 +81,30 @@ const show_users_flag = ref(true);
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="record in records" :key="record.id" class="border-b border-neutral-300">
-                            <td>{{ record.id }}</td>
-                            <td>{{ record.black_player }}</td>
-                            <td>{{ record.white_player }}</td>
+                        <tr v-for="brainRecord in brainRecords" :key="brainRecord.id"
+                            class="border-b border-neutral-300">
+                            <td>{{ brainRecord.id }}</td>
+                            <td>{{ brainRecord.brain_id }}</td>
+                            <td>{{ brainRecord.opponent_id }}</td>
                             <td>
-                                <template v-if="record.count_black > record.count_white">
+                                <template v-if="brainRecord.brain_discs > brainRecord.opponent_discs">
                                     Black
                                 </template>
-                                <template v-else-if="record.count_black < record.count_white">
+                                <template v-else-if="brainRecord.brain_discs < brainRecord.opponent_discs">
                                     White
                                 </template>
                                 <template v-else>-</template>
-                                ({{ record.count_black }}:{{ record.count_white }})
+                                <span class="text-sm">
+                                    ({{ brainRecord.brain_discs }}:{{ brainRecord.opponent_discs }})
+                                </span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="fixed bottom-4 right-4" v-if="$page.props.auth.user && $page.props.auth.user.is_admin && show_brains_flag">
+        <div class="fixed bottom-4 right-4"
+            v-if="$page.props.auth.user && $page.props.auth.user.is_admin && show_brains_flag">
             <Link as="button" :href="route('records.create')"
                 class="bg-emerald-500 text-white text-2xl rounded-md font-bold md:w-16 md:h-16 w-12 h-12 flex items-center justify-center">
             +

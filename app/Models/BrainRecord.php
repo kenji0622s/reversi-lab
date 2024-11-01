@@ -12,8 +12,9 @@ class BrainRecord extends Model
     protected $fillable = [
         'user_id',
         'brain_id',
-        'user_discs',
+        'opponent_id',
         'brain_discs',
+        'opponent_discs',
         'is_first',
     ];
 }

@@ -9,27 +9,29 @@ const props = defineProps({
     messages: Object,
 });
 
-// グループ化されたデータを配列に変換
-const groupedRecords = Object.values(props.userRecords);
-const groupedRecordsResult = [];
-for (let i = 0; i < groupedRecords.length; i++) {
+const userRecords = props.userRecords;
+const userRecordKeys = Object.keys(props.userRecords);
+const userRecordValues = Object.values(props.userRecords);
+
+console.log('userRecords', userRecords);
+console.log('userRecordKeys', userRecordKeys);
+console.log('userRecordValues', userRecordValues);
+
+const userRecordsResults = [];
+for (let i = 0; i < userRecordKeys.length; i++) {
     let win = 0;
     let draw = 0;
     let lose = 0;
-    for (let j = 0; j < groupedRecords[i].length; j++) {
-        switch (groupedRecords[i][j].result) {
-            case 'win':
-                win++;
-                break;
-            case 'draw':
-                draw++;
-                break;
-            case 'lose':
-                lose++;
-                break;
+    for (let j = 0; j < userRecordValues[i].length; j++) {
+        if (userRecordValues[i][j].user_discs > userRecordValues[i][j].brain_discs) {
+            win++;
+        } else if (userRecordValues[i][j].user_discs === userRecordValues[i][j].brain_discs) {
+            draw++;
+        } else {
+            lose++;
         }
     }
-    groupedRecordsResult.push({
+    userRecordsResults.push({
         'win': win,
         'draw': draw,
         'lose': lose,
@@ -37,12 +39,16 @@ for (let i = 0; i < groupedRecords.length; i++) {
     });
 }
 
-const show_records_flag = ref(Array(groupedRecords.length).fill(false));
-const show_records = (index) => {
-    show_records_flag.value[index] = !show_records_flag.value[index];
+
+console.log('userRecordsResults', userRecordsResults);
+
+const showUserRecordsFlag = ref(Array(userRecordKeys.length).fill(false));
+const showUserRecords = (index) => {
+    showUserRecordsFlag.value[index] = !showUserRecordsFlag.value[index];
 }
 
 const checked = ref(false);
+
 </script>
 
 <template>
@@ -56,32 +62,32 @@ const checked = ref(false);
             </template>
         </template>
         <div class="w-4/5 md:w-2/5 mx-auto mt-6">
-            <div v-for="(group, brainId) in groupedRecords" :key="brainId"
+            <div v-for="(opponentBrain, i) in userRecordValues" :key="i"
                 class="mb-4 bg-neutral-100 border-2 border-neutral-300 p-4 rounded-md shadow-sm">
-                <div @click="show_records(brainId)">
-                    <p class="text-lg font-bold">vs {{ group[0].brain.name }}</p>
-                    <p class="mb-2" v-if="messages.lang === 'ja'">{{ group[0].brain.description }}</p>
-                    <p class="mb-2" v-else>{{ group[0].brain.description_en }}</p>
+                <div @click="showUserRecords(i)">
+                    <p class="text-lg font-bold">vs {{ messages.lang === 'ja' ? opponentBrain[0].brain.ja_name : opponentBrain[0].brain.en_name }}</p>
+                    <p class="mb-2">{{ messages.lang === 'ja' ? opponentBrain[0].brain.ja_description : opponentBrain[0].brain.en_description }}</p>
                     <div class="flex justify-between items-center">
-                        <!-- <p class="font-bold">勝率 10%（ 12 勝 12 分 12 敗）</p> -->
-                        <p class="font-bold">{{ messages.user_records.win_rate }} {{ groupedRecordsResult[brainId].rate }}
-                            <span class="block text-sm">{{ messages.user_records.win }} {{ groupedRecordsResult[brainId].win }} | {{ messages.user_records.lose }} {{ groupedRecordsResult[brainId].lose }} | {{ messages.user_records.draw }} {{ groupedRecordsResult[brainId].draw }}</span>
+                        <p class="font-bold">{{ messages.user_records.win_rate }} {{ userRecordsResults[i].rate }}
+                            <span class="block text-sm">{{ messages.user_records.win }} {{ userRecordsResults[i].win }} | {{ messages.user_records.lose }} {{ userRecordsResults[i].lose }} | {{ messages.user_records.draw }} {{ userRecordsResults[i].draw }}</span>
                         </p>
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500"
-                            v-if="!show_records_flag[brainId]"></i>
+                            v-if="!showUserRecordsFlag[i]"></i>
                         <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>
                     </div>
 
                 </div>
-                <table class="text-center mx-auto mt-4 w-full md:w-72" v-if="show_records_flag[brainId]">
+                <table class="text-center mx-auto mt-4 w-full md:w-72" v-if="showUserRecordsFlag[i]">
                     <thead>
                         <tr class="bg-neutral-300">
+                            <th>check</th>
                             <th class="w-1/2">{{ messages.user_records.date }}</th>
                             <th class="w-1/2">{{ messages.user_records.result }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="record in group" :key="record.id" class="border-b border-neutral-300">
+                        <tr v-for="record in opponentBrain" :key="record.id" class="border-b border-neutral-300">
+                            <td>{{ record.user_id }} vs {{ record.brain_id }}</td>
                             <td>{{ dayjs(record.created_at).format('YYYY/MM/DD') }}</td>
                             <td>
                                 <template v-if="record.result === 'win'">
@@ -93,6 +99,7 @@ const checked = ref(false);
                                 <template v-else>
                                     {{ messages.user_records.lose }}
                                 </template>
+                                <span class="text-sm">({{ record.user_discs }}:{{ record.brain_discs }})</span>
                             </td>
                         </tr>
                     </tbody>
