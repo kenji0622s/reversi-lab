@@ -38,7 +38,7 @@ class BrainRecordController extends Controller
      */
     public function create()
     {
-        $debug = config('services.debug');
+        $debug = config('app.debug');
         $brains = Brain::all();
         return Inertia::render('BrainRecords/Simulate', [
             'brains' => $brains,
@@ -56,7 +56,6 @@ class BrainRecordController extends Controller
     public function store(StoreBrainRecordRequest $request)
     {
         $results = $request->results;
-        // dd($results);
         foreach ($results as $result) {
             BrainRecord::create([
                 'brain_id' => $result['brain_id'],

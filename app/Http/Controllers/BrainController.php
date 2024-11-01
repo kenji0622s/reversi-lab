@@ -46,9 +46,11 @@ class BrainController extends Controller
     {
         Brain::create(
             [
-                'name' => $request->name,
+                'ja_name' => $request->ja_name,
+                'en_name' => $request->en_name,
                 'ja_description' => $request->ja_description,
                 'en_description' => $request->en_description,
+                'created_by' => $request->created_by,
             ]
         );
         return to_route('brains.index');
@@ -105,11 +107,15 @@ class BrainController extends Controller
      */
     public function update(UpdateBrainRequest $request, Brain $brain)
     {
+
+        // dd($request->all());
         $brain->update(
             [
-                'name' => $request->name,
+                'ja_name' => $request->ja_name,
+                'en_name' => $request->en_name,
                 'ja_description' => $request->ja_description,
                 'en_description' => $request->en_description,
+                'created_by' => $request->created_by,
             ]
         );
         return to_route('brains.index');

@@ -90,10 +90,10 @@ const checked = ref(false);
                             <td>{{ record.user_id }} vs {{ record.brain_id }}</td>
                             <td>{{ dayjs(record.created_at).format('YYYY/MM/DD') }}</td>
                             <td>
-                                <template v-if="record.result === 'win'">
+                                <template v-if="record.user_discs > record.brain_discs">
                                     {{ messages.user_records.win }}
                                 </template>
-                                <template v-else-if="record.result === 'draw'">
+                                <template v-else-if="record.user_discs === record.brain_discs">
                                     {{ messages.user_records.draw }}
                                 </template>
                                 <template v-else>

@@ -10,7 +10,6 @@ return [
         "logout" => "Logout",
         "close" => "Close",
     ],
-
     "menu" => [
         "challenge" => "Challenge",
         "brain_list" => "Brain Records",
@@ -21,7 +20,6 @@ return [
         "play" => "Two-player Play",
         "profile" => "Profile",
     ],
-
     "challenge" => [
         "select_brain" => "Select a challenge brain",
         "select_turn" => "Select a turn",
@@ -30,7 +28,7 @@ return [
         "game_start" => "Start",
         "your_turn" => "Your turn",
         "brain_turn" => "Brain's turn",
-        "reset_game" => "Reset Game",
+        "again" => "Again",
         "game_end_win" => "You win",
         "game_end_lose" => "Brain wins",
         "game_end_draw" => "Draw",
@@ -52,8 +50,7 @@ return [
         "reset_game" => "Reset Game",
     ],
     "simulate" => [
-        "select_black_brain" => "Select first turn brain (Black)",
-        "select_white_brain" => "Select second turn brain (White)",
+        "select_brain" => "Select Brain to simulate",
         "check_explain" => "The simulation will start.\nIt will take about 1 minute.",
         "simulate_start" => "Start",
         "ready_game" => "Ready",
@@ -76,8 +73,8 @@ return [
         "turn" => "Turn",
         "first_turn" => "First",
         "second_turn" => "Second",
+        "no_record" => "No record",
     ],
-
     "register" => [
         "name" => "Name",
         "email" => "Email",

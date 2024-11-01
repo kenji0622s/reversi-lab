@@ -13,6 +13,7 @@ import { strategies } from '../strategies/brains';
 const props = defineProps({
     user: Object,
     brains: Object,
+    debug: Boolean,
     messages: Object,
 });
 
@@ -111,23 +112,29 @@ const selectCell = (cell) => {
     }
     if (blackAvailableCells.value.length === 0 && whiteAvailableCells.value.length === 0 && usedCells.value.length > 4) {
         isGameEnd.value = true;
-        if (yourTurn.value === turns[0]) {
-            user_discs = blackCells.value.length;
-            brain_discs = whiteCells.value.length;
-            isFirst = true;
-        } else {
-            user_discs = whiteCells.value.length;
-            brain_discs = blackCells.value.length;
-            isFirst = false;
+        let user_discs;
+        let brain_discs;
+        let isFirst;
+        try{
+            if (yourTurn.value === turns[0]) {
+                user_discs = blackCells.value.length;
+                brain_discs = whiteCells.value.length;
+                isFirst = true;
+            } else {
+                user_discs = whiteCells.value.length;
+                brain_discs = blackCells.value.length;
+                isFirst = false;
+            }
+            router.post('/user-records', {
+                user_id: userId,
+                brain_id: brain.value.id,
+                user_discs: user_discs,
+                brain_discs: brain_discs,
+                is_first: isFirst,
+            });
+        } catch (error) {
+            console.error(error);
         }
-        router.post('/user-records', {
-            user_id: userId,
-            brain_id: brain.value.id,
-            user_discs: blackCellsLength,
-            brain_discs: whiteCellsLength,
-            is_first: isFirst,
-        });
-
     }
 }
 
@@ -141,7 +148,7 @@ const selectCell = (cell) => {
 
     <BasicLayout :messages="messages">
         <template #title>
-            Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ brain.name }}</span>
+            Challenge<span class="text-sm ml-2" v-if="isReady">vs {{ messages.lang === 'ja' ? brain.ja_name : brain.en_name }}</span>
         </template>
 
         <!-- <div class="relative">
@@ -192,9 +199,34 @@ const selectCell = (cell) => {
         </div>
 
         <div class="flex justify-center items-center mt-6">
-            <button @click="resetGame" onclick="window.location.reload()"
+            <button @click="resetGame" onclick="window.location.reload()" v-if="isGameEnd"
                 class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
-                    messages.challenge.reset_game }}</button>
+                    messages.challenge.again }}</button>
+        </div>
+
+        <div v-if="debug">
+            <table class="text-left">
+                <tr>
+                    <th>turn</th>
+                    <td>{{ turn }}</td>
+                </tr>
+                <tr>
+                    <th>usedCells</th>
+                    <td>{{ usedCells }}</td>
+                </tr>
+                <tr>
+                    <th>availableCells</th>
+                    <td>{{ availableCells }}</td>
+                </tr>
+                <tr>
+                    <th>blackAvailableCells</th>
+                    <td>{{ blackAvailableCells }}</td>
+                </tr>
+                <tr>
+                    <th>whiteAvailableCells</th>
+                    <td>{{ whiteAvailableCells }}</td>
+                </tr>
+            </table>
         </div>
 
         <div v-if="!isReady" class="w-full mt-16 h-[calc(100vh-4rem)] bg-neutral-100/95 absolute top-0 left-0">

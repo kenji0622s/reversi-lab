@@ -54,7 +54,7 @@ const isShowLanguage = ref(false);
                                 <!-- <NavLink :href="route('watch')" :active="route().current('watch')">
                                     Watch
                                 </NavLink> -->
-                                <NavLink :href="route('brain-records.create')" :active="route().current('brain-records.create')">
+                                <NavLink :href="route('simulation')" :active="route().current('simulation')">
                                     {{ messages.menu.simulation }}
                                 </NavLink>
                                 <NavLink :href="route('play')" :active="route().current('play')">
@@ -148,7 +148,7 @@ const isShowLanguage = ref(false);
                         <!-- <ResponsiveNavLink :href="route('watch')" :active="route().current('watch')">
                             Watch
                         </ResponsiveNavLink> -->
-                        <ResponsiveNavLink :href="route('brain-records.create')" :active="route().current('brain-records.create')">
+                        <ResponsiveNavLink :href="route('simulation')" :active="route().current('simulation')">
                             {{ messages.menu.simulation }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('play')" :active="route().current('play')">

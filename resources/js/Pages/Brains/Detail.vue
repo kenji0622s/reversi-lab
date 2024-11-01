@@ -13,11 +13,6 @@ const props = defineProps({
     messages: Object,
 });
 
-console.log('brain', props.brain);
-console.log('brains', props.brains);
-console.log('brainRecords', props.brainRecords);
-console.log('userRecords', props.userRecords);
-
 const brain = props.brain;
 const brains = props.brains;
 const brainRecords = props.brainRecords;
@@ -46,32 +41,34 @@ vsUserResult = {
 };
 
 const showVsUserRecordsFlag = ref(false);
-
-
 const brainResults = [];
-for (let i = 0; i < brainRecordKeys.length; i++) {
-    console.log('brainRecords[i]', brainRecordsValues[i]);
+for (let i = 0; i < brains.length; i++) {
     let win = 0;
     let draw = 0;
     let lose = 0;
-    for (let j = 0; j < brainRecordsValues[i].length; j++) {
-        if (
-            brainRecordsValues[i][j].brain_discs > brainRecordsValues[i][j].opponent_discs
-        ) {
-            win++;
-        } else if (brainRecordsValues[i][j].brain_discs === brainRecordsValues[i][j].opponent_discs) {
-            draw++;
-        } else {
-            lose++;
+    let games = 0;
+    if (brainRecordsValues[i]) {
+        for (let j = 0; j < brainRecordsValues[i].length; j++) {
+            games++;
+            if (
+                brainRecordsValues[i][j].brain_discs > brainRecordsValues[i][j].opponent_discs
+            ) {
+                win++;
+            } else if (brainRecordsValues[i][j].brain_discs === brainRecordsValues[i][j].opponent_discs) {
+                draw++;
+            } else {
+                lose++;
+            }
         }
     }
-    brainResults.push({
-        'key': brainRecordKeys[i],
-        'win': win,
-        'draw': draw,
-        'lose': lose,
-        'rate': ((win / (win + draw + lose)) * 100).toFixed(2) + '%',
-    });
+        brainResults.push({
+            'key': brainRecordKeys[i],
+            'win': win,
+            'draw': draw,
+            'lose': lose,
+            'rate': ((win / games) * 100).toFixed(2) + '%',
+            'games': games,
+        });
 }
 
 console.log('brainResults', brainResults);
@@ -159,7 +156,7 @@ const showBrainRecords = (index) => {
                     </p>
                     <div v-if="messages.lang === 'ja'" v-html="nl2br(opponentBrain.ja_description)"></div>
                     <div v-else v-html="nl2br(opponentBrain.en_description)"></div>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center" v-if="brainResults[i].games > 0">
                         <p class="font-bold">{{ messages.brains.win_rate }} {{ brainResults[i].rate }}
                             <span class="block text-sm">{{ messages.brains.win }} {{ brainResults[i].win }} | {{
                                 messages.brains.lose }} {{ brainResults[i].lose }} | {{ messages.brains.draw }} {{
@@ -168,6 +165,9 @@ const showBrainRecords = (index) => {
                         <i class="fa-solid fa-angle-down text-lg text-emerald-500" v-if="!showBrainRecordsFlag[i]"></i>
                         <i class="fa-solid fa-angle-up text-lg text-emerald-500" v-else></i>
                     </div>
+                    <p class="text-sm" v-else>
+                        {{ messages.brains.no_record }}
+                    </p>
 
                 </div>
                 <table class="text-center mx-auto w-full mt-4 md:w-72" v-if="showBrainRecordsFlag[i]">

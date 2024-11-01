@@ -21,14 +21,11 @@ class DatabaseSeeder extends Seeder
             BrainSeeder::class,
         ]);
 
-        if (config('app.env') === 'local') {
+        if (config('app.debug')) {
             \App\Models\User::factory(10)->create();
             \App\Models\UserRecord::factory(300)->create();
             \App\Models\BrainRecord::factory(300)->create();
         }
-
-
-
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

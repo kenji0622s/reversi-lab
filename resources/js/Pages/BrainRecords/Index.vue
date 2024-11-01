@@ -56,10 +56,10 @@ const showUserRecordsFlag = ref(true);
                             </td>
                             <td>{{ userRecord.brain_id }}</td>
                             <td>
-                                <template v-if="userRecord.user_discs > userRecord.opponent_discs">
+                                <template v-if="userRecord.user_discs > userRecord.brain_discs">
                                     勝ち
                                 </template>
-                                <template v-else-if="userRecord.user_discs === userRecord.opponent_discs">
+                                <template v-else-if="userRecord.user_discs === userRecord.brain_discs">
                                     引き分け
                                 </template>
                                 <template v-else>
@@ -75,9 +75,10 @@ const showUserRecordsFlag = ref(true);
                     <thead>
                         <tr class="bg-neutral-300">
                             <th>ID</th>
-                            <th>Black</th>
-                            <th>White</th>
-                            <th>Winner</th>
+                            <th>Brain</th>
+                            <th>Opponent</th>
+                            <th>Result</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,16 +89,19 @@ const showUserRecordsFlag = ref(true);
                             <td>{{ brainRecord.opponent_id }}</td>
                             <td>
                                 <template v-if="brainRecord.brain_discs > brainRecord.opponent_discs">
-                                    Black
+                                    勝ち
                                 </template>
                                 <template v-else-if="brainRecord.brain_discs < brainRecord.opponent_discs">
-                                    White
+                                    負け
                                 </template>
-                                <template v-else>-</template>
+                                <template v-else>
+                                    引き分け
+                                </template>
                                 <span class="text-sm">
                                     ({{ brainRecord.brain_discs }}:{{ brainRecord.opponent_discs }})
                                 </span>
                             </td>
+                            <td>{{ dayjs(brainRecord.created_at).format('MM/DD HH:mm') }}</td>
                         </tr>
                     </tbody>
                 </table>

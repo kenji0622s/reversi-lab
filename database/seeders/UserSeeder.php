@@ -20,7 +20,6 @@ class UserSeeder extends Seeder
         $adminPassword = config('services.admin.password');
         DB::table('users')->insert([
             [
-
                 'name' => 'Admin',
                 'email' => $adminEmail,
                 'password' => Hash::make($adminPassword),

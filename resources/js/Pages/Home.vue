@@ -35,7 +35,7 @@ defineProps({
             <!-- <Link :href="route('watch')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 shadow-md">Watch
             </Link> -->
-            <Link :href="route('brain-records.create')"
+            <Link :href="route('simulation')"
                 class="bg-emerald-500 text-lg font-bold text-center text-white p-2 rounded-md w-60 md:w-72 shadow-md">
             {{ messages.menu.simulation }}
             </Link>

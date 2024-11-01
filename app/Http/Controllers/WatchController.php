@@ -8,7 +8,7 @@ class WatchController extends Controller
 {
     public function index()
     {
-        $debug = config('services.debug');
+        $debug = config('app.debug');
         return Inertia::render('Watch', [
             'debug' => $debug,
         ]);
