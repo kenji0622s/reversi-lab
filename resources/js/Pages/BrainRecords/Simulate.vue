@@ -29,8 +29,18 @@ const isGameEnd = ref(false);
 const gameEndMessage = ref('');
 ;
 const countGames = ref(0);
-const MAX_GAMES = 300;
-const INTERVAL = 1;
+
+let MAX_GAMES;
+let INTERVAL;
+if (props.debug) {
+    // 開発環境の設定
+    MAX_GAMES = 300;
+    INTERVAL = 1;
+} else {
+    // 本番環境の設定（変更しない）
+    MAX_GAMES = 100;
+    INTERVAL = 1;
+}
 
 const brains = props.brains;
 
