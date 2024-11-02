@@ -63,15 +63,16 @@ const isShowLanguage = ref(false);
                                 <NavLink :href="route('profile.edit')" v-if="$page.props.auth.user">
                                     {{ messages.menu.profile }}
                                 </NavLink>
+                                <NavLink :href="route('brain-records.index')"
+                                    :active="route().current('brain-records.index')"
+                                    v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
+                                    {{ messages.menu.records }}
+                                </NavLink>
                                 <NavLink :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
                                     {{ messages.common.logout }}
                                 </NavLink>
                                 <NavLink :href="route('login')" v-if="!$page.props.auth.user">
                                     {{ messages.common.login }}
-                                </NavLink>
-                                <NavLink :href="route('brain-records.index')" :active="route().current('brain-records.index')"
-                                    v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
-                                    {{ messages.menu.records }}
                                 </NavLink>
 
                                 <button @click="isShowLanguage = !isShowLanguage">
@@ -157,13 +158,14 @@ const isShowLanguage = ref(false);
                         <ResponsiveNavLink :href="route('profile.edit')" v-if="$page.props.auth.user">
                             {{ messages.menu.profile }}
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('brain-records.index')"
+                            :active="route().current('brain-records.index')"
+                            v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
+                            {{ messages.menu.records }}
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('logout')" method="post" as="button"
                             v-if="$page.props.auth.user">
                             {{ messages.common.logout }}
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('brain-records.index')" :active="route().current('brain-records.index')"
-                            v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
-                            {{ messages.menu.records }}
                         </ResponsiveNavLink>
                         <!-- Responsive Settings Options -->
                         <!-- <div class="pt-4 pb-1 border-t border-gray-200">
