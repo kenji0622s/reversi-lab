@@ -220,43 +220,47 @@ const selectCell = (cell) => {
         <div class="absolute top-40 left-0 w-full z-30 text-center" v-if="isGameEnd && isGameEndMessage">
             <div
                 class="w-4/5 md:w-[32rem] mx-auto bg-neutral-100 border-2 border-neutral-400 shadow-md rounded-md pt-16 pb-12 relative text-neutral-900">
-                <p class="text-center font-bold mb-4">{{ messages.challenge.you }} {{ user_discs }} :  AI {{ brain_discs }}</p>
+                <p class="text-center font-bold mb-4">{{ messages.challenge.you }} {{ user_discs }} : AI {{ brain_discs
+                    }}</p>
                 <p class="text-center font-bold mb-6" v-html="nl2br(gameEndMessage)"></p>
                 <button @click="resetGame" onclick="window.location.reload()"
                     class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
                         messages.challenge.again }}</button>
-                <i class="fa-solid fa-xmark absolute top-2 right-4 text-xl cursor-pointer" @click="isGameEndMessage = false"></i>
+                <i class="fa-solid fa-xmark absolute top-2 right-4 text-xl cursor-pointer"
+                    @click="isGameEndMessage = false"></i>
             </div>
         </div>
 
         <div class="text-center mt-8" v-if="isGameEnd && !isGameEndMessage">
-    <button @click="resetGame" onclick="window.location.reload()"
-                    class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
-                        messages.challenge.again }}</button>
-   </div>
+            <button @click="resetGame" onclick="window.location.reload()"
+                class="border-2 border-emerald-500 text-emerald-500 px-4 py-2 rounded-md font-bold">{{
+                    messages.challenge.again }}</button>
+        </div>
 
         <div v-if="debug">
             <table class="text-left">
-                <tr>
-                    <th>turn</th>
-                    <td>{{ turn }}</td>
-                </tr>
-                <tr>
-                    <th>usedCells</th>
-                    <td>{{ usedCells }}</td>
-                </tr>
-                <tr>
-                    <th>availableCells</th>
-                    <td>{{ availableCells }}</td>
-                </tr>
-                <tr>
-                    <th>blackAvailableCells</th>
-                    <td>{{ blackAvailableCells }}</td>
-                </tr>
-                <tr>
-                    <th>whiteAvailableCells</th>
-                    <td>{{ whiteAvailableCells }}</td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <th>turn</th>
+                        <td>{{ turn }}</td>
+                    </tr>
+                    <tr>
+                        <th>usedCells</th>
+                        <td>{{ usedCells }}</td>
+                    </tr>
+                    <tr>
+                        <th>availableCells</th>
+                        <td>{{ availableCells }}</td>
+                    </tr>
+                    <tr>
+                        <th>blackAvailableCells</th>
+                        <td>{{ blackAvailableCells }}</td>
+                    </tr>
+                    <tr>
+                        <th>whiteAvailableCells</th>
+                        <td>{{ whiteAvailableCells }}</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
 

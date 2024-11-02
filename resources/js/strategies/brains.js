@@ -3,6 +3,7 @@ import { askBrain2 } from "@/strategies/brains/brain2";
 import { askBrain3 } from "@/strategies/brains/brain3";
 import { askBrain4 } from "@/strategies/brains/brain4";
 import { askBrain5 } from "@/strategies/brains/brain5";
+import { askBrain6 } from "@/strategies/brains/brain6";
 
 // { brain_id: strategy }の形でVueに渡す
 export const strategies = {
@@ -11,4 +12,5 @@ export const strategies = {
     3: askBrain3,
     4: askBrain4,
     5: askBrain5,
+    6: askBrain6,
 };

@@ -29,7 +29,7 @@ const isGameEnd = ref(false);
 const gameEndMessage = ref('');
 ;
 const countGames = ref(0);
-const MAX_GAMES = 100;
+const MAX_GAMES = 300;
 const INTERVAL = 1;
 
 const brains = props.brains;
@@ -291,26 +291,28 @@ const selectCell = (cell) => {
 
         <div v-if="debug">
             <table class="text-left">
-                <tr>
-                    <th>turn</th>
-                    <td>{{ turn }}</td>
-                </tr>
-                <tr>
-                    <th>usedCells({{ usedCells.length }})</th>
-                    <td>{{ usedCells }}</td>
-                </tr>
-                <tr>
-                    <th>availableCells({{ availableCells.length }})</th>
-                    <td>{{ availableCells }}</td>
-                </tr>
-                <tr>
-                    <th>blackAvailableCells({{ blackAvailableCells.length }})</th>
-                    <td>{{ blackAvailableCells }}</td>
-                </tr>
-                <tr>
-                    <th>whiteAvailableCells({{ whiteAvailableCells.length }})</th>
-                    <td>{{ whiteAvailableCells }}</td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <th>turn</th>
+                        <td>{{ turn }}</td>
+                    </tr>
+                    <tr>
+                        <th>usedCells({{ usedCells.length }})</th>
+                        <td>{{ usedCells }}</td>
+                    </tr>
+                    <tr>
+                        <th>availableCells({{ availableCells.length }})</th>
+                        <td>{{ availableCells }}</td>
+                    </tr>
+                    <tr>
+                        <th>blackAvailableCells({{ blackAvailableCells.length }})</th>
+                        <td>{{ blackAvailableCells }}</td>
+                    </tr>
+                    <tr>
+                        <th>whiteAvailableCells({{ whiteAvailableCells.length }})</th>
+                        <td>{{ whiteAvailableCells }}</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </BasicLayout>
