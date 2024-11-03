@@ -68,11 +68,11 @@ const isShowLanguage = ref(false);
                                     v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
                                     {{ messages.menu.records }}
                                 </NavLink>
-                                <NavLink :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
-                                    {{ messages.common.logout }}
-                                </NavLink>
                                 <NavLink :href="route('login')" v-if="!$page.props.auth.user">
                                     {{ messages.common.login }}
+                                </NavLink>
+                                <NavLink :href="route('logout')" method="post" as="button" v-if="$page.props.auth.user">
+                                    {{ messages.common.logout }}
                                 </NavLink>
 
                                 <button @click="isShowLanguage = !isShowLanguage">
@@ -162,6 +162,9 @@ const isShowLanguage = ref(false);
                             :active="route().current('brain-records.index')"
                             v-if="$page.props.auth.user && $page.props.auth.user.is_admin">
                             {{ messages.menu.records }}
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('login')" v-if="!$page.props.auth.user">
+                            {{ messages.common.login }}
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('logout')" method="post" as="button"
                             v-if="$page.props.auth.user">
