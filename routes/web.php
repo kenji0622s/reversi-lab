@@ -38,6 +38,11 @@ Route::get('/', function () {
         'messages' => trans('messages'),
     ]);
 })->name('home');
+Route::get('/privacy-policy', function () {
+    return Inertia::render('PrivacyPolicy', [
+        'messages' => trans('messages'),
+    ]);
+})->name('privacy-policy');
 
 Route::get('/switch-language/{locale}', [LanguageController::class, 'switch']);
 
